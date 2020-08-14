@@ -31,9 +31,7 @@ import org.xtext.example.symg.symg.Enumeration
 import org.xtext.example.symg.symg.DomainType
 import org.xtext.example.symg.symg.BasicType
 import org.xtext.example.symg.symg.OntoCType
-import org.xtext.example.symg.symg.Declar
 import java.util.ArrayList
-import org.xtext.example.symg.symg.DeclarPair
 import java.util.HashSet
 
 /**
@@ -48,6 +46,9 @@ class SymgGenerator extends AbstractGenerator {
 		var superTypes = new HashMap<String, String>()
 		var declNames = new HashMap<String, ArrayList<ArrayList<String>>>()
 		var declEvents = new HashSet<String>()
+		var dates = new HashSet<String>()
+		var roles = new HashSet<String>()
+		var assets = new HashSet<String>()
 		var totParams = 0
 		var p = 1
 		
@@ -61,13 +62,23 @@ class SymgGenerator extends AbstractGenerator {
 		// count the number of contract parameters
 		for (param: model.parameters) {
 			var pType = param.type.checkParameterType(superTypes)
-			if (pType.equals('ROLE') || pType.equals('DATE') || pType.equals('ASSET')) {
+			if (pType.equals('ROLE') || pType.equals('DATE')) {
+				if (pType.equals('ROLE')) {
+					// add parameter name to roles
+					roles.add(param.name)
+				}
+				if (pType.equals('DATE')) {
+					// add parameter name to dates
+					dates.add(param.name)
+				}
+				
 				totParams += 1
 			}
 		}
 		
 		// count the number of contract parameters
 		// map attributes/attribute values to the names of declarations
+		// let's just consider that assets will always be formed in declarations from basic types
 		for (declaration : model.declarations) {
 			var parentType = declaration.type.name
 			var attrs = new ArrayList<ArrayList<String>>()
@@ -77,6 +88,7 @@ class SymgGenerator extends AbstractGenerator {
 			}
 			
 			if (parentType.equals('ASSET')) {
+				assets.add(declaration.name)
 				totParams += 1
 			}
 			if (parentType.equals('EVENT')) {
@@ -95,14 +107,13 @@ class SymgGenerator extends AbstractGenerator {
 			declNames.put(declaration.name, attrs)
 		}
 		
+		// check each obligation to see if a declaration appears in the consequent
+		
+		// compile declaration events
 		for (d : declNames.keySet) {
 			if (declEvents.contains(d)) {
 				res.append(d + "(E)\t:-\t")
 				res.append("happens(E,T),holds_at(type(E," + d + ")),")
-			}
-			else {
-				//temp, just for testing
-				res.append(d + "\t:-\t")
 			}
 			"E".compileDeclaration(d, res, declNames)		
 			res.append(".\n")
@@ -117,59 +128,54 @@ class SymgGenerator extends AbstractGenerator {
 		res.append(")).\n\n")
 		totParams -= 1
 		
-		for (param : model.parameters) {
-			var pType = param.type.checkParameterType(superTypes)
-			
-			if (pType.equals('ROLE') || pType.equals('DATE') || pType.equals('ASSET')) {
-				if (pType.equals('ROLE')) {
-					res.append("initially(bind(" + param.name + ",X))\t:-\t")
-				}
-				if (pType.equals('ASSET') || pType.equals('DATE')) {
-					res.append(param.name + "(X)\t:-\t")	
-				}
-				res.append("initially(" + model.contractName + "(")
-				for (i : 0..< p) {
-					res.append("_,")
-				}
-				res.append("X")
-				for (i : 0..< totParams) {
-					res.append(",_")
-				}
-				res.append(")).\n")
-				totParams -= 1
-				p += 1
+		for (role : roles) {
+			res.append("initially(bind(" + role + ",X))\t:-\t")
+			res.append("initially(" + model.contractName + "(")
+			for (i : 0..< p) {
+				res.append("_,")
 			}
+			res.append("X")
+			for (i : 0..< totParams) {
+				res.append(",_")
+			}
+			res.append(")).\n")
+			totParams -= 1
+			p += 1
 		}
 		
-		// adds declarations to the contract parameters
-		for (declaration : model.declarations) {
-			var parentType = declaration.type.name
-			
-			while (superTypes.containsKey(parentType)) {
-				parentType = superTypes.get(parentType)
+		for (date : dates) {
+			res.append(date + "(X)\t:-\t")
+			res.append("initially(" + model.contractName + "(")
+			for (i : 0..< p) {
+				res.append("_,")
 			}
-			
-			if (parentType.equals('ASSET')) {
-				res.append(declaration.name + "(X)\t:-\t")	
-				res.append("initially(" + model.contractName + "(")
-				for (i : 0..< p) {
-					res.append("_,")
-				}
-				res.append("X")
-				for (i : 0..< totParams) {
-					res.append(",_")
-				}
-				res.append(")).\n")
-				totParams -= 1
-				p += 1
+			res.append("X")
+			for (i : 0..< totParams) {
+				res.append(",_")
 			}
+			res.append(")).\n")
+			totParams -= 1
+			p += 1
 		}
-		res.append("\n\n")
 		
-		res.append("\n## Contract\n")
+		for (asset : assets) {
+			res.append(asset + "(X)")
+			res.append("initially(" + model.contractName + "(")
+			for (i : 0..< p) {
+				res.append("_,")
+			}
+			res.append("X")
+			for (i : 0..< totParams) {
+				res.append(",_")
+			}
+			res.append(")).\n")
+			totParams -= 1
+			p += 1
+		}
+		
+		res.append("\n\n## Contract\n")
 		res.append("initially(form(X))\t:-\t")
 		res.append("initially(" + model.contractName + "(X")
-		
 		for (i : 0..< p-1) {
 			res.append(",_")
 		}
@@ -255,6 +261,9 @@ class SymgGenerator extends AbstractGenerator {
 		power.trigger.compileTrigger(power.name, res)
 	}
 	
+	/**
+	 * checks the "root" type of each contract parameter and returns it
+	 */
 	def dispatch checkParameterType(DomainType dType, HashMap<String, String> superTypes) {
 		var parentType = dType.superType.name
 		
@@ -265,13 +274,13 @@ class SymgGenerator extends AbstractGenerator {
 		return parentType
 	}
 	
+	/**
+	 * if a parameter is a basic type that type is returned as a string
+	 */
 	def dispatch checkParameterType(BasicType bType, HashMap<String, String> superTypes) {
 		return bType.name
 	}
 	
-	def compileAttributes(String parent, StringBuilder res, HashMap<String, ArrayList<String>> declNames) {
-		
-	}
 	/**
 	 * Generates prolog code for a regular domain concept
 	 */
