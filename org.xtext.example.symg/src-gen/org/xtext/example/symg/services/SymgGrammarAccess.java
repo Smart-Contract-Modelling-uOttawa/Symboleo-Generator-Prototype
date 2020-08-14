@@ -71,11 +71,12 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final RuleCall cObligationsObligationParserRuleCall_13_1_0_0 = (RuleCall)cObligationsAssignment_13_1_0.eContents().get(0);
 		private final Keyword cSemicolonKeyword_13_1_1 = (Keyword)cGroup_13_1.eContents().get(1);
 		private final Group cGroup_14 = (Group)cGroup.eContents().get(14);
-		private final Keyword cSurvivingObligationsKeyword_14_0 = (Keyword)cGroup_14.eContents().get(0);
-		private final Group cGroup_14_1 = (Group)cGroup_14.eContents().get(1);
-		private final Assignment cSobligationsAssignment_14_1_0 = (Assignment)cGroup_14_1.eContents().get(0);
-		private final RuleCall cSobligationsObligationParserRuleCall_14_1_0_0 = (RuleCall)cSobligationsAssignment_14_1_0.eContents().get(0);
-		private final Keyword cSemicolonKeyword_14_1_1 = (Keyword)cGroup_14_1.eContents().get(1);
+		private final Keyword cSurvivingKeyword_14_0 = (Keyword)cGroup_14.eContents().get(0);
+		private final Keyword cObligationsKeyword_14_1 = (Keyword)cGroup_14.eContents().get(1);
+		private final Group cGroup_14_2 = (Group)cGroup_14.eContents().get(2);
+		private final Assignment cSobligationsAssignment_14_2_0 = (Assignment)cGroup_14_2.eContents().get(0);
+		private final RuleCall cSobligationsObligationParserRuleCall_14_2_0_0 = (RuleCall)cSobligationsAssignment_14_2_0.eContents().get(0);
+		private final Keyword cSemicolonKeyword_14_2_1 = (Keyword)cGroup_14_2.eContents().get(1);
 		private final Group cGroup_15 = (Group)cGroup.eContents().get(15);
 		private final Keyword cPowersKeyword_15_0 = (Keyword)cGroup_15.eContents().get(0);
 		private final Group cGroup_15_1 = (Group)cGroup_15.eContents().get(1);
@@ -95,7 +96,7 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//	'endDomain'
 		//	'Contract' contractName=ID '(' (parameters+=Parameter ',')+ parameters+=Parameter ')' ('Declarations'
 		//	(declarations+=Declar ';')*)? ('Preconditions' (preconditions+=Proposition ';')*)? ('Postconditions'
-		//	(postconditions+=Proposition ';')*)? ('Obligations' (obligations+=Obligation ';')*)? ('SurvivingObligations'
+		//	(postconditions+=Proposition ';')*)? ('Obligations' (obligations+=Obligation ';')*)? ('Surviving' 'Obligations'
 		//	(sobligations+=Obligation ';')*)? ('Powers' (powers+=Power ';')*)? ('Constraints' (constraints+=Proposition ';')*)?
 		//	'endContract';
 		@Override public ParserRule getRule() { return rule; }
@@ -103,7 +104,7 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//'Domain' domainName=ID (domainConcepts+=DomainConcept ';')+ 'endDomain' 'Contract' contractName=ID '('
 		//(parameters+=Parameter ',')+ parameters+=Parameter ')' ('Declarations' (declarations+=Declar ';')*)? ('Preconditions'
 		//(preconditions+=Proposition ';')*)? ('Postconditions' (postconditions+=Proposition ';')*)? ('Obligations'
-		//(obligations+=Obligation ';')*)? ('SurvivingObligations' (sobligations+=Obligation ';')*)? ('Powers' (powers+=Power
+		//(obligations+=Obligation ';')*)? ('Surviving' 'Obligations' (sobligations+=Obligation ';')*)? ('Powers' (powers+=Power
 		//';')*)? ('Constraints' (constraints+=Proposition ';')*)? 'endContract'
 		public Group getGroup() { return cGroup; }
 		
@@ -236,23 +237,26 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//';'
 		public Keyword getSemicolonKeyword_13_1_1() { return cSemicolonKeyword_13_1_1; }
 		
-		//('SurvivingObligations' (sobligations+=Obligation ';')*)?
+		//('Surviving' 'Obligations' (sobligations+=Obligation ';')*)?
 		public Group getGroup_14() { return cGroup_14; }
 		
-		//'SurvivingObligations'
-		public Keyword getSurvivingObligationsKeyword_14_0() { return cSurvivingObligationsKeyword_14_0; }
+		//'Surviving'
+		public Keyword getSurvivingKeyword_14_0() { return cSurvivingKeyword_14_0; }
+		
+		//'Obligations'
+		public Keyword getObligationsKeyword_14_1() { return cObligationsKeyword_14_1; }
 		
 		//(sobligations+=Obligation ';')*
-		public Group getGroup_14_1() { return cGroup_14_1; }
+		public Group getGroup_14_2() { return cGroup_14_2; }
 		
 		//sobligations+=Obligation
-		public Assignment getSobligationsAssignment_14_1_0() { return cSobligationsAssignment_14_1_0; }
+		public Assignment getSobligationsAssignment_14_2_0() { return cSobligationsAssignment_14_2_0; }
 		
 		//Obligation
-		public RuleCall getSobligationsObligationParserRuleCall_14_1_0_0() { return cSobligationsObligationParserRuleCall_14_1_0_0; }
+		public RuleCall getSobligationsObligationParserRuleCall_14_2_0_0() { return cSobligationsObligationParserRuleCall_14_2_0_0; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_14_1_1() { return cSemicolonKeyword_14_1_1; }
+		public Keyword getSemicolonKeyword_14_2_1() { return cSemicolonKeyword_14_2_1; }
 		
 		//('Powers' (powers+=Power ';')*)?
 		public Group getGroup_15() { return cGroup_15; }
@@ -2205,7 +2209,7 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//	'endDomain'
 	//	'Contract' contractName=ID '(' (parameters+=Parameter ',')+ parameters+=Parameter ')' ('Declarations'
 	//	(declarations+=Declar ';')*)? ('Preconditions' (preconditions+=Proposition ';')*)? ('Postconditions'
-	//	(postconditions+=Proposition ';')*)? ('Obligations' (obligations+=Obligation ';')*)? ('SurvivingObligations'
+	//	(postconditions+=Proposition ';')*)? ('Obligations' (obligations+=Obligation ';')*)? ('Surviving' 'Obligations'
 	//	(sobligations+=Obligation ';')*)? ('Powers' (powers+=Power ';')*)? ('Constraints' (constraints+=Proposition ';')*)?
 	//	'endContract';
 	public ModelElements getModelAccess() {

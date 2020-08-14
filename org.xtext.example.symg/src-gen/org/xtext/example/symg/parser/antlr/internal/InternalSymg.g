@@ -326,17 +326,21 @@ ruleModel returns [EObject current=null]
 			)*
 		)?
 		(
-			otherlv_24='SurvivingObligations'
+			otherlv_24='Surviving'
 			{
-				newLeafNode(otherlv_24, grammarAccess.getModelAccess().getSurvivingObligationsKeyword_14_0());
+				newLeafNode(otherlv_24, grammarAccess.getModelAccess().getSurvivingKeyword_14_0());
+			}
+			otherlv_25='Obligations'
+			{
+				newLeafNode(otherlv_25, grammarAccess.getModelAccess().getObligationsKeyword_14_1());
 			}
 			(
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getModelAccess().getSobligationsObligationParserRuleCall_14_1_0_0());
+							newCompositeNode(grammarAccess.getModelAccess().getSobligationsObligationParserRuleCall_14_2_0_0());
 						}
-						lv_sobligations_25_0=ruleObligation
+						lv_sobligations_26_0=ruleObligation
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getModelRule());
@@ -344,22 +348,22 @@ ruleModel returns [EObject current=null]
 							add(
 								$current,
 								"sobligations",
-								lv_sobligations_25_0,
+								lv_sobligations_26_0,
 								"org.xtext.example.symg.Symg.Obligation");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
-				otherlv_26=';'
+				otherlv_27=';'
 				{
-					newLeafNode(otherlv_26, grammarAccess.getModelAccess().getSemicolonKeyword_14_1_1());
+					newLeafNode(otherlv_27, grammarAccess.getModelAccess().getSemicolonKeyword_14_2_1());
 				}
 			)*
 		)?
 		(
-			otherlv_27='Powers'
+			otherlv_28='Powers'
 			{
-				newLeafNode(otherlv_27, grammarAccess.getModelAccess().getPowersKeyword_15_0());
+				newLeafNode(otherlv_28, grammarAccess.getModelAccess().getPowersKeyword_15_0());
 			}
 			(
 				(
@@ -367,7 +371,7 @@ ruleModel returns [EObject current=null]
 						{
 							newCompositeNode(grammarAccess.getModelAccess().getPowersPowerParserRuleCall_15_1_0_0());
 						}
-						lv_powers_28_0=rulePower
+						lv_powers_29_0=rulePower
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getModelRule());
@@ -375,22 +379,22 @@ ruleModel returns [EObject current=null]
 							add(
 								$current,
 								"powers",
-								lv_powers_28_0,
+								lv_powers_29_0,
 								"org.xtext.example.symg.Symg.Power");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
-				otherlv_29=';'
+				otherlv_30=';'
 				{
-					newLeafNode(otherlv_29, grammarAccess.getModelAccess().getSemicolonKeyword_15_1_1());
+					newLeafNode(otherlv_30, grammarAccess.getModelAccess().getSemicolonKeyword_15_1_1());
 				}
 			)*
 		)?
 		(
-			otherlv_30='Constraints'
+			otherlv_31='Constraints'
 			{
-				newLeafNode(otherlv_30, grammarAccess.getModelAccess().getConstraintsKeyword_16_0());
+				newLeafNode(otherlv_31, grammarAccess.getModelAccess().getConstraintsKeyword_16_0());
 			}
 			(
 				(
@@ -398,7 +402,7 @@ ruleModel returns [EObject current=null]
 						{
 							newCompositeNode(grammarAccess.getModelAccess().getConstraintsPropositionParserRuleCall_16_1_0_0());
 						}
-						lv_constraints_31_0=ruleProposition
+						lv_constraints_32_0=ruleProposition
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getModelRule());
@@ -406,21 +410,21 @@ ruleModel returns [EObject current=null]
 							add(
 								$current,
 								"constraints",
-								lv_constraints_31_0,
+								lv_constraints_32_0,
 								"org.xtext.example.symg.Symg.Proposition");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
-				otherlv_32=';'
+				otherlv_33=';'
 				{
-					newLeafNode(otherlv_32, grammarAccess.getModelAccess().getSemicolonKeyword_16_1_1());
+					newLeafNode(otherlv_33, grammarAccess.getModelAccess().getSemicolonKeyword_16_1_1());
 				}
 			)*
 		)?
-		otherlv_33='endContract'
+		otherlv_34='endContract'
 		{
-			newLeafNode(otherlv_33, grammarAccess.getModelAccess().getEndContractKeyword_17());
+			newLeafNode(otherlv_34, grammarAccess.getModelAccess().getEndContractKeyword_17());
 		}
 	)
 ;

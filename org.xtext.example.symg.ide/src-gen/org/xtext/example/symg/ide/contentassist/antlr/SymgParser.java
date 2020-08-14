@@ -62,7 +62,7 @@ public class SymgParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModelAccess().getGroup_13(), "rule__Model__Group_13__0");
 			builder.put(grammarAccess.getModelAccess().getGroup_13_1(), "rule__Model__Group_13_1__0");
 			builder.put(grammarAccess.getModelAccess().getGroup_14(), "rule__Model__Group_14__0");
-			builder.put(grammarAccess.getModelAccess().getGroup_14_1(), "rule__Model__Group_14_1__0");
+			builder.put(grammarAccess.getModelAccess().getGroup_14_2(), "rule__Model__Group_14_2__0");
 			builder.put(grammarAccess.getModelAccess().getGroup_15(), "rule__Model__Group_15__0");
 			builder.put(grammarAccess.getModelAccess().getGroup_15_1(), "rule__Model__Group_15_1__0");
 			builder.put(grammarAccess.getModelAccess().getGroup_16(), "rule__Model__Group_16__0");
@@ -112,7 +112,7 @@ public class SymgParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModelAccess().getPreconditionsAssignment_11_1_0(), "rule__Model__PreconditionsAssignment_11_1_0");
 			builder.put(grammarAccess.getModelAccess().getPostconditionsAssignment_12_1_0(), "rule__Model__PostconditionsAssignment_12_1_0");
 			builder.put(grammarAccess.getModelAccess().getObligationsAssignment_13_1_0(), "rule__Model__ObligationsAssignment_13_1_0");
-			builder.put(grammarAccess.getModelAccess().getSobligationsAssignment_14_1_0(), "rule__Model__SobligationsAssignment_14_1_0");
+			builder.put(grammarAccess.getModelAccess().getSobligationsAssignment_14_2_0(), "rule__Model__SobligationsAssignment_14_2_0");
 			builder.put(grammarAccess.getModelAccess().getPowersAssignment_15_1_0(), "rule__Model__PowersAssignment_15_1_0");
 			builder.put(grammarAccess.getModelAccess().getConstraintsAssignment_16_1_0(), "rule__Model__ConstraintsAssignment_16_1_0");
 			builder.put(grammarAccess.getRegularAccess().getNameAssignment_0(), "rule__Regular__NameAssignment_0");

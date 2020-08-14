@@ -11,7 +11,7 @@ Model:
 	('Preconditions' (preconditions+=Proposition';')*)?
 	('Postconditions' (postconditions+=Proposition ';')*)?
 	('Obligations'(obligations+=Obligation ';')*)?
-	('SurvivingObligations' (sobligations+=Obligation ';')*)?
+	('Surviving''Obligations' (sobligations+=Obligation ';')*)?
 	('Powers'(powers+=Power ';')*)?
 	('Constraints' (constraints+=Proposition ';')*)?
 	'endContract'
