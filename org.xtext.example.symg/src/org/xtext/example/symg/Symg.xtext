@@ -1,0 +1,202 @@
+grammar org.xtext.example.symg.Symg with org.eclipse.xtext.common.Terminals
+
+generate symg "http://www.xtext.org/example/symg/Symg"
+
+Model:
+	'Domain' domainName=ID
+	(domainConcepts += DomainConcept ';')+ 
+	'endDomain'
+	'Contract' contractName=ID '(' (parameters+=Parameter ',')+ (parameters+=Parameter) ')'
+	('Declarations' (declarations+=Declar ';')*)?
+	('Preconditions' (preconditions+=Proposition';')*)?
+	('Postconditions' (postconditions+=Proposition ';')*)?
+	('Obligations'(obligations+=Obligation ';')*)?
+	('SurvivingObligations' (sobligations+=Obligation ';')*)?
+	('Powers'(powers+=Power ';')*)?
+	('Constraints' (constraints+=Proposition ';')*)?
+	'endContract'
+;
+
+DomainConcept:
+	Regular | Enumeration
+;
+
+Regular:
+	name=ID 'isA' conceptType=CType ('with' (attributes+=Attribute ',')* (attributes+=Attribute))?
+;
+
+Attribute:
+	name=ID ':' attributeType=CType
+;
+
+Enumeration:
+	name=ID 'isA''Enumeration''('(enumerationItems+=enumItem ',')* (enumerationItems+=enumItem)')'
+;
+
+enumItem:
+	{enumItem} name=ID
+;
+
+CType:
+	DomainType | OntoCType | BasicType
+;
+
+DomainType:
+	superType = [DomainConcept]
+;
+
+BasicType:
+	name=('NUMBER' | 'STRING' | 'DATE')
+;
+
+OntoCType:
+	name=('ASSET' | 'EVENT' | 'ROLE' | 'SITUATION' | 'CONTRACT')
+;
+
+Parameter:
+	name=ID ':' type=TypeName
+;
+
+TypeName:
+	DomainType | BasicType
+;
+
+// can't have param be declar right now because multiple derivation trees
+DeclarPair:
+	attr=ID ':=' param=[Parameter]
+;
+
+Declar:
+	name=ID ':' type=[Regular] 'with' (attributes+=DeclarPair ',')* (attributes+=DeclarPair)
+;
+
+Obligation:
+	name=ID ':' ( trigger=Proposition '->')? 'obligation''('role1=ID','role2=ID','antecedent=Proposition','consequent=Proposition')'
+;
+
+Power:
+	name=ID ':' ( trigger=Proposition '->')? 'power''('role1=ID','role2=ID','antecedent=Proposition','consequent=Proposition')'
+;
+
+Proposition:
+	junctions+=Junction ('OR' junctions+=Junction)*	
+;
+
+Junction:
+	negativeAtoms+=Negation ('AND' negativeAtoms+=Negation)*
+;
+
+Negation:
+	negated ?= ('NOT')? atomicExpression=Atom
+;
+
+Atom:
+	'happens''('eventProposition=EventProp')'
+	| 'occurs''('situationProposition=SitProp')'
+	| point=Point 'within' interval=Interval
+	| bool='TRUE'
+	| bool='FALSE'
+;
+
+SitProp:
+	(situationName = ID
+	| oSituationName = oState 
+	| cSituationName = cState 
+	| pSituationName = pState) ',' interval=Interval
+;
+
+EventProp:
+	( eventName = ID
+	| oEventName = oEvent
+	| cEventName = cEvent
+	| pEventName = pEvent) ',' point=Point
+;
+
+Interval:
+	situationName=SitName | '[' start=Point ',' end=Point ']'
+	| unnamed='UNNAMED_INTERVAL' 
+	| (situationName=SitName)(tempOp=TempOp)(intConst=IntConst)(unit=Unit)
+;
+
+SitName:
+	SitName=ID | oState=oState | pState=pState | cState=cState 
+	| oEvent=oEvent | cEvent=cEvent | pEvent=pEvent
+;
+
+Unit:
+	'SECONDS' | 'MINUTES' | 'HOURS' | 'DAYS' | 'WEEKS' | 'MONTHS' | 'QUARTERS' 
+	| 'YEARS'
+;
+
+IntConst:
+	{IntConst} Type = INT
+;
+
+TempOp:
+	'BEFORE' | 'AFTER' | 'AT' | 'WITHIN' | '+' | '-'
+;
+
+Point:
+	eventName=SitName  | unnamed='UNNAMED_POINT' | (pointConst=PointConst) 
+	| (pointConst=PointConst)(unit=Unit)(tempOp=TempOp)(eventName=SitName)
+;
+
+pEvent:
+	powEvent=PowEvent '(' powName=ID ')'
+;
+
+PowEvent:
+	'pTRIGGERED' | 'pACTIVATED' | 'pSUSPENDED' | 'pRESUMED' | 'pEXERTED' 
+	| 'pEXPIRED' | 'pTERMINATED'
+;
+
+cEvent:
+	contrEvent=ContrEvent '(' contrName=ID ')'
+;
+
+ContrEvent:
+	'cACTIVATED' | 'cSUSPENDED' | 'cRESUMED' | 'cFULFILLED_ACTIVE_OBLS' 
+	| 'cREVOKED_PARTY' | 'cASSIGNED_PARTY' | 'cTERMINATED'
+;
+
+oEvent:
+	oblEvent=OblEvent '(' oblName=ID ')'
+;
+
+OblEvent:
+	'oTRIGGERED' | 'oACTIVATED' | 'oSUSPENDED' | 'oRESUMED' | 'oDISCHARGED' 
+	| 'oEXPIRED' | 'oFULFILLED' | 'oVIOLATED' | 'oTERMINATED'
+;
+
+
+PointConst:
+	{PointConst} Type = INT
+;
+
+oState:
+	oblState=OblState '(' oblName=ID ')'
+;
+
+OblState:
+	'oCREATE' | 'oINEFFECT' | 'oSUSPENSION' | 'oSUCCESSFUL_TERMINATION' 
+	| 'oUNSUCCESSFUL_TERMINATION' | 'oVIOLATION' | 'oFULFILLMENT' | 'oDISCHARGE'
+;
+
+cState:
+	contrState=ContrState '(' contractName=ID ')'
+;
+
+ContrState:
+	'cFORM' | 'cINEFFECT' | 'cSUSPENSION' | 'cSUCCESSFUL_TERMINATION' 
+	| 'cUNSECCESSFUL_TERMINATION' | 'cUNASSIGN'
+;
+
+
+pState:
+	powState=PowState '(' powName=ID ')'
+;
+
+PowState:
+	'pCREATE' | 'pINEFFECT' | 'pSUSPENSION' | 'pSUCCESSFUL_TERMINATION' 
+	| 'pUNSUCCESSFUL_TERMINATION'
+;
