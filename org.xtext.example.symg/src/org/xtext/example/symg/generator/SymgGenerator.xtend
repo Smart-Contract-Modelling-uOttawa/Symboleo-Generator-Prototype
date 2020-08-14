@@ -32,6 +32,9 @@ import org.xtext.example.symg.symg.DomainType
 import org.xtext.example.symg.symg.BasicType
 import org.xtext.example.symg.symg.OntoCType
 import org.xtext.example.symg.symg.Declar
+import java.util.ArrayList
+import org.xtext.example.symg.symg.DeclarPair
+import java.util.HashSet
 
 /**
  * Generates code from your model files on save.
@@ -43,8 +46,11 @@ class SymgGenerator extends AbstractGenerator {
 	def compile(Model model) {
 		var res = new StringBuilder()
 		var superTypes = new HashMap<String, String>()
+		var declNames = new HashMap<String, ArrayList<ArrayList<String>>>()
+		var declEvents = new HashSet<String>()
 		var totParams = 0
 		var p = 1
+		
 		// compiling domain
 		res.append("## Domain\n")
 		for (domainConcept : model.domainConcepts) {
@@ -61,8 +67,10 @@ class SymgGenerator extends AbstractGenerator {
 		}
 		
 		// count the number of contract parameters
+		// map attributes/attribute values to the names of declarations
 		for (declaration : model.declarations) {
 			var parentType = declaration.type.name
+			var attrs = new ArrayList<ArrayList<String>>()
 			
 			while (superTypes.containsKey(parentType)) {
 				parentType = superTypes.get(parentType)
@@ -71,11 +79,38 @@ class SymgGenerator extends AbstractGenerator {
 			if (parentType.equals('ASSET')) {
 				totParams += 1
 			}
+			if (parentType.equals('EVENT')) {
+				// keeps track of all declarations that are events
+				declEvents.add(declaration.name)
+			}
+			
+			// adding pair value pairs of each declaration attribute to arr list
+			for (attribute: declaration.attributes) {
+				var kvpair = new ArrayList<String>()
+				kvpair.add(attribute.attr)
+				kvpair.add(attribute.param)
+				attrs.add(kvpair)
+			}
+			
+			declNames.put(declaration.name, attrs)
+		}
+		
+		for (d : declNames.keySet) {
+			if (declEvents.contains(d)) {
+				res.append(d + "(E)\t:-\t")
+				res.append("happens(E,T),holds_at(type(E," + d + ")),")
+			}
+			else {
+				//temp, just for testing
+				res.append(d + "\t:-\t")
+			}
+			"E".compileDeclaration(d, res, declNames)		
+			res.append(".\n")
 		}
 		
 		// I'm guessing length of contract = #roles + #dates + #assets + 1
 		
-		res.append("c(X)\t:-\tinitially(" + model.contractName + "(X")
+		res.append("\nc(X)\t:-\tinitially(" + model.contractName + "(X")
 		for (i : 0..< totParams) {
 			res.append(",_")
 		}
@@ -131,11 +166,6 @@ class SymgGenerator extends AbstractGenerator {
 		}
 		res.append("\n\n")
 		
-		// compiling declarations
-		for (declaration : model.declarations) {
-			declaration.compileDeclaration(res, superTypes)
-		}
-		
 		res.append("\n## Contract\n")
 		res.append("initially(form(X))\t:-\t")
 		res.append("initially(" + model.contractName + "(X")
@@ -164,6 +194,43 @@ class SymgGenerator extends AbstractGenerator {
 		}
 		
 		return res.toString
+	}
+	
+	/**
+	 * Generates prolog code for declarations
+	 */
+	def compileDeclaration(String parent, String declName, StringBuilder res, HashMap<String,ArrayList<ArrayList<String>>> declNames) {
+		var i = 0
+		for (attr: declNames.get(declName)) {
+			val key = attr.get(0)
+			val value = attr.get(1)
+			
+			if (declNames.containsKey(value)) {
+				// the value of this attribute is a declaration
+				value.compileDeclarations(res, declNames)
+			}
+			res.append("holds_at(" + key + "(" + parent + "," + value + "),T)")
+			if (i < declNames.get(declName).length - 1) {
+				res.append(",")
+			}
+			i += 1
+		}
+	}
+	
+	/**
+	 * Recursively generates prolog code for declaration attributes that are also declarations
+	 */
+	def compileDeclarations(String object, StringBuilder res, HashMap<String,ArrayList<ArrayList<String>>> declNames) {
+		for (attr: declNames.get(object)) {
+			val key = attr.get(0)
+			val value = attr.get(1)
+			
+			if (declNames.containsKey(value)) {
+				// the value of this attribute is a declaration
+				value.compileDeclarations(res, declNames)
+			}
+			res.append("holds_at(" + key + "(" + object + "," + value + "),T),")
+		}
 	}
 	
 	def compileSObligations(Obligation obl, int i, StringBuilder res) {
@@ -202,39 +269,9 @@ class SymgGenerator extends AbstractGenerator {
 		return bType.name
 	}
 	
-	/**
-	 * Generates prolog code for a declaration
-	 */
-	def compileDeclaration(Declar declaration, StringBuilder res, HashMap<String, String> superTypes) {
-		var parentType = declaration.type.name
+	def compileAttributes(String parent, StringBuilder res, HashMap<String, ArrayList<String>> declNames) {
 		
-		// determine parent type
-		while (superTypes.containsKey(parentType)) {
-			parentType = superTypes.get(parentType)
-		}
-		
-		if (parentType.equals('EVENT')) {
-			res.append(declaration.name + "(E)\t:-\t")
-			res.append("happens(E,T),")
-			res.append("holds_at(type(E," + declaration.name + "),T),")
-			for (i : 0 ..< declaration.attributes.length) {
-				if (declaration.attributes.get(i).attr.equals('from')) {
-					res.append("within(E,performer(O," + declaration.attributes.get(i).param.name + ")),")
-				}
-				if (declaration.attributes.get(i).attr.equals('to')) {
-					res.append("within(E,rightHolder(O," + declaration.attributes.get(i).param.name + ")),")
-				}
-				res.append("holds_at(" + declaration.attributes.get(i).attr + "(E," + declaration.attributes.get(i).param.name + "),T)")	
-				if (i < declaration.attributes.length - 1) {
-					res.append(",")
-				}
-			}
-			res.append(".\n")
-		}
-		
-		// think about how objects will work with this
 	}
-	
 	/**
 	 * Generates prolog code for a regular domain concept
 	 */

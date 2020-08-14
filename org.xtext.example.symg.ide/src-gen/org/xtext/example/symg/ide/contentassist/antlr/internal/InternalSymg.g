@@ -7305,13 +7305,9 @@ rule__DeclarPair__ParamAssignment_2
 	}
 :
 	(
-		{ before(grammarAccess.getDeclarPairAccess().getParamParameterCrossReference_2_0()); }
-		(
-			{ before(grammarAccess.getDeclarPairAccess().getParamParameterIDTerminalRuleCall_2_0_1()); }
-			RULE_ID
-			{ after(grammarAccess.getDeclarPairAccess().getParamParameterIDTerminalRuleCall_2_0_1()); }
-		)
-		{ after(grammarAccess.getDeclarPairAccess().getParamParameterCrossReference_2_0()); }
+		{ before(grammarAccess.getDeclarPairAccess().getParamIDTerminalRuleCall_2_0()); }
+		RULE_ID
+		{ after(grammarAccess.getDeclarPairAccess().getParamIDTerminalRuleCall_2_0()); }
 	)
 ;
 finally {

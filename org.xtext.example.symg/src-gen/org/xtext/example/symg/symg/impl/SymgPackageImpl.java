@@ -761,9 +761,9 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
    * @generated
    */
   @Override
-  public EReference getDeclarPair_Param()
+  public EAttribute getDeclarPair_Param()
   {
-    return (EReference)declarPairEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)declarPairEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1803,7 +1803,7 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
 
     declarPairEClass = createEClass(DECLAR_PAIR);
     createEAttribute(declarPairEClass, DECLAR_PAIR__ATTR);
-    createEReference(declarPairEClass, DECLAR_PAIR__PARAM);
+    createEAttribute(declarPairEClass, DECLAR_PAIR__PARAM);
 
     declarEClass = createEClass(DECLAR);
     createEAttribute(declarEClass, DECLAR__NAME);
@@ -2000,7 +2000,7 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
 
     initEClass(declarPairEClass, DeclarPair.class, "DeclarPair", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDeclarPair_Attr(), ecorePackage.getEString(), "attr", null, 0, 1, DeclarPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDeclarPair_Param(), this.getParameter(), null, "param", null, 0, 1, DeclarPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDeclarPair_Param(), ecorePackage.getEString(), "param", null, 0, 1, DeclarPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(declarEClass, Declar.class, "Declar", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDeclar_Name(), ecorePackage.getEString(), "name", null, 0, 1, Declar.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -207,7 +207,7 @@ public class SymgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     DeclarPair returns DeclarPair
 	 *
 	 * Constraint:
-	 *     (attr=ID param=[Parameter|ID])
+	 *     (attr=ID param=ID)
 	 */
 	protected void sequence_DeclarPair(ISerializationContext context, DeclarPair semanticObject) {
 		if (errorAcceptor != null) {
@@ -218,7 +218,7 @@ public class SymgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getDeclarPairAccess().getAttrIDTerminalRuleCall_0_0(), semanticObject.getAttr());
-		feeder.accept(grammarAccess.getDeclarPairAccess().getParamParameterIDTerminalRuleCall_2_0_1(), semanticObject.eGet(SymgPackage.Literals.DECLAR_PAIR__PARAM, false));
+		feeder.accept(grammarAccess.getDeclarPairAccess().getParamIDTerminalRuleCall_2_0(), semanticObject.getParam());
 		feeder.finish();
 	}
 	

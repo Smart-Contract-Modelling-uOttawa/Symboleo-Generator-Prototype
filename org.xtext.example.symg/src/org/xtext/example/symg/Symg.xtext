@@ -61,10 +61,9 @@ TypeName:
 	DomainType | BasicType
 ;
 
-// test two
-// can't have param be declar right now because multiple derivation trees
+// gonna use param=ID for now
 DeclarPair:
-	attr=ID ':=' param=[Parameter]
+	attr=ID ':=' param=ID
 ;
 
 Declar:

@@ -530,7 +530,7 @@ public interface SymgPackage extends EPackage
   int DECLAR_PAIR__ATTR = 0;
 
   /**
-   * The feature id for the '<em><b>Param</b></em>' reference.
+   * The feature id for the '<em><b>Param</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1926,15 +1926,15 @@ public interface SymgPackage extends EPackage
   EAttribute getDeclarPair_Attr();
 
   /**
-   * Returns the meta object for the reference '{@link org.xtext.example.symg.symg.DeclarPair#getParam <em>Param</em>}'.
+   * Returns the meta object for the attribute '{@link org.xtext.example.symg.symg.DeclarPair#getParam <em>Param</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Param</em>'.
+   * @return the meta object for the attribute '<em>Param</em>'.
    * @see org.xtext.example.symg.symg.DeclarPair#getParam()
    * @see #getDeclarPair()
    * @generated
    */
-  EReference getDeclarPair_Param();
+  EAttribute getDeclarPair_Param();
 
   /**
    * Returns the meta object for class '{@link org.xtext.example.symg.symg.Declar <em>Declar</em>}'.
@@ -3219,12 +3219,12 @@ public interface SymgPackage extends EPackage
     EAttribute DECLAR_PAIR__ATTR = eINSTANCE.getDeclarPair_Attr();
 
     /**
-     * The meta object literal for the '<em><b>Param</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Param</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference DECLAR_PAIR__PARAM = eINSTANCE.getDeclarPair_Param();
+    EAttribute DECLAR_PAIR__PARAM = eINSTANCE.getDeclarPair_Param();
 
     /**
      * The meta object literal for the '{@link org.xtext.example.symg.symg.impl.DeclarImpl <em>Declar</em>}' class.

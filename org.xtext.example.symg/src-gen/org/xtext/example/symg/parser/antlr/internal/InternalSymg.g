@@ -1119,14 +1119,19 @@ ruleDeclarPair returns [EObject current=null]
 		}
 		(
 			(
+				lv_param_2_0=RULE_ID
+				{
+					newLeafNode(lv_param_2_0, grammarAccess.getDeclarPairAccess().getParamIDTerminalRuleCall_2_0());
+				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getDeclarPairRule());
 					}
-				}
-				otherlv_2=RULE_ID
-				{
-					newLeafNode(otherlv_2, grammarAccess.getDeclarPairAccess().getParamParameterCrossReference_2_0());
+					setWithLastConsumed(
+						$current,
+						"param",
+						lv_param_2_0,
+						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
 		)

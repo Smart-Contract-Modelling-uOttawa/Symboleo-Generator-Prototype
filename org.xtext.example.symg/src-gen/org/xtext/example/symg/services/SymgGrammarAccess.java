@@ -653,15 +653,14 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final RuleCall cAttrIDTerminalRuleCall_0_0 = (RuleCall)cAttrAssignment_0.eContents().get(0);
 		private final Keyword cColonEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cParamAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final CrossReference cParamParameterCrossReference_2_0 = (CrossReference)cParamAssignment_2.eContents().get(0);
-		private final RuleCall cParamParameterIDTerminalRuleCall_2_0_1 = (RuleCall)cParamParameterCrossReference_2_0.eContents().get(1);
+		private final RuleCall cParamIDTerminalRuleCall_2_0 = (RuleCall)cParamAssignment_2.eContents().get(0);
 		
-		//// can't have param be declar right now because multiple derivation trees
+		//// gonna use param=ID for now
 		//DeclarPair:
-		//	attr=ID ':=' param=[Parameter];
+		//	attr=ID ':=' param=ID;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//attr=ID ':=' param=[Parameter]
+		//attr=ID ':=' param=ID
 		public Group getGroup() { return cGroup; }
 		
 		//attr=ID
@@ -673,14 +672,11 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//':='
 		public Keyword getColonEqualsSignKeyword_1() { return cColonEqualsSignKeyword_1; }
 		
-		//param=[Parameter]
+		//param=ID
 		public Assignment getParamAssignment_2() { return cParamAssignment_2; }
 		
-		//[Parameter]
-		public CrossReference getParamParameterCrossReference_2_0() { return cParamParameterCrossReference_2_0; }
-		
 		//ID
-		public RuleCall getParamParameterIDTerminalRuleCall_2_0_1() { return cParamParameterIDTerminalRuleCall_2_0_1; }
+		public RuleCall getParamIDTerminalRuleCall_2_0() { return cParamIDTerminalRuleCall_2_0; }
 	}
 	public class DeclarElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.symg.Symg.Declar");
@@ -2330,9 +2326,9 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		return getTypeNameAccess().getRule();
 	}
 	
-	//// can't have param be declar right now because multiple derivation trees
+	//// gonna use param=ID for now
 	//DeclarPair:
-	//	attr=ID ':=' param=[Parameter];
+	//	attr=ID ':=' param=ID;
 	public DeclarPairElements getDeclarPairAccess() {
 		return pDeclarPair;
 	}

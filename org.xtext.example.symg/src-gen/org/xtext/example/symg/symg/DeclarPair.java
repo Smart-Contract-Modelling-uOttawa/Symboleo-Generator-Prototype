@@ -47,25 +47,25 @@ public interface DeclarPair extends EObject
   void setAttr(String value);
 
   /**
-   * Returns the value of the '<em><b>Param</b></em>' reference.
+   * Returns the value of the '<em><b>Param</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Param</em>' reference.
-   * @see #setParam(Parameter)
+   * @return the value of the '<em>Param</em>' attribute.
+   * @see #setParam(String)
    * @see org.xtext.example.symg.symg.SymgPackage#getDeclarPair_Param()
    * @model
    * @generated
    */
-  Parameter getParam();
+  String getParam();
 
   /**
-   * Sets the value of the '{@link org.xtext.example.symg.symg.DeclarPair#getParam <em>Param</em>}' reference.
+   * Sets the value of the '{@link org.xtext.example.symg.symg.DeclarPair#getParam <em>Param</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Param</em>' reference.
+   * @param value the new value of the '<em>Param</em>' attribute.
    * @see #getParam()
    * @generated
    */
-  void setParam(Parameter value);
+  void setParam(String value);
 
 } // DeclarPair

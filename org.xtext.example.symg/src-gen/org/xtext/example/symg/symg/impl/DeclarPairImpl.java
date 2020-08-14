@@ -6,13 +6,11 @@ package org.xtext.example.symg.symg.impl;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.xtext.example.symg.symg.DeclarPair;
-import org.xtext.example.symg.symg.Parameter;
 import org.xtext.example.symg.symg.SymgPackage;
 
 /**
@@ -52,14 +50,24 @@ public class DeclarPairImpl extends MinimalEObjectImpl.Container implements Decl
   protected String attr = ATTR_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getParam() <em>Param</em>}' reference.
+   * The default value of the '{@link #getParam() <em>Param</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getParam()
    * @generated
    * @ordered
    */
-  protected Parameter param;
+  protected static final String PARAM_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getParam() <em>Param</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getParam()
+   * @generated
+   * @ordered
+   */
+  protected String param = PARAM_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -113,27 +121,7 @@ public class DeclarPairImpl extends MinimalEObjectImpl.Container implements Decl
    * @generated
    */
   @Override
-  public Parameter getParam()
-  {
-    if (param != null && param.eIsProxy())
-    {
-      InternalEObject oldParam = (InternalEObject)param;
-      param = (Parameter)eResolveProxy(oldParam);
-      if (param != oldParam)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SymgPackage.DECLAR_PAIR__PARAM, oldParam, param));
-      }
-    }
-    return param;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Parameter basicGetParam()
+  public String getParam()
   {
     return param;
   }
@@ -144,9 +132,9 @@ public class DeclarPairImpl extends MinimalEObjectImpl.Container implements Decl
    * @generated
    */
   @Override
-  public void setParam(Parameter newParam)
+  public void setParam(String newParam)
   {
-    Parameter oldParam = param;
+    String oldParam = param;
     param = newParam;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SymgPackage.DECLAR_PAIR__PARAM, oldParam, param));
@@ -165,8 +153,7 @@ public class DeclarPairImpl extends MinimalEObjectImpl.Container implements Decl
       case SymgPackage.DECLAR_PAIR__ATTR:
         return getAttr();
       case SymgPackage.DECLAR_PAIR__PARAM:
-        if (resolve) return getParam();
-        return basicGetParam();
+        return getParam();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -185,7 +172,7 @@ public class DeclarPairImpl extends MinimalEObjectImpl.Container implements Decl
         setAttr((String)newValue);
         return;
       case SymgPackage.DECLAR_PAIR__PARAM:
-        setParam((Parameter)newValue);
+        setParam((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -205,7 +192,7 @@ public class DeclarPairImpl extends MinimalEObjectImpl.Container implements Decl
         setAttr(ATTR_EDEFAULT);
         return;
       case SymgPackage.DECLAR_PAIR__PARAM:
-        setParam((Parameter)null);
+        setParam(PARAM_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -224,7 +211,7 @@ public class DeclarPairImpl extends MinimalEObjectImpl.Container implements Decl
       case SymgPackage.DECLAR_PAIR__ATTR:
         return ATTR_EDEFAULT == null ? attr != null : !ATTR_EDEFAULT.equals(attr);
       case SymgPackage.DECLAR_PAIR__PARAM:
-        return param != null;
+        return PARAM_EDEFAULT == null ? param != null : !PARAM_EDEFAULT.equals(param);
     }
     return super.eIsSet(featureID);
   }
@@ -242,6 +229,8 @@ public class DeclarPairImpl extends MinimalEObjectImpl.Container implements Decl
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (attr: ");
     result.append(attr);
+    result.append(", param: ");
+    result.append(param);
     result.append(')');
     return result.toString();
   }
