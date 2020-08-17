@@ -49,8 +49,8 @@ class SymgGenerator extends AbstractGenerator {
 		var dates = new HashSet<String>()
 		var roles = new HashSet<String>()
 		var assets = new HashSet<String>()
-		var totParams = 0
-		var p = 1
+		var underscoreAfter = 0
+		var underscoreBefore = 0
 		
 		// compiling domain
 		res.append("## Domain\n")
@@ -72,7 +72,7 @@ class SymgGenerator extends AbstractGenerator {
 					dates.add(param.name)
 				}
 				
-				totParams += 1
+				underscoreAfter += 1
 			}
 		}
 		
@@ -89,7 +89,7 @@ class SymgGenerator extends AbstractGenerator {
 			
 			if (parentType.equals('ASSET')) {
 				assets.add(declaration.name)
-				totParams += 1
+				underscoreAfter += 1
 			}
 			if (parentType.equals('EVENT')) {
 				// keeps track of all declarations that are events
@@ -120,66 +120,37 @@ class SymgGenerator extends AbstractGenerator {
 		}
 		
 		// I'm guessing length of contract = #roles + #dates + #assets + 1
-		
-		res.append("\nc(X)\t:-\tinitially(" + model.contractName + "(X")
-		for (i : 0..< totParams) {
-			res.append(",_")
-		}
-		res.append(")).\n\n")
-		totParams -= 1
+		res.append("\n")
+		res.append("c(X)\t:-\t")
+		contractUnderscoreHelper(model.contractName, underscoreBefore, underscoreAfter, res)
+		res.append("\n")
+		underscoreAfter -= 1
+		underscoreBefore += 1
 		
 		for (role : roles) {
 			res.append("initially(bind(" + role + ",X))\t:-\t")
-			res.append("initially(" + model.contractName + "(")
-			for (i : 0..< p) {
-				res.append("_,")
-			}
-			res.append("X")
-			for (i : 0..< totParams) {
-				res.append(",_")
-			}
-			res.append(")).\n")
-			totParams -= 1
-			p += 1
+			contractUnderscoreHelper(model.contractName, underscoreBefore, underscoreAfter, res)
+			underscoreAfter -= 1
+			underscoreBefore += 1
 		}
 		
 		for (date : dates) {
 			res.append(date + "(X)\t:-\t")
-			res.append("initially(" + model.contractName + "(")
-			for (i : 0..< p) {
-				res.append("_,")
-			}
-			res.append("X")
-			for (i : 0..< totParams) {
-				res.append(",_")
-			}
-			res.append(")).\n")
-			totParams -= 1
-			p += 1
+			contractUnderscoreHelper(model.contractName, underscoreBefore, underscoreAfter, res)
+			underscoreAfter -= 1
+			underscoreBefore += 1
 		}
 		
 		for (asset : assets) {
 			res.append(asset + "(X)")
-			res.append("initially(" + model.contractName + "(")
-			for (i : 0..< p) {
-				res.append("_,")
-			}
-			res.append("X")
-			for (i : 0..< totParams) {
-				res.append(",_")
-			}
-			res.append(")).\n")
-			totParams -= 1
-			p += 1
+			contractUnderscoreHelper(model.contractName, underscoreBefore, underscoreAfter, res)
+			underscoreAfter -= 1
+			underscoreBefore += 1
 		}
 		
 		res.append("\n\n## Contract\n")
 		res.append("initially(form(X))\t:-\t")
-		res.append("initially(" + model.contractName + "(X")
-		for (i : 0..< p-1) {
-			res.append(",_")
-		}
-		res.append(")).\n")
+		contractUnderscoreHelper(model.contractName, underscoreBefore, underscoreAfter-1, res)
 		
 		res.append("\n## Obligations\n")
 		// compiling obligations
@@ -200,6 +171,21 @@ class SymgGenerator extends AbstractGenerator {
 		}
 		
 		return res.toString
+	}
+	
+	/**
+	 * Writes the underscores for assets/roles/dates in contract binding
+	 */
+	def contractUnderscoreHelper(String contractName, int before, int after, StringBuilder res) {
+		res.append("initially(" + contractName + "(")
+		for (i : 0..< before) {
+			res.append("_,")
+		}
+		res.append("X")
+		for (i : 0..< after) {
+			res.append(",_")
+		}
+		res.append(")).\n")
 	}
 	
 	/**
