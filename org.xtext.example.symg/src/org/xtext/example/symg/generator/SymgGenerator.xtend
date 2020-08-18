@@ -271,38 +271,40 @@ class SymgGenerator extends AbstractGenerator {
 		res.append("\n## Powers\n")
 		// compiling powers
 		for(i : 0..< model.powers.length) {
-			model.powers.get(i).compilePowers(i+1, res)
+			model.powers.get(i).compilePowers(i+1, res, declNames)
 		}
 		
 		res.append("\n## Surviving Obligations\n")
 		// compiling surviving obligations
 		for (i : 0..< model.sobligations.length) {
-			model.sobligations.get(i).compileSObligations(i+1, res)
+			model.sobligations.get(i).compileSObligations(i+1, res, declNames)
 		}
 		
 		return res.toString
 	}
 	
-	def compileSObligations(Obligation obl, int i, StringBuilder res) {
+	def compileSObligations(Obligation obl, int i, StringBuilder res, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
 		res.append("SO(X)\t:-\tSO" + i + "(X).\n")
 		res.append("SO" + i + "(" + obl.name + ").\n")
 		res.append("associate(" + obl.name + ",cArgToCan).\n\n")
 		res.append("initially(debtor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n")
 		res.append("initially(creditor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n\n")
-//		obl.antecedent.compileAntecedent(obl.name, res)
-//		obl.trigger.compileTrigger(obl.name, res)
-//		obl.consequent.compileOConsequent(obl.name, res)
+		obl.antecedent.compileAntecedent(obl.name, res, declNames)
+		obl.trigger.compileTrigger(obl.name, res, declNames)
+		obl.consequent.compileOConsequent(obl.name, res, declNames)
 		res.append("\n\n")
 	}
 	
-	def compilePowers(Power power, int i, StringBuilder res) {
+	def compilePowers(Power power, int i, StringBuilder res, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
+		// this is probably just wrong (I do not think powers are handled the same as obligations)
 		res.append("P(X)\t:-\tP" + i + "(X).\n")
 		res.append("P" + i + "(" + power.name + ").\n")
 		res.append("associate(" + power.name + ",cArgToCan).\n\n")
 		res.append("initially(debtor(X,P))\t:-\tP" + i + "(X),initially(bind(" + power.role1 + ",P)).\n")
 		res.append("initially(creditor(X,P))\t:-\tP" + i + "(X),initially(bind(" + power.role1 + ",P)).\n\n")
-//		power.antecedent.compileAntecedent(power.name, res)
-//		power.trigger.compileTrigger(power.name, res)
+		power.antecedent.compileAntecedent(power.name, res, declNames)
+		power.trigger.compileTrigger(power.name, res, declNames)
+		power.consequent.compileOConsequent(power.name, res, declNames)
 	}
 	
 	/**
