@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.xtext.example.symg.symg.Declar;
 import org.xtext.example.symg.symg.EventProp;
 import org.xtext.example.symg.symg.Point;
 import org.xtext.example.symg.symg.SymgPackage;
@@ -39,24 +40,14 @@ import org.xtext.example.symg.symg.pEvent;
 public class EventPropImpl extends MinimalEObjectImpl.Container implements EventProp
 {
   /**
-   * The default value of the '{@link #getEventName() <em>Event Name</em>}' attribute.
+   * The cached value of the '{@link #getEventName() <em>Event Name</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getEventName()
    * @generated
    * @ordered
    */
-  protected static final String EVENT_NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getEventName() <em>Event Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEventName()
-   * @generated
-   * @ordered
-   */
-  protected String eventName = EVENT_NAME_EDEFAULT;
+  protected Declar eventName;
 
   /**
    * The cached value of the '{@link #getOEventName() <em>OEvent Name</em>}' containment reference.
@@ -125,7 +116,27 @@ public class EventPropImpl extends MinimalEObjectImpl.Container implements Event
    * @generated
    */
   @Override
-  public String getEventName()
+  public Declar getEventName()
+  {
+    if (eventName != null && eventName.eIsProxy())
+    {
+      InternalEObject oldEventName = (InternalEObject)eventName;
+      eventName = (Declar)eResolveProxy(oldEventName);
+      if (eventName != oldEventName)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SymgPackage.EVENT_PROP__EVENT_NAME, oldEventName, eventName));
+      }
+    }
+    return eventName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Declar basicGetEventName()
   {
     return eventName;
   }
@@ -136,9 +147,9 @@ public class EventPropImpl extends MinimalEObjectImpl.Container implements Event
    * @generated
    */
   @Override
-  public void setEventName(String newEventName)
+  public void setEventName(Declar newEventName)
   {
-    String oldEventName = eventName;
+    Declar oldEventName = eventName;
     eventName = newEventName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SymgPackage.EVENT_PROP__EVENT_NAME, oldEventName, eventName));
@@ -377,7 +388,8 @@ public class EventPropImpl extends MinimalEObjectImpl.Container implements Event
     switch (featureID)
     {
       case SymgPackage.EVENT_PROP__EVENT_NAME:
-        return getEventName();
+        if (resolve) return getEventName();
+        return basicGetEventName();
       case SymgPackage.EVENT_PROP__OEVENT_NAME:
         return getOEventName();
       case SymgPackage.EVENT_PROP__CEVENT_NAME:
@@ -401,7 +413,7 @@ public class EventPropImpl extends MinimalEObjectImpl.Container implements Event
     switch (featureID)
     {
       case SymgPackage.EVENT_PROP__EVENT_NAME:
-        setEventName((String)newValue);
+        setEventName((Declar)newValue);
         return;
       case SymgPackage.EVENT_PROP__OEVENT_NAME:
         setOEventName((oEvent)newValue);
@@ -430,7 +442,7 @@ public class EventPropImpl extends MinimalEObjectImpl.Container implements Event
     switch (featureID)
     {
       case SymgPackage.EVENT_PROP__EVENT_NAME:
-        setEventName(EVENT_NAME_EDEFAULT);
+        setEventName((Declar)null);
         return;
       case SymgPackage.EVENT_PROP__OEVENT_NAME:
         setOEventName((oEvent)null);
@@ -459,7 +471,7 @@ public class EventPropImpl extends MinimalEObjectImpl.Container implements Event
     switch (featureID)
     {
       case SymgPackage.EVENT_PROP__EVENT_NAME:
-        return EVENT_NAME_EDEFAULT == null ? eventName != null : !EVENT_NAME_EDEFAULT.equals(eventName);
+        return eventName != null;
       case SymgPackage.EVENT_PROP__OEVENT_NAME:
         return oEventName != null;
       case SymgPackage.EVENT_PROP__CEVENT_NAME:
@@ -470,23 +482,6 @@ public class EventPropImpl extends MinimalEObjectImpl.Container implements Event
         return point != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (eventName: ");
-    result.append(eventName);
-    result.append(')');
-    return result.toString();
   }
 
 } //EventPropImpl

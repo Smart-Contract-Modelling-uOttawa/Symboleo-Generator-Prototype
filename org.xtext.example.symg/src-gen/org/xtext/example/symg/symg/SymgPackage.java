@@ -971,7 +971,7 @@ public interface SymgPackage extends EPackage
   int EVENT_PROP = 21;
 
   /**
-   * The feature id for the '<em><b>Event Name</b></em>' attribute.
+   * The feature id for the '<em><b>Event Name</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -2346,15 +2346,15 @@ public interface SymgPackage extends EPackage
   EClass getEventProp();
 
   /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.symg.symg.EventProp#getEventName <em>Event Name</em>}'.
+   * Returns the meta object for the reference '{@link org.xtext.example.symg.symg.EventProp#getEventName <em>Event Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Event Name</em>'.
+   * @return the meta object for the reference '<em>Event Name</em>'.
    * @see org.xtext.example.symg.symg.EventProp#getEventName()
    * @see #getEventProp()
    * @generated
    */
-  EAttribute getEventProp_EventName();
+  EReference getEventProp_EventName();
 
   /**
    * Returns the meta object for the containment reference '{@link org.xtext.example.symg.symg.EventProp#getOEventName <em>OEvent Name</em>}'.
@@ -3549,12 +3549,12 @@ public interface SymgPackage extends EPackage
     EClass EVENT_PROP = eINSTANCE.getEventProp();
 
     /**
-     * The meta object literal for the '<em><b>Event Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Event Name</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute EVENT_PROP__EVENT_NAME = eINSTANCE.getEventProp_EventName();
+    EReference EVENT_PROP__EVENT_NAME = eINSTANCE.getEventProp_EventName();
 
     /**
      * The meta object literal for the '<em><b>OEvent Name</b></em>' containment reference feature.

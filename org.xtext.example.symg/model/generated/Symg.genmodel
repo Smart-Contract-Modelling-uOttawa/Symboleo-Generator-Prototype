@@ -101,7 +101,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//SitProp/interval"/>
     </genClasses>
     <genClasses ecoreClass="Symg.ecore#//EventProp">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//EventProp/eventName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Symg.ecore#//EventProp/eventName"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//EventProp/oEventName"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//EventProp/cEventName"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//EventProp/pEventName"/>

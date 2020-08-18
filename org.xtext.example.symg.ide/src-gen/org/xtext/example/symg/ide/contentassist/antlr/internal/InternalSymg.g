@@ -7831,9 +7831,13 @@ rule__EventProp__EventNameAssignment_0_0
 	}
 :
 	(
-		{ before(grammarAccess.getEventPropAccess().getEventNameIDTerminalRuleCall_0_0_0()); }
-		RULE_ID
-		{ after(grammarAccess.getEventPropAccess().getEventNameIDTerminalRuleCall_0_0_0()); }
+		{ before(grammarAccess.getEventPropAccess().getEventNameDeclarCrossReference_0_0_0()); }
+		(
+			{ before(grammarAccess.getEventPropAccess().getEventNameDeclarIDTerminalRuleCall_0_0_0_1()); }
+			RULE_ID
+			{ after(grammarAccess.getEventPropAccess().getEventNameDeclarIDTerminalRuleCall_0_0_0_1()); }
+		)
+		{ after(grammarAccess.getEventPropAccess().getEventNameDeclarCrossReference_0_0_0()); }
 	)
 ;
 finally {

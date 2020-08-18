@@ -40,7 +40,118 @@ import java.util.HashSet
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class SymgGenerator extends AbstractGenerator {
-
+	//-----------------------------------------------------------------------//
+	//-----------------------Domain Concept Generator------------------------//
+	//-----------------------------------------------------------------------//
+	
+	/**
+	 * Generates prolog code for a regular domain concept
+	 */
+	def dispatch compileDomainConcept(Regular domainConcept, StringBuilder res, HashMap<String, String> superTypes) {
+		domainConcept.conceptType.compileCType(domainConcept.name, res, superTypes)
+	}
+	
+	/**
+	 * compiles domain concept if its type is another domain concept
+	 */
+	def dispatch compileCType(DomainType dType, String dName, StringBuilder res, HashMap<String, String> superTypes) {
+		res.append(dType.superType.name + "(X)\t:-\t" + dName + "(X).\n")
+		superTypes.put(dName, dType.superType.name)
+	}
+	
+	/**
+	 * compiles domain concept if its type is a basic type
+	 */
+	def dispatch compileCType(BasicType bType, String dName, StringBuilder res, HashMap<String, String> superTypes) {
+		res.append(bType.name + "(" + dName + ").\n")
+		superTypes.put(dName, bType.name)
+	}
+	
+	/**
+	 * compiles domain concept if its type is an ontoctype
+	 */
+	def dispatch compileCType(OntoCType oType, String dName, StringBuilder res, HashMap<String, String> superTypes) {
+		if (oType.name.equals('ROLE')) {
+			res.append("ROLE(" + dName + ").\n")
+		}
+		else {
+			res.append(oType.name + "(X)\t:-\t" + dName + "(X).\n")
+		}
+		superTypes.put(dName, oType.name)
+	}
+	
+	/**
+	 * Generates prolog code for an enumeration domain concept
+	 */
+	def dispatch compileDomainConcept(Enumeration domainConcept, StringBuilder res, HashMap<String, String> superTypes) {
+		for (value : domainConcept.enumerationItems) {
+			res.append(domainConcept.name + "(" + value.name + ").\n")
+		}
+		res.append("\n")
+	}
+	
+	//-----------------------------------------------------------------------//
+	//-------------------------Declaration Generator-------------------------//
+	//-----------------------------------------------------------------------//
+	
+		/**
+	 * Writes the underscores for assets/roles/dates in contract binding
+	 */
+	def contractUnderscoreHelper(String contractName, int before, int after, StringBuilder res) {
+		res.append("initially(" + contractName + "(")
+		for (i : 0..< before) {
+			res.append("_,")
+		}
+		res.append("X")
+		for (i : 0..< after) {
+			res.append(",_")
+		}
+		res.append(")).\n")
+	}
+	
+	/**
+	 * Generates prolog code for declarations
+	 */
+	def compileDeclaration(String parent, String declName, StringBuilder res, HashMap<String,ArrayList<ArrayList<String>>> declNames, HashSet<String> dates) {
+		var i = 0
+		for (attr: declNames.get(declName)) {
+			val key = attr.get(0)
+			val value = attr.get(1)
+			
+			if (declNames.containsKey(value)) {
+				// the value of this attribute is a declaration
+				value.compileDeclarations(res, declNames, dates)
+			}
+			// if the value is date in the parameters, ignore it
+			if (!dates.contains(value)) {
+				res.append("holds_at(" + key + "(" + parent + "," + value + "),T)")	
+				if (i < declNames.get(declName).length - 1) {
+					res.append(",")
+				}
+			}
+			i += 1
+		}
+	}
+	
+	/**
+	 * Recursively generates prolog code for declaration attributes that are also declarations
+	 */
+	def compileDeclarations(String object, StringBuilder res, HashMap<String,ArrayList<ArrayList<String>>> declNames, HashSet<String> dates) {
+		for (attr: declNames.get(object)) {
+			val key = attr.get(0)
+			val value = attr.get(1)
+			
+			if (declNames.containsKey(value)) {
+				// the value of this attribute is a declaration
+				value.compileDeclarations(res, declNames, dates)
+			}
+			// if the value is date in the parameters, ignore it 
+			if (!dates.contains(value)) {
+				res.append("holds_at(" + key + "(" + object + "," + value + "),T),")	
+			}
+		}
+	}
+	
 	def compile(Model model) {
 		var res = new StringBuilder()
 		var superTypes = new HashMap<String, String>()
@@ -57,8 +168,7 @@ class SymgGenerator extends AbstractGenerator {
 		for (domainConcept : model.domainConcepts) {
 			domainConcept.compileDomainConcept(res, superTypes)
 		}
-		
-		res.append("\n## Declarations\n")		
+			
 		// count the number of contract parameters
 		for (param: model.parameters) {
 			var pType = param.type.checkParameterType(superTypes)
@@ -107,20 +217,9 @@ class SymgGenerator extends AbstractGenerator {
 			declNames.put(declaration.name, attrs)
 		}
 		
-		// check each obligation to see if a declaration appears in the consequent
-		
-		// compile declaration events
-		for (d : declNames.keySet) {
-			if (declEvents.contains(d)) {
-				res.append(d + "(E)\t:-\t")
-				res.append("happens(E,T),holds_at(type(E," + d + ")),")
-			}
-			"E".compileDeclaration(d, res, declNames)		
-			res.append(".\n")
-		}
-		
+		// initialize contract
 		// I'm guessing length of contract = #roles + #dates + #assets + 1
-		res.append("\n")
+		res.append("\n## Contract\n")	
 		res.append("c(X)\t:-\t")
 		contractUnderscoreHelper(model.contractName, underscoreBefore, underscoreAfter, res)
 		res.append("\n")
@@ -148,14 +247,25 @@ class SymgGenerator extends AbstractGenerator {
 			underscoreBefore += 1
 		}
 		
-		res.append("\n\n## Contract\n")
 		res.append("initially(form(X))\t:-\t")
-		contractUnderscoreHelper(model.contractName, underscoreBefore, underscoreAfter-1, res)
+		contractUnderscoreHelper(model.contractName, underscoreBefore-1, underscoreAfter, res)
+		
+		// initialize declarations
+		res.append("\n## Declarations\n")
+		// compile declaration events
+		for (d : declNames.keySet) {
+			if (declEvents.contains(d)) {
+				res.append(d + "(E)\t:-\t")
+				res.append("happens(E,T),holds_at(type(E," + d + ")),")
+				"E".compileDeclaration(d, res, declNames, dates)		
+				res.append(".\n")
+			}
+		}
 		
 		res.append("\n## Obligations\n")
 		// compiling obligations
 		for (i : 0 ..< model.obligations.length) {
-			model.obligations.get(i).compileObligations(i+1, res)
+			model.obligations.get(i).compileObligations(i+1, res, declNames)
 		}
 		
 		res.append("\n## Powers\n")
@@ -173,67 +283,15 @@ class SymgGenerator extends AbstractGenerator {
 		return res.toString
 	}
 	
-	/**
-	 * Writes the underscores for assets/roles/dates in contract binding
-	 */
-	def contractUnderscoreHelper(String contractName, int before, int after, StringBuilder res) {
-		res.append("initially(" + contractName + "(")
-		for (i : 0..< before) {
-			res.append("_,")
-		}
-		res.append("X")
-		for (i : 0..< after) {
-			res.append(",_")
-		}
-		res.append(")).\n")
-	}
-	
-	/**
-	 * Generates prolog code for declarations
-	 */
-	def compileDeclaration(String parent, String declName, StringBuilder res, HashMap<String,ArrayList<ArrayList<String>>> declNames) {
-		var i = 0
-		for (attr: declNames.get(declName)) {
-			val key = attr.get(0)
-			val value = attr.get(1)
-			
-			if (declNames.containsKey(value)) {
-				// the value of this attribute is a declaration
-				value.compileDeclarations(res, declNames)
-			}
-			res.append("holds_at(" + key + "(" + parent + "," + value + "),T)")
-			if (i < declNames.get(declName).length - 1) {
-				res.append(",")
-			}
-			i += 1
-		}
-	}
-	
-	/**
-	 * Recursively generates prolog code for declaration attributes that are also declarations
-	 */
-	def compileDeclarations(String object, StringBuilder res, HashMap<String,ArrayList<ArrayList<String>>> declNames) {
-		for (attr: declNames.get(object)) {
-			val key = attr.get(0)
-			val value = attr.get(1)
-			
-			if (declNames.containsKey(value)) {
-				// the value of this attribute is a declaration
-				value.compileDeclarations(res, declNames)
-			}
-			res.append("holds_at(" + key + "(" + object + "," + value + "),T),")
-		}
-	}
-	
 	def compileSObligations(Obligation obl, int i, StringBuilder res) {
 		res.append("SO(X)\t:-\tSO" + i + "(X).\n")
 		res.append("SO" + i + "(" + obl.name + ").\n")
 		res.append("associate(" + obl.name + ",cArgToCan).\n\n")
 		res.append("initially(debtor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n")
 		res.append("initially(creditor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n\n")
-		obl.antecedent.compileAntecedent(obl.name, res)
-		obl.trigger.compileTrigger(obl.name, res)
-		obl.consequent.compileOConsequent(obl.name, res)
+//		obl.antecedent.compileAntecedent(obl.name, res)
+//		obl.trigger.compileTrigger(obl.name, res)
+//		obl.consequent.compileOConsequent(obl.name, res)
 		res.append("\n\n")
 	}
 	
@@ -243,8 +301,8 @@ class SymgGenerator extends AbstractGenerator {
 		res.append("associate(" + power.name + ",cArgToCan).\n\n")
 		res.append("initially(debtor(X,P))\t:-\tP" + i + "(X),initially(bind(" + power.role1 + ",P)).\n")
 		res.append("initially(creditor(X,P))\t:-\tP" + i + "(X),initially(bind(" + power.role1 + ",P)).\n\n")
-		power.antecedent.compileAntecedent(power.name, res)
-		power.trigger.compileTrigger(power.name, res)
+//		power.antecedent.compileAntecedent(power.name, res)
+//		power.trigger.compileTrigger(power.name, res)
 	}
 	
 	/**
@@ -268,127 +326,110 @@ class SymgGenerator extends AbstractGenerator {
 	}
 	
 	/**
-	 * Generates prolog code for a regular domain concept
+	 * Generate prolog code for obligation
 	 */
-	def dispatch compileDomainConcept(Regular domainConcept, StringBuilder res, HashMap<String, String> superTypes) {
-		domainConcept.conceptType.compileCType(domainConcept.name, res, superTypes)
-	}
-	
-	/**
-	 * compiles domain concept if its type is another domain concept
-	 */
-	def dispatch compileCType(DomainType dType, String dName, StringBuilder res, HashMap<String, String> superTypes) {
-		res.append(dType.superType.name + "(X)\t:-\t" + dName + "(X).\n")
-		superTypes.put(dName, dType.superType.name)
-	}
-	
-	/**
-	 * compiles domain concept if its type is a basic type
-	 */
-	def dispatch compileCType(BasicType bType, String dName, StringBuilder res, HashMap<String, String> superTypes) {
-		res.append(bType.name + "(" + dName + ").\n")
-		superTypes.put(dName, bType.name)
-	}
-	
-	/**
-	 * compiles domain concept if its type is an ontoctype
-	 */
-	def dispatch compileCType(OntoCType oType, String dName, StringBuilder res, HashMap<String, String> superTypes) {
-		if (oType.name.equals('ROLE')) {
-			res.append("ROLE(" + dName + ").\n")
-		}
-		else {
-			res.append(oType.name + "(X)\t:-\t" + dName + "(X).\n")
-		}
-		superTypes.put(dName, oType.name)
-	}
-	
-	/**
-	 * Generates prolog code for an enumeration domain concept
-	 */
-	def dispatch compileDomainConcept(Enumeration domainConcept, StringBuilder res, HashMap<String, String> superTypes) {
-		for (value : domainConcept.enumerationItems) {
-			res.append(domainConcept.name + "(" + value.name + ").\n")
-		}
-		res.append("\n")
-	}
-	
-	def compileObligations(Obligation obl, int i, StringBuilder res) {
+	def compileObligations(Obligation obl, int i, StringBuilder res, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
 		res.append("O(X)\t:-\tO" + i + "(X).\n")
 		res.append("O" + i + "(" + obl.name + ").\n")
 		res.append("associate(" + obl.name + ",cArgToCan).\n\n")
 		res.append("initially(debtor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n")
 		res.append("initially(creditor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n\n")
-		obl.antecedent.compileAntecedent(obl.name, res)
-		obl.trigger.compileTrigger(obl.name, res)
-		obl.consequent.compileOConsequent(obl.name, res)
+		obl.antecedent.compileAntecedent(obl.name, res, declNames)
+		obl.trigger.compileTrigger(obl.name, res, declNames)
+		obl.consequent.compileOConsequent(obl.name, res, declNames)
 		res.append("\n\n")
 	}
 	
-	def compileAntecedent(Proposition prop, String oblName, StringBuilder res) {
+	/**
+	 * Helper function to generate code for antecedent
+	 */
+	def compileAntecedent(Proposition prop, String oblName, StringBuilder res, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
 		var ant = new StringBuilder()
 		
-		for (junction : prop.junctions) {
-			ant.append("ant(" + oblName + ")\t:-\t")
-			junction.obligationCompileAnds(ant, 0)
-			ant.append(".\n")
+		ant.append("ant(" + oblName + ")\t:-\t")
+		for (i : 0..< prop.junctions.length) {
+			ant.append("(")
+			prop.junctions.get(i).obligationCompileAnds(ant, 0, oblName, declNames)
+			ant.append(")")
+			if (i < prop.junctions.length - 1) {
+				ant.append(" ; ")
+			}
 		}
+		ant.append(".\n")
 		
 		res.append(ant.toString)
 	}
 	
-	def compileOConsequent(Proposition prop, String oblName, StringBuilder res) {
+	/**
+	 * Helper function to generate code for consequent
+	 */
+	def compileOConsequent(Proposition prop, String oblName, StringBuilder res, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
 		var cons = new StringBuilder()
 		
-		for (junction : prop.junctions) {
-			cons.append("initiates(E0, cons(" + oblName + "))\t:\t")
-			junction.obligationCompileAnds(cons, 0)
-			cons.append(".\n")
+		cons.append("initiates(E0, cons(" + oblName + "))\t:-\t")
+		// compile ors
+		for (i : 0..< prop.junctions.length) {
+			cons.append("(")
+			prop.junctions.get(i).obligationCompileAnds(cons, 0, oblName, declNames)
+			cons.append(")")
+			if (i < prop.junctions.length - 1) {
+				cons.append(" ; ")
+			}
 		}
+		cons.append(".\n")
 		
 		res.append(cons.toString)
 	}
 	
-	def compileTrigger(Proposition trigger, String oblName, StringBuilder res) {
+	def compileTrigger(Proposition trigger, String oblName, StringBuilder res, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
 		if (trigger == null) {
 			res.append("initiates(E0,trigger(" + oblName + "))\t:-\thappens(E0,_),initiates(E0,inEffect(cArgToCan)).\n")
 			return
 		}
 		
 		var trig = new StringBuilder()
-		
-		for (junction : trigger.junctions) {
-			trig.append("initiates(E0,trigger(" + oblName + "))\t:-\t")
-			junction.obligationCompileAnds(trig, 0)
-			trig.append(".\n")
+		trig.append("initiates(E0, trigger(" + oblName + "))\t:-\t")
+		for (i : 0..< trigger.junctions.length) {
+			trig.append("(")
+			trigger.junctions.get(i).obligationCompileAnds(trig, 0, oblName, declNames)
+			trig.append(")")
+			if (i < trigger.junctions.length - 1) {
+				trig.append(" ; ")
+			}
 		}
+		trig.append(".\n")
 		
 		res.append(trig.toString)
 	}
 	
-	def obligationCompileAnds(Junction junc, StringBuilder res, int d) {
-		var x = 0
-		for (atom : junc.negativeAtoms) {
-			atom.obligationCompileNegs(res, d)
-			if (x < junc.negativeAtoms.length - 1) {
+	/**
+	 * Helper function to generate code for ands in a proposition
+	 */
+	def obligationCompileAnds(Junction or, StringBuilder res, int d, String oblName, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
+		for (i : 0..< or.negativeAtoms.length) {
+			// compile ands
+			or.negativeAtoms.get(i).obligationCompileNegs(res, d, oblName, declNames)
+			if (i < or.negativeAtoms.length - 1) {
 				res.append(',')
-				x += 1	
 			}
 		}
 	}
 	
-	def obligationCompileNegs(Negation atom, StringBuilder res, int d) {
+	/**
+	 * Helper function to generate code for negative atoms
+	 */
+	def obligationCompileNegs(Negation atom, StringBuilder res, int d, String oblName, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
 		if (atom.negated) {
 			res.append("\\+(")
-			atom.atomicExpression.obligationCompileAtom(res, d)
+			atom.atomicExpression.obligationCompileAtom(res, d, oblName, declNames)
 			res.append(")")
 		}
 		else {
-			atom.atomicExpression.obligationCompileAtom(res, d)
+			atom.atomicExpression.obligationCompileAtom(res, d, oblName, declNames)
 		}
 	}
 	
-	def obligationCompileAtom(Atom atom, StringBuilder res, int d) {
+	def obligationCompileAtom(Atom atom, StringBuilder res, int d, String oblName, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
 		if (atom.bool == 'TRUE') {
 			res.append("TRUE")	
 		}
@@ -396,10 +437,10 @@ class SymgGenerator extends AbstractGenerator {
 			res.append("FALSE")
 		}
 		if (atom.eventProposition != null) {
-			atom.eventProposition.obligationCompileEventProp(res, d)
+			atom.eventProposition.obligationCompileEventProp(res, d, oblName)
 		}
 		if (atom.situationProposition != null) {
-			atom.situationProposition.obligationCompileSituationProp(res, d)
+			atom.situationProposition.obligationCompileSituationProp(res, d, oblName)
 		}
 		if (atom.point != null && atom.interval != null) {
 			atom.point.obligationCompileWithin(atom.interval, res, d)
@@ -412,16 +453,16 @@ class SymgGenerator extends AbstractGenerator {
 		interval.compileInterval(res, d+1)
 	}
 	
-	def obligationCompileEventProp(EventProp eProp, StringBuilder res, int d) {
+	def obligationCompileEventProp(EventProp eProp, StringBuilder res, int d, String oblName) {
 		// compile point
 		eProp.point.compilePoint(res, d)
 		res.append(",")
 		
 		// compile event
-		// happens(paid,UNNAMED_POINT)
-		// happens(E0,T0),paid(E0)
 		if (eProp.eventName != null) {
-			res.append(eProp.eventName + "(E" + d + ")")
+			// event is a declaration
+			res.append("within(E" + d + ",performer(E" + d + "," + oblName + ")),")
+			res.append(eProp.eventName.name + "(E" + d + ")")
 		}
 		else {
 			if (eProp.OEventName != null) {
@@ -436,7 +477,7 @@ class SymgGenerator extends AbstractGenerator {
 		}
 	}
 	
-	def obligationCompileSituationProp(SitProp sProp, StringBuilder res, int d) {
+	def obligationCompileSituationProp(SitProp sProp, StringBuilder res, int d, String oblName) {
 		//compile interval
 		sProp.interval.compileInterval(res, d)
 		res.append(",")
@@ -519,8 +560,6 @@ class SymgGenerator extends AbstractGenerator {
 	}
 	
 	def compileOEvent(oEvent event, StringBuilder res, int d) {
-		
-		res.append("initiates(E" + d + ",")
 		switch (event.oblEvent) {
 			case 'oTRIGGERED': res.append('trigger(' + event.oblName + ')')
 			case 'oACTIVATED': res.append('activate(' + event.oblName + ')')
@@ -532,12 +571,9 @@ class SymgGenerator extends AbstractGenerator {
 			case'oVIOLATED': res.append('violate(' + event.oblName + ')')
 			case 'oTERMINATED': res.append('terminate(' + event.oblName + ')')
 		}
-		res.append(")")
 	}
 	
 	def compileCEvent(cEvent event, StringBuilder res, int d) {
-				
-		res.append("initiates(E" + d + ",")
 		switch (event.contrEvent) {
 			case 'cACTIVATED': res.append('activate(' + event.contrName + ')')
 			case 'cSUSPENDED': res.append('suspend(' + event.contrName + ')')
@@ -547,12 +583,9 @@ class SymgGenerator extends AbstractGenerator {
 			case 'cASSIGNED_PARTY': res.append('assignParty(' + event.contrName + ')')
 			case 'cTERMINATED': res.append('terminate(' + event.contrName + ')')
 		}
-		res.append(")")
 	}
 	
 	def compilePEvent(pEvent event, StringBuilder res, int d) {
-
-		res.append("initiates(E" + d + ",")
 		switch (event.powEvent) {
 			case 'pTRIGGERED': res.append('trigger(' + event.powName + ')')
 			case 'pACTIVATED': res.append('activate(' + event.powName + ')')
@@ -562,7 +595,6 @@ class SymgGenerator extends AbstractGenerator {
 			case 'pEXPIRED': res.append('expire(' + event.powName + ')')
 			case 'pTERMINATED': res.append('terminate(' + event.powName + ')')
 		}
-		res.append(")")
 	}
 	
 	def compileInterval(Interval interval, StringBuilder res, int d) {

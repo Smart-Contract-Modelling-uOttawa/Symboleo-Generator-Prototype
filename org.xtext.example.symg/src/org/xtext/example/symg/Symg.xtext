@@ -106,7 +106,7 @@ SitProp:
 ;
 
 EventProp:
-	( eventName = ID
+	( eventName = [Declar]
 	| oEventName = oEvent
 	| cEventName = cEvent
 	| pEventName = pEvent) ',' point=Point

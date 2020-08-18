@@ -2048,19 +2048,14 @@ ruleEventProp returns [EObject current=null]
 		(
 			(
 				(
-					lv_eventName_0_0=RULE_ID
-					{
-						newLeafNode(lv_eventName_0_0, grammarAccess.getEventPropAccess().getEventNameIDTerminalRuleCall_0_0_0());
-					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getEventPropRule());
 						}
-						setWithLastConsumed(
-							$current,
-							"eventName",
-							lv_eventName_0_0,
-							"org.eclipse.xtext.common.Terminals.ID");
+					}
+					otherlv_0=RULE_ID
+					{
+						newLeafNode(otherlv_0, grammarAccess.getEventPropAccess().getEventNameDeclarCrossReference_0_0_0());
 					}
 				)
 			)

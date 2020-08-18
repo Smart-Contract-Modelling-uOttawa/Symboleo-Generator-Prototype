@@ -28,26 +28,26 @@ import org.eclipse.emf.ecore.EObject;
 public interface EventProp extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Event Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Event Name</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Event Name</em>' attribute.
-   * @see #setEventName(String)
+   * @return the value of the '<em>Event Name</em>' reference.
+   * @see #setEventName(Declar)
    * @see org.xtext.example.symg.symg.SymgPackage#getEventProp_EventName()
    * @model
    * @generated
    */
-  String getEventName();
+  Declar getEventName();
 
   /**
-   * Sets the value of the '{@link org.xtext.example.symg.symg.EventProp#getEventName <em>Event Name</em>}' attribute.
+   * Sets the value of the '{@link org.xtext.example.symg.symg.EventProp#getEventName <em>Event Name</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Event Name</em>' attribute.
+   * @param value the new value of the '<em>Event Name</em>' reference.
    * @see #getEventName()
    * @generated
    */
-  void setEventName(String value);
+  void setEventName(Declar value);
 
   /**
    * Returns the value of the '<em><b>OEvent Name</b></em>' containment reference.

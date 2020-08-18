@@ -1203,7 +1203,8 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
 		private final Assignment cEventNameAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
-		private final RuleCall cEventNameIDTerminalRuleCall_0_0_0 = (RuleCall)cEventNameAssignment_0_0.eContents().get(0);
+		private final CrossReference cEventNameDeclarCrossReference_0_0_0 = (CrossReference)cEventNameAssignment_0_0.eContents().get(0);
+		private final RuleCall cEventNameDeclarIDTerminalRuleCall_0_0_0_1 = (RuleCall)cEventNameDeclarCrossReference_0_0_0.eContents().get(1);
 		private final Assignment cOEventNameAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
 		private final RuleCall cOEventNameOEventParserRuleCall_0_1_0 = (RuleCall)cOEventNameAssignment_0_1.eContents().get(0);
 		private final Assignment cCEventNameAssignment_0_2 = (Assignment)cAlternatives_0.eContents().get(2);
@@ -1215,23 +1216,25 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final RuleCall cPointPointParserRuleCall_2_0 = (RuleCall)cPointAssignment_2.eContents().get(0);
 		
 		//EventProp:
-		//	(eventName=ID
-		//	| oEventName=oEvent
+		//	(eventName=[Declar] | oEventName=oEvent
 		//	| cEventName=cEvent
 		//	| pEventName=pEvent) ',' point=Point;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(eventName=ID | oEventName=oEvent | cEventName=cEvent | pEventName=pEvent) ',' point=Point
+		//(eventName=[Declar] | oEventName=oEvent | cEventName=cEvent | pEventName=pEvent) ',' point=Point
 		public Group getGroup() { return cGroup; }
 		
-		//(eventName=ID | oEventName=oEvent | cEventName=cEvent | pEventName=pEvent)
+		//(eventName=[Declar] | oEventName=oEvent | cEventName=cEvent | pEventName=pEvent)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
-		//eventName=ID
+		//eventName=[Declar]
 		public Assignment getEventNameAssignment_0_0() { return cEventNameAssignment_0_0; }
 		
+		//[Declar]
+		public CrossReference getEventNameDeclarCrossReference_0_0_0() { return cEventNameDeclarCrossReference_0_0_0; }
+		
 		//ID
-		public RuleCall getEventNameIDTerminalRuleCall_0_0_0() { return cEventNameIDTerminalRuleCall_0_0_0; }
+		public RuleCall getEventNameDeclarIDTerminalRuleCall_0_0_0_1() { return cEventNameDeclarIDTerminalRuleCall_0_0_0_1; }
 		
 		//oEventName=oEvent
 		public Assignment getOEventNameAssignment_0_1() { return cOEventNameAssignment_0_1; }
@@ -2427,8 +2430,7 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	}
 	
 	//EventProp:
-	//	(eventName=ID
-	//	| oEventName=oEvent
+	//	(eventName=[Declar] | oEventName=oEvent
 	//	| cEventName=cEvent
 	//	| pEventName=pEvent) ',' point=Point;
 	public EventPropElements getEventPropAccess() {

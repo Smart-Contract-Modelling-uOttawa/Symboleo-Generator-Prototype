@@ -1190,9 +1190,9 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
    * @generated
    */
   @Override
-  public EAttribute getEventProp_EventName()
+  public EReference getEventProp_EventName()
   {
-    return (EAttribute)eventPropEClass.getEStructuralFeatures().get(0);
+    return (EReference)eventPropEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1851,7 +1851,7 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
     createEReference(sitPropEClass, SIT_PROP__INTERVAL);
 
     eventPropEClass = createEClass(EVENT_PROP);
-    createEAttribute(eventPropEClass, EVENT_PROP__EVENT_NAME);
+    createEReference(eventPropEClass, EVENT_PROP__EVENT_NAME);
     createEReference(eventPropEClass, EVENT_PROP__OEVENT_NAME);
     createEReference(eventPropEClass, EVENT_PROP__CEVENT_NAME);
     createEReference(eventPropEClass, EVENT_PROP__PEVENT_NAME);
@@ -2048,7 +2048,7 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
     initEReference(getSitProp_Interval(), this.getInterval(), null, "interval", null, 0, 1, SitProp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(eventPropEClass, EventProp.class, "EventProp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getEventProp_EventName(), ecorePackage.getEString(), "eventName", null, 0, 1, EventProp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEventProp_EventName(), this.getDeclar(), null, "eventName", null, 0, 1, EventProp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEventProp_OEventName(), this.getoEvent(), null, "oEventName", null, 0, 1, EventProp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEventProp_CEventName(), this.getcEvent(), null, "cEventName", null, 0, 1, EventProp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEventProp_PEventName(), this.getpEvent(), null, "pEventName", null, 0, 1, EventProp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

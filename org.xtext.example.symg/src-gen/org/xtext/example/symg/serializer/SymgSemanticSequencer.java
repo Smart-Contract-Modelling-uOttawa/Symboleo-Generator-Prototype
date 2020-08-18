@@ -273,7 +273,7 @@ public class SymgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     EventProp returns EventProp
 	 *
 	 * Constraint:
-	 *     ((eventName=ID | oEventName=oEvent | cEventName=cEvent | pEventName=pEvent) point=Point)
+	 *     ((eventName=[Declar|ID] | oEventName=oEvent | cEventName=cEvent | pEventName=pEvent) point=Point)
 	 */
 	protected void sequence_EventProp(ISerializationContext context, EventProp semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
