@@ -33,6 +33,7 @@ import org.xtext.example.symg.symg.BasicType
 import org.xtext.example.symg.symg.OntoCType
 import java.util.ArrayList
 import java.util.HashSet
+import org.xtext.example.symg.generator.KeyValuePair;
 
 /**
  * Generates code from your model files on save.
@@ -112,19 +113,17 @@ class SymgGenerator extends AbstractGenerator {
 	/**
 	 * Generates prolog code for declarations
 	 */
-	def compileDeclaration(String parent, String declName, StringBuilder res, HashMap<String,ArrayList<ArrayList<String>>> declNames, HashSet<String> dates) {
+	def compileDeclaration(String parent, String declName, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declNames, HashSet<String> dates) {
 		var i = 0
 		for (attr: declNames.get(declName)) {
-			val key = attr.get(0)
-			val value = attr.get(1)
-			
-			if (declNames.containsKey(value)) {
+
+			if (declNames.containsKey(attr.value)) {
 				// the value of this attribute is a declaration
-				value.compileDeclarations(res, declNames, dates)
+				attr.value.compileDeclarations(res, declNames, dates)
 			}
 			// if the value is date in the parameters, ignore it
-			if (!dates.contains(value)) {
-				res.append("holds_at(" + key + "(" + parent + "," + value + "),T)")	
+			if (!dates.contains(attr.value)) {
+				res.append("holds_at(" + attr.key + "(" + parent + "," + attr.value + "),T)")	
 				if (i < declNames.get(declName).length - 1) {
 					res.append(",")
 				}
@@ -136,18 +135,16 @@ class SymgGenerator extends AbstractGenerator {
 	/**
 	 * Recursively generates prolog code for declaration attributes that are also declarations
 	 */
-	def compileDeclarations(String object, StringBuilder res, HashMap<String,ArrayList<ArrayList<String>>> declNames, HashSet<String> dates) {
+	def compileDeclarations(String object, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declNames, HashSet<String> dates) {
 		for (attr: declNames.get(object)) {
-			val key = attr.get(0)
-			val value = attr.get(1)
-			
-			if (declNames.containsKey(value)) {
+
+			if (declNames.containsKey(attr.value)) {
 				// the value of this attribute is a declaration
-				value.compileDeclarations(res, declNames, dates)
+				attr.value.compileDeclarations(res, declNames, dates)
 			}
 			// if the value is date in the parameters, ignore it 
-			if (!dates.contains(value)) {
-				res.append("holds_at(" + key + "(" + object + "," + value + "),T),")	
+			if (!dates.contains(attr.value)) {
+				res.append("holds_at(" + attr.key + "(" + object + "," + attr.value + "),T),")	
 			}
 		}
 	}
@@ -155,7 +152,7 @@ class SymgGenerator extends AbstractGenerator {
 	def compile(Model model) {
 		var res = new StringBuilder()
 		var superTypes = new HashMap<String, String>()
-		var declNames = new HashMap<String, ArrayList<ArrayList<String>>>()
+		var declNames = new HashMap<String, ArrayList<KeyValuePair>>()
 		var declEvents = new HashSet<String>()
 		var dates = new HashSet<String>()
 		var roles = new HashSet<String>()
@@ -191,7 +188,7 @@ class SymgGenerator extends AbstractGenerator {
 		// let's just consider that assets will always be formed in declarations from basic types
 		for (declaration : model.declarations) {
 			var parentType = declaration.type.name
-			var attrs = new ArrayList<ArrayList<String>>()
+			var attrs = new ArrayList<KeyValuePair>()
 			
 			while (superTypes.containsKey(parentType)) {
 				parentType = superTypes.get(parentType)
@@ -208,10 +205,7 @@ class SymgGenerator extends AbstractGenerator {
 			
 			// adding pair value pairs of each declaration attribute to arr list
 			for (attribute: declaration.attributes) {
-				var kvpair = new ArrayList<String>()
-				kvpair.add(attribute.attr)
-				kvpair.add(attribute.param)
-				attrs.add(kvpair)
+				attrs.add(new KeyValuePair(attribute.attr, attribute.param))
 			}
 			
 			declNames.put(declaration.name, attrs)
@@ -283,7 +277,7 @@ class SymgGenerator extends AbstractGenerator {
 		return res.toString
 	}
 	
-	def compileSObligations(Obligation obl, int i, StringBuilder res, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
+	def compileSObligations(Obligation obl, int i, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declNames) {
 		res.append("SO(X)\t:-\tSO" + i + "(X).\n")
 		res.append("SO" + i + "(" + obl.name + ").\n")
 		res.append("associate(" + obl.name + ",cArgToCan).\n\n")
@@ -295,7 +289,7 @@ class SymgGenerator extends AbstractGenerator {
 		res.append("\n\n")
 	}
 	
-	def compilePowers(Power power, int i, StringBuilder res, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
+	def compilePowers(Power power, int i, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declNames) {
 		// this is probably just wrong (I do not think powers are handled the same as obligations)
 		res.append("P(X)\t:-\tP" + i + "(X).\n")
 		res.append("P" + i + "(" + power.name + ").\n")
@@ -330,7 +324,7 @@ class SymgGenerator extends AbstractGenerator {
 	/**
 	 * Generate prolog code for obligation
 	 */
-	def compileObligations(Obligation obl, int i, StringBuilder res, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
+	def compileObligations(Obligation obl, int i, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declNames) {
 		res.append("O(X)\t:-\tO" + i + "(X).\n")
 		res.append("O" + i + "(" + obl.name + ").\n")
 		res.append("associate(" + obl.name + ",cArgToCan).\n\n")
@@ -345,7 +339,7 @@ class SymgGenerator extends AbstractGenerator {
 	/**
 	 * Helper function to generate code for antecedent
 	 */
-	def compileAntecedent(Proposition prop, String oblName, StringBuilder res, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
+	def compileAntecedent(Proposition prop, String oblName, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declNames) {
 		var ant = new StringBuilder()
 		
 		ant.append("ant(" + oblName + ")\t:-\t")
@@ -365,7 +359,7 @@ class SymgGenerator extends AbstractGenerator {
 	/**
 	 * Helper function to generate code for consequent
 	 */
-	def compileOConsequent(Proposition prop, String oblName, StringBuilder res, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
+	def compileOConsequent(Proposition prop, String oblName, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declNames) {
 		var cons = new StringBuilder()
 		
 		cons.append("initiates(E0, cons(" + oblName + "))\t:-\t")
@@ -383,7 +377,7 @@ class SymgGenerator extends AbstractGenerator {
 		res.append(cons.toString)
 	}
 	
-	def compileTrigger(Proposition trigger, String oblName, StringBuilder res, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
+	def compileTrigger(Proposition trigger, String oblName, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declNames) {
 		if (trigger == null) {
 			res.append("initiates(E0,trigger(" + oblName + "))\t:-\thappens(E0,_),initiates(E0,inEffect(cArgToCan)).\n")
 			return
@@ -407,7 +401,7 @@ class SymgGenerator extends AbstractGenerator {
 	/**
 	 * Helper function to generate code for ands in a proposition
 	 */
-	def obligationCompileAnds(Junction or, StringBuilder res, int d, String oblName, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
+	def obligationCompileAnds(Junction or, StringBuilder res, int d, String oblName, HashMap<String, ArrayList<KeyValuePair>> declNames) {
 		for (i : 0..< or.negativeAtoms.length) {
 			// compile ands
 			or.negativeAtoms.get(i).obligationCompileNegs(res, d, oblName, declNames)
@@ -420,7 +414,7 @@ class SymgGenerator extends AbstractGenerator {
 	/**
 	 * Helper function to generate code for negative atoms
 	 */
-	def obligationCompileNegs(Negation atom, StringBuilder res, int d, String oblName, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
+	def obligationCompileNegs(Negation atom, StringBuilder res, int d, String oblName, HashMap<String, ArrayList<KeyValuePair>> declNames) {
 		if (atom.negated) {
 			res.append("\\+(")
 			atom.atomicExpression.obligationCompileAtom(res, d, oblName, declNames)
@@ -431,7 +425,7 @@ class SymgGenerator extends AbstractGenerator {
 		}
 	}
 	
-	def obligationCompileAtom(Atom atom, StringBuilder res, int d, String oblName, HashMap<String, ArrayList<ArrayList<String>>> declNames) {
+	def obligationCompileAtom(Atom atom, StringBuilder res, int d, String oblName, HashMap<String, ArrayList<KeyValuePair>> declNames) {
 		if (atom.bool == 'TRUE') {
 			res.append("TRUE")	
 		}
@@ -511,7 +505,7 @@ class SymgGenerator extends AbstractGenerator {
 	
 	def compilePoint(Point point, StringBuilder res, int d) {
 		if (point.unnamed != null) {
-			res.append("happens(E" + d + ",T" + d + ")")
+			res.append("happens(E" + d + ",_)")
 		}
 		else {
 			if (point.tempOp != null) {
@@ -616,11 +610,9 @@ class SymgGenerator extends AbstractGenerator {
 					res.append(")")
 				}
 				else {
-					interval.start.compilePoint(res, d+1)
-					res.append(",")
-					interval.end.compilePoint(res, d+2)
-					res.append(",")
-					res.append("T" + (d+1) + "<=T" + d + "<=T" + (d+2))
+					// two time point interval
+					// assuming the points will for sure be situations
+					res.append("occurs(E" + d + "," + interval.start.eventName.sitName + "," + interval.end.eventName.sitName + ")")
 				}
 			}
 		}
