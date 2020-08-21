@@ -90,6 +90,7 @@ public class SymgParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAtomAccess().getGroup_0(), "rule__Atom__Group_0__0");
 			builder.put(grammarAccess.getAtomAccess().getGroup_1(), "rule__Atom__Group_1__0");
 			builder.put(grammarAccess.getAtomAccess().getGroup_2(), "rule__Atom__Group_2__0");
+			builder.put(grammarAccess.getAtomAccess().getGroup_3(), "rule__Atom__Group_3__0");
 			builder.put(grammarAccess.getSitPropAccess().getGroup(), "rule__SitProp__Group__0");
 			builder.put(grammarAccess.getEventPropAccess().getGroup(), "rule__EventProp__Group__0");
 			builder.put(grammarAccess.getIntervalAccess().getGroup_1(), "rule__Interval__Group_1__0");
@@ -156,10 +157,11 @@ public class SymgParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getNegationAccess().getAtomicExpressionAssignment_1(), "rule__Negation__AtomicExpressionAssignment_1");
 			builder.put(grammarAccess.getAtomAccess().getEventPropositionAssignment_0_2(), "rule__Atom__EventPropositionAssignment_0_2");
 			builder.put(grammarAccess.getAtomAccess().getSituationPropositionAssignment_1_2(), "rule__Atom__SituationPropositionAssignment_1_2");
-			builder.put(grammarAccess.getAtomAccess().getPointAssignment_2_0(), "rule__Atom__PointAssignment_2_0");
-			builder.put(grammarAccess.getAtomAccess().getIntervalAssignment_2_2(), "rule__Atom__IntervalAssignment_2_2");
-			builder.put(grammarAccess.getAtomAccess().getBoolAssignment_3(), "rule__Atom__BoolAssignment_3");
+			builder.put(grammarAccess.getAtomAccess().getInnerAssignment_2_1(), "rule__Atom__InnerAssignment_2_1");
+			builder.put(grammarAccess.getAtomAccess().getPointAssignment_3_0(), "rule__Atom__PointAssignment_3_0");
+			builder.put(grammarAccess.getAtomAccess().getIntervalAssignment_3_2(), "rule__Atom__IntervalAssignment_3_2");
 			builder.put(grammarAccess.getAtomAccess().getBoolAssignment_4(), "rule__Atom__BoolAssignment_4");
+			builder.put(grammarAccess.getAtomAccess().getBoolAssignment_5(), "rule__Atom__BoolAssignment_5");
 			builder.put(grammarAccess.getSitPropAccess().getSituationNameAssignment_0_0(), "rule__SitProp__SituationNameAssignment_0_0");
 			builder.put(grammarAccess.getSitPropAccess().getOSituationNameAssignment_0_1(), "rule__SitProp__OSituationNameAssignment_0_1");
 			builder.put(grammarAccess.getSitPropAccess().getCSituationNameAssignment_0_2(), "rule__SitProp__CSituationNameAssignment_0_2");
@@ -178,7 +180,7 @@ public class SymgParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getIntervalAccess().getTempOpAssignment_3_1(), "rule__Interval__TempOpAssignment_3_1");
 			builder.put(grammarAccess.getIntervalAccess().getIntConstAssignment_3_2(), "rule__Interval__IntConstAssignment_3_2");
 			builder.put(grammarAccess.getIntervalAccess().getUnitAssignment_3_3(), "rule__Interval__UnitAssignment_3_3");
-			builder.put(grammarAccess.getSitNameAccess().getSitNameAssignment_0(), "rule__SitName__SitNameAssignment_0");
+			builder.put(grammarAccess.getSitNameAccess().getDeclNameAssignment_0(), "rule__SitName__DeclNameAssignment_0");
 			builder.put(grammarAccess.getSitNameAccess().getOStateAssignment_1(), "rule__SitName__OStateAssignment_1");
 			builder.put(grammarAccess.getSitNameAccess().getPStateAssignment_2(), "rule__SitName__PStateAssignment_2");
 			builder.put(grammarAccess.getSitNameAccess().getCStateAssignment_3(), "rule__SitName__CStateAssignment_3");

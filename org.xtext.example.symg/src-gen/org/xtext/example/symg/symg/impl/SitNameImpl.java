@@ -29,7 +29,7 @@ import org.xtext.example.symg.symg.pState;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.xtext.example.symg.symg.impl.SitNameImpl#getSitName <em>Sit Name</em>}</li>
+ *   <li>{@link org.xtext.example.symg.symg.impl.SitNameImpl#getDeclName <em>Decl Name</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.impl.SitNameImpl#getOState <em>OState</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.impl.SitNameImpl#getPState <em>PState</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.impl.SitNameImpl#getCState <em>CState</em>}</li>
@@ -43,24 +43,24 @@ import org.xtext.example.symg.symg.pState;
 public class SitNameImpl extends MinimalEObjectImpl.Container implements SitName
 {
   /**
-   * The default value of the '{@link #getSitName() <em>Sit Name</em>}' attribute.
+   * The default value of the '{@link #getDeclName() <em>Decl Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSitName()
+   * @see #getDeclName()
    * @generated
    * @ordered
    */
-  protected static final String SIT_NAME_EDEFAULT = null;
+  protected static final String DECL_NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getSitName() <em>Sit Name</em>}' attribute.
+   * The cached value of the '{@link #getDeclName() <em>Decl Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSitName()
+   * @see #getDeclName()
    * @generated
    * @ordered
    */
-  protected String sitName = SIT_NAME_EDEFAULT;
+  protected String declName = DECL_NAME_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getOState() <em>OState</em>}' containment reference.
@@ -149,9 +149,9 @@ public class SitNameImpl extends MinimalEObjectImpl.Container implements SitName
    * @generated
    */
   @Override
-  public String getSitName()
+  public String getDeclName()
   {
-    return sitName;
+    return declName;
   }
 
   /**
@@ -160,12 +160,12 @@ public class SitNameImpl extends MinimalEObjectImpl.Container implements SitName
    * @generated
    */
   @Override
-  public void setSitName(String newSitName)
+  public void setDeclName(String newDeclName)
   {
-    String oldSitName = sitName;
-    sitName = newSitName;
+    String oldDeclName = declName;
+    declName = newDeclName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SymgPackage.SIT_NAME__SIT_NAME, oldSitName, sitName));
+      eNotify(new ENotificationImpl(this, Notification.SET, SymgPackage.SIT_NAME__DECL_NAME, oldDeclName, declName));
   }
 
   /**
@@ -504,8 +504,8 @@ public class SitNameImpl extends MinimalEObjectImpl.Container implements SitName
   {
     switch (featureID)
     {
-      case SymgPackage.SIT_NAME__SIT_NAME:
-        return getSitName();
+      case SymgPackage.SIT_NAME__DECL_NAME:
+        return getDeclName();
       case SymgPackage.SIT_NAME__OSTATE:
         return getOState();
       case SymgPackage.SIT_NAME__PSTATE:
@@ -532,8 +532,8 @@ public class SitNameImpl extends MinimalEObjectImpl.Container implements SitName
   {
     switch (featureID)
     {
-      case SymgPackage.SIT_NAME__SIT_NAME:
-        setSitName((String)newValue);
+      case SymgPackage.SIT_NAME__DECL_NAME:
+        setDeclName((String)newValue);
         return;
       case SymgPackage.SIT_NAME__OSTATE:
         setOState((oState)newValue);
@@ -567,8 +567,8 @@ public class SitNameImpl extends MinimalEObjectImpl.Container implements SitName
   {
     switch (featureID)
     {
-      case SymgPackage.SIT_NAME__SIT_NAME:
-        setSitName(SIT_NAME_EDEFAULT);
+      case SymgPackage.SIT_NAME__DECL_NAME:
+        setDeclName(DECL_NAME_EDEFAULT);
         return;
       case SymgPackage.SIT_NAME__OSTATE:
         setOState((oState)null);
@@ -602,8 +602,8 @@ public class SitNameImpl extends MinimalEObjectImpl.Container implements SitName
   {
     switch (featureID)
     {
-      case SymgPackage.SIT_NAME__SIT_NAME:
-        return SIT_NAME_EDEFAULT == null ? sitName != null : !SIT_NAME_EDEFAULT.equals(sitName);
+      case SymgPackage.SIT_NAME__DECL_NAME:
+        return DECL_NAME_EDEFAULT == null ? declName != null : !DECL_NAME_EDEFAULT.equals(declName);
       case SymgPackage.SIT_NAME__OSTATE:
         return oState != null;
       case SymgPackage.SIT_NAME__PSTATE:
@@ -631,8 +631,8 @@ public class SitNameImpl extends MinimalEObjectImpl.Container implements SitName
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (SitName: ");
-    result.append(sitName);
+    result.append(" (declName: ");
+    result.append(declName);
     result.append(')');
     return result.toString();
   }

@@ -1831,12 +1831,42 @@ ruleAtom returns [EObject current=null]
 		)
 		    |
 		(
+			otherlv_8='('
+			{
+				newLeafNode(otherlv_8, grammarAccess.getAtomAccess().getLeftParenthesisKeyword_2_0());
+			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getAtomAccess().getPointPointParserRuleCall_2_0_0());
+						newCompositeNode(grammarAccess.getAtomAccess().getInnerPropositionParserRuleCall_2_1_0());
 					}
-					lv_point_8_0=rulePoint
+					lv_inner_9_0=ruleProposition
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getAtomRule());
+						}
+						set(
+							$current,
+							"inner",
+							lv_inner_9_0,
+							"org.xtext.example.symg.Symg.Proposition");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			otherlv_10=')'
+			{
+				newLeafNode(otherlv_10, grammarAccess.getAtomAccess().getRightParenthesisKeyword_2_2());
+			}
+		)
+		    |
+		(
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getAtomAccess().getPointPointParserRuleCall_3_0_0());
+					}
+					lv_point_11_0=rulePoint
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getAtomRule());
@@ -1844,22 +1874,22 @@ ruleAtom returns [EObject current=null]
 						set(
 							$current,
 							"point",
-							lv_point_8_0,
+							lv_point_11_0,
 							"org.xtext.example.symg.Symg.Point");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-			otherlv_9='within'
+			otherlv_12='within'
 			{
-				newLeafNode(otherlv_9, grammarAccess.getAtomAccess().getWithinKeyword_2_1());
+				newLeafNode(otherlv_12, grammarAccess.getAtomAccess().getWithinKeyword_3_1());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getAtomAccess().getIntervalIntervalParserRuleCall_2_2_0());
+						newCompositeNode(grammarAccess.getAtomAccess().getIntervalIntervalParserRuleCall_3_2_0());
 					}
-					lv_interval_10_0=ruleInterval
+					lv_interval_13_0=ruleInterval
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getAtomRule());
@@ -1867,7 +1897,7 @@ ruleAtom returns [EObject current=null]
 						set(
 							$current,
 							"interval",
-							lv_interval_10_0,
+							lv_interval_13_0,
 							"org.xtext.example.symg.Symg.Interval");
 						afterParserOrEnumRuleCall();
 					}
@@ -1877,30 +1907,30 @@ ruleAtom returns [EObject current=null]
 		    |
 		(
 			(
-				lv_bool_11_0='TRUE'
+				lv_bool_14_0='TRUE'
 				{
-					newLeafNode(lv_bool_11_0, grammarAccess.getAtomAccess().getBoolTRUEKeyword_3_0());
+					newLeafNode(lv_bool_14_0, grammarAccess.getAtomAccess().getBoolTRUEKeyword_4_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getAtomRule());
 					}
-					setWithLastConsumed($current, "bool", lv_bool_11_0, "TRUE");
+					setWithLastConsumed($current, "bool", lv_bool_14_0, "TRUE");
 				}
 			)
 		)
 		    |
 		(
 			(
-				lv_bool_12_0='FALSE'
+				lv_bool_15_0='FALSE'
 				{
-					newLeafNode(lv_bool_12_0, grammarAccess.getAtomAccess().getBoolFALSEKeyword_4_0());
+					newLeafNode(lv_bool_15_0, grammarAccess.getAtomAccess().getBoolFALSEKeyword_5_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getAtomRule());
 					}
-					setWithLastConsumed($current, "bool", lv_bool_12_0, "FALSE");
+					setWithLastConsumed($current, "bool", lv_bool_15_0, "FALSE");
 				}
 			)
 		)
@@ -2349,9 +2379,9 @@ ruleSitName returns [EObject current=null]
 	(
 		(
 			(
-				lv_SitName_0_0=RULE_ID
+				lv_declName_0_0=RULE_ID
 				{
-					newLeafNode(lv_SitName_0_0, grammarAccess.getSitNameAccess().getSitNameIDTerminalRuleCall_0_0());
+					newLeafNode(lv_declName_0_0, grammarAccess.getSitNameAccess().getDeclNameIDTerminalRuleCall_0_0());
 				}
 				{
 					if ($current==null) {
@@ -2359,8 +2389,8 @@ ruleSitName returns [EObject current=null]
 					}
 					setWithLastConsumed(
 						$current,
-						"SitName",
-						lv_SitName_0_0,
+						"declName",
+						lv_declName_0_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)

@@ -1048,26 +1048,32 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final RuleCall cSituationPropositionSitPropParserRuleCall_1_2_0 = (RuleCall)cSituationPropositionAssignment_1_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Assignment cPointAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
-		private final RuleCall cPointPointParserRuleCall_2_0_0 = (RuleCall)cPointAssignment_2_0.eContents().get(0);
-		private final Keyword cWithinKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
-		private final Assignment cIntervalAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cIntervalIntervalParserRuleCall_2_2_0 = (RuleCall)cIntervalAssignment_2_2.eContents().get(0);
-		private final Assignment cBoolAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
-		private final Keyword cBoolTRUEKeyword_3_0 = (Keyword)cBoolAssignment_3.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cInnerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cInnerPropositionParserRuleCall_2_1_0 = (RuleCall)cInnerAssignment_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
+		private final Assignment cPointAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
+		private final RuleCall cPointPointParserRuleCall_3_0_0 = (RuleCall)cPointAssignment_3_0.eContents().get(0);
+		private final Keyword cWithinKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
+		private final Assignment cIntervalAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cIntervalIntervalParserRuleCall_3_2_0 = (RuleCall)cIntervalAssignment_3_2.eContents().get(0);
 		private final Assignment cBoolAssignment_4 = (Assignment)cAlternatives.eContents().get(4);
-		private final Keyword cBoolFALSEKeyword_4_0 = (Keyword)cBoolAssignment_4.eContents().get(0);
+		private final Keyword cBoolTRUEKeyword_4_0 = (Keyword)cBoolAssignment_4.eContents().get(0);
+		private final Assignment cBoolAssignment_5 = (Assignment)cAlternatives.eContents().get(5);
+		private final Keyword cBoolFALSEKeyword_5_0 = (Keyword)cBoolAssignment_5.eContents().get(0);
 		
 		//Atom:
 		//	'happens' '(' eventProposition=EventProp ')'
 		//	| 'occurs' '(' situationProposition=SitProp ')'
+		//	| '(' inner=Proposition ')'
 		//	| point=Point 'within' interval=Interval
 		//	| bool='TRUE'
 		//	| bool='FALSE';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'happens' '(' eventProposition=EventProp ')' | 'occurs' '(' situationProposition=SitProp ')' | point=Point 'within'
-		//interval=Interval | bool='TRUE' | bool='FALSE'
+		//'happens' '(' eventProposition=EventProp ')' | 'occurs' '(' situationProposition=SitProp ')' | '(' inner=Proposition ')'
+		//| point=Point 'within' interval=Interval | bool='TRUE' | bool='FALSE'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//'happens' '(' eventProposition=EventProp ')'
@@ -1106,35 +1112,50 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//')'
 		public Keyword getRightParenthesisKeyword_1_3() { return cRightParenthesisKeyword_1_3; }
 		
-		//point=Point 'within' interval=Interval
+		//'(' inner=Proposition ')'
 		public Group getGroup_2() { return cGroup_2; }
 		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+		
+		//inner=Proposition
+		public Assignment getInnerAssignment_2_1() { return cInnerAssignment_2_1; }
+		
+		//Proposition
+		public RuleCall getInnerPropositionParserRuleCall_2_1_0() { return cInnerPropositionParserRuleCall_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
+		
+		//point=Point 'within' interval=Interval
+		public Group getGroup_3() { return cGroup_3; }
+		
 		//point=Point
-		public Assignment getPointAssignment_2_0() { return cPointAssignment_2_0; }
+		public Assignment getPointAssignment_3_0() { return cPointAssignment_3_0; }
 		
 		//Point
-		public RuleCall getPointPointParserRuleCall_2_0_0() { return cPointPointParserRuleCall_2_0_0; }
+		public RuleCall getPointPointParserRuleCall_3_0_0() { return cPointPointParserRuleCall_3_0_0; }
 		
 		//'within'
-		public Keyword getWithinKeyword_2_1() { return cWithinKeyword_2_1; }
+		public Keyword getWithinKeyword_3_1() { return cWithinKeyword_3_1; }
 		
 		//interval=Interval
-		public Assignment getIntervalAssignment_2_2() { return cIntervalAssignment_2_2; }
+		public Assignment getIntervalAssignment_3_2() { return cIntervalAssignment_3_2; }
 		
 		//Interval
-		public RuleCall getIntervalIntervalParserRuleCall_2_2_0() { return cIntervalIntervalParserRuleCall_2_2_0; }
+		public RuleCall getIntervalIntervalParserRuleCall_3_2_0() { return cIntervalIntervalParserRuleCall_3_2_0; }
 		
 		//bool='TRUE'
-		public Assignment getBoolAssignment_3() { return cBoolAssignment_3; }
-		
-		//'TRUE'
-		public Keyword getBoolTRUEKeyword_3_0() { return cBoolTRUEKeyword_3_0; }
-		
-		//bool='FALSE'
 		public Assignment getBoolAssignment_4() { return cBoolAssignment_4; }
 		
+		//'TRUE'
+		public Keyword getBoolTRUEKeyword_4_0() { return cBoolTRUEKeyword_4_0; }
+		
+		//bool='FALSE'
+		public Assignment getBoolAssignment_5() { return cBoolAssignment_5; }
+		
 		//'FALSE'
-		public Keyword getBoolFALSEKeyword_4_0() { return cBoolFALSEKeyword_4_0; }
+		public Keyword getBoolFALSEKeyword_5_0() { return cBoolFALSEKeyword_5_0; }
 	}
 	public class SitPropElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.symg.Symg.SitProp");
@@ -1364,8 +1385,8 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	public class SitNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.symg.Symg.SitName");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cSitNameAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cSitNameIDTerminalRuleCall_0_0 = (RuleCall)cSitNameAssignment_0.eContents().get(0);
+		private final Assignment cDeclNameAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final RuleCall cDeclNameIDTerminalRuleCall_0_0 = (RuleCall)cDeclNameAssignment_0.eContents().get(0);
 		private final Assignment cOStateAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cOStateOStateParserRuleCall_1_0 = (RuleCall)cOStateAssignment_1.eContents().get(0);
 		private final Assignment cPStateAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
@@ -1380,18 +1401,18 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final RuleCall cPEventPEventParserRuleCall_6_0 = (RuleCall)cPEventAssignment_6.eContents().get(0);
 		
 		//SitName:
-		//	SitName=ID | oState=oState | pState=pState | cState=cState
+		//	declName=ID | oState=oState | pState=pState | cState=cState
 		//	| oEvent=oEvent | cEvent=cEvent | pEvent=pEvent;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//SitName=ID | oState=oState | pState=pState | cState=cState | oEvent=oEvent | cEvent=cEvent | pEvent=pEvent
+		//declName=ID | oState=oState | pState=pState | cState=cState | oEvent=oEvent | cEvent=cEvent | pEvent=pEvent
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//SitName=ID
-		public Assignment getSitNameAssignment_0() { return cSitNameAssignment_0; }
+		//declName=ID
+		public Assignment getDeclNameAssignment_0() { return cDeclNameAssignment_0; }
 		
 		//ID
-		public RuleCall getSitNameIDTerminalRuleCall_0_0() { return cSitNameIDTerminalRuleCall_0_0; }
+		public RuleCall getDeclNameIDTerminalRuleCall_0_0() { return cDeclNameIDTerminalRuleCall_0_0; }
 		
 		//oState=oState
 		public Assignment getOStateAssignment_1() { return cOStateAssignment_1; }
@@ -2405,6 +2426,7 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//Atom:
 	//	'happens' '(' eventProposition=EventProp ')'
 	//	| 'occurs' '(' situationProposition=SitProp ')'
+	//	| '(' inner=Proposition ')'
 	//	| point=Point 'within' interval=Interval
 	//	| bool='TRUE'
 	//	| bool='FALSE';
@@ -2454,7 +2476,7 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	}
 	
 	//SitName:
-	//	SitName=ID | oState=oState | pState=pState | cState=cState
+	//	declName=ID | oState=oState | pState=pState | cState=cState
 	//	| oEvent=oEvent | cEvent=cEvent | pEvent=pEvent;
 	public SitNameElements getSitNameAccess() {
 		return pSitName;

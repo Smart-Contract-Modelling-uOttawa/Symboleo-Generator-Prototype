@@ -89,6 +89,7 @@
     <genClasses ecoreClass="Symg.ecore#//Atom">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//Atom/eventProposition"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//Atom/situationProposition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//Atom/inner"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//Atom/point"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//Atom/interval"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//Atom/bool"/>
@@ -117,7 +118,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//Interval/unit"/>
     </genClasses>
     <genClasses ecoreClass="Symg.ecore#//SitName">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//SitName/SitName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//SitName/declName"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//SitName/oState"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//SitName/pState"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//SitName/cState"/>

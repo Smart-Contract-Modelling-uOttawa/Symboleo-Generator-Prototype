@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.xtext.example.symg.symg.SitName#getSitName <em>Sit Name</em>}</li>
+ *   <li>{@link org.xtext.example.symg.symg.SitName#getDeclName <em>Decl Name</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.SitName#getOState <em>OState</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.SitName#getPState <em>PState</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.SitName#getCState <em>CState</em>}</li>
@@ -30,26 +30,26 @@ import org.eclipse.emf.ecore.EObject;
 public interface SitName extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Sit Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Decl Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Sit Name</em>' attribute.
-   * @see #setSitName(String)
-   * @see org.xtext.example.symg.symg.SymgPackage#getSitName_SitName()
+   * @return the value of the '<em>Decl Name</em>' attribute.
+   * @see #setDeclName(String)
+   * @see org.xtext.example.symg.symg.SymgPackage#getSitName_DeclName()
    * @model
    * @generated
    */
-  String getSitName();
+  String getDeclName();
 
   /**
-   * Sets the value of the '{@link org.xtext.example.symg.symg.SitName#getSitName <em>Sit Name</em>}' attribute.
+   * Sets the value of the '{@link org.xtext.example.symg.symg.SitName#getDeclName <em>Decl Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Sit Name</em>' attribute.
-   * @see #getSitName()
+   * @param value the new value of the '<em>Decl Name</em>' attribute.
+   * @see #getDeclName()
    * @generated
    */
-  void setSitName(String value);
+  void setDeclName(String value);
 
   /**
    * Returns the value of the '<em><b>OState</b></em>' containment reference.

@@ -1080,7 +1080,7 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
    * @generated
    */
   @Override
-  public EReference getAtom_Point()
+  public EReference getAtom_Inner()
   {
     return (EReference)atomEClass.getEStructuralFeatures().get(2);
   }
@@ -1091,7 +1091,7 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
    * @generated
    */
   @Override
-  public EReference getAtom_Interval()
+  public EReference getAtom_Point()
   {
     return (EReference)atomEClass.getEStructuralFeatures().get(3);
   }
@@ -1102,9 +1102,20 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
    * @generated
    */
   @Override
+  public EReference getAtom_Interval()
+  {
+    return (EReference)atomEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EAttribute getAtom_Bool()
   {
-    return (EAttribute)atomEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)atomEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -1344,7 +1355,7 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
    * @generated
    */
   @Override
-  public EAttribute getSitName_SitName()
+  public EAttribute getSitName_DeclName()
   {
     return (EAttribute)sitNameEClass.getEStructuralFeatures().get(0);
   }
@@ -1839,6 +1850,7 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
     atomEClass = createEClass(ATOM);
     createEReference(atomEClass, ATOM__EVENT_PROPOSITION);
     createEReference(atomEClass, ATOM__SITUATION_PROPOSITION);
+    createEReference(atomEClass, ATOM__INNER);
     createEReference(atomEClass, ATOM__POINT);
     createEReference(atomEClass, ATOM__INTERVAL);
     createEAttribute(atomEClass, ATOM__BOOL);
@@ -1867,7 +1879,7 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
     createEAttribute(intervalEClass, INTERVAL__UNIT);
 
     sitNameEClass = createEClass(SIT_NAME);
-    createEAttribute(sitNameEClass, SIT_NAME__SIT_NAME);
+    createEAttribute(sitNameEClass, SIT_NAME__DECL_NAME);
     createEReference(sitNameEClass, SIT_NAME__OSTATE);
     createEReference(sitNameEClass, SIT_NAME__PSTATE);
     createEReference(sitNameEClass, SIT_NAME__CSTATE);
@@ -2036,6 +2048,7 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
     initEClass(atomEClass, Atom.class, "Atom", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAtom_EventProposition(), this.getEventProp(), null, "eventProposition", null, 0, 1, Atom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAtom_SituationProposition(), this.getSitProp(), null, "situationProposition", null, 0, 1, Atom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAtom_Inner(), this.getProposition(), null, "inner", null, 0, 1, Atom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAtom_Point(), this.getPoint(), null, "point", null, 0, 1, Atom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAtom_Interval(), this.getInterval(), null, "interval", null, 0, 1, Atom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAtom_Bool(), ecorePackage.getEString(), "bool", null, 0, 1, Atom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2064,7 +2077,7 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
     initEAttribute(getInterval_Unit(), ecorePackage.getEString(), "unit", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(sitNameEClass, SitName.class, "SitName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSitName_SitName(), ecorePackage.getEString(), "SitName", null, 0, 1, SitName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSitName_DeclName(), ecorePackage.getEString(), "declName", null, 0, 1, SitName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSitName_OState(), this.getoState(), null, "oState", null, 0, 1, SitName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSitName_PState(), this.getpState(), null, "pState", null, 0, 1, SitName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSitName_CState(), this.getcState(), null, "cState", null, 0, 1, SitName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

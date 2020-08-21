@@ -93,6 +93,7 @@ Negation:
 Atom:
 	'happens''('eventProposition=EventProp')'
 	| 'occurs''('situationProposition=SitProp')'
+	| '('inner=Proposition')'
 	| point=Point 'within' interval=Interval
 	| bool='TRUE'
 	| bool='FALSE'
@@ -119,8 +120,8 @@ Interval:
 ;
 
 SitName:
-	SitName=ID | oState=oState | pState=pState | cState=cState 
-	| oEvent=oEvent | cEvent=cEvent | pEvent=pEvent
+	(declName = ID | oState=oState | pState=pState | cState=cState 
+	| oEvent=oEvent | cEvent=cEvent | pEvent=pEvent)
 ;
 
 Unit:
@@ -137,7 +138,7 @@ TempOp:
 ;
 
 Point:
-	eventName=SitName  | unnamed='UNNAMED_POINT' | (pointConst=PointConst) 
+	(eventName=SitName)  | unnamed='UNNAMED_POINT' | (pointConst=PointConst) 
 	| (pointConst=PointConst)(unit=Unit)(tempOp=TempOp)(eventName=SitName)
 ;
 

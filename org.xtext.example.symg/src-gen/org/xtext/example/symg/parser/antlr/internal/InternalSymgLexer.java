@@ -2208,10 +2208,10 @@ public class InternalSymgLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSymg.g:3595:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // InternalSymg.g:3595:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalSymg.g:3625:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalSymg.g:3625:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // InternalSymg.g:3595:11: ( '^' )?
+            // InternalSymg.g:3625:11: ( '^' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -2220,7 +2220,7 @@ public class InternalSymgLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // InternalSymg.g:3595:11: '^'
+                    // InternalSymg.g:3625:11: '^'
                     {
                     match('^'); 
 
@@ -2238,7 +2238,7 @@ public class InternalSymgLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalSymg.g:3595:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalSymg.g:3625:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop2:
             do {
                 int alt2=2;
@@ -2287,10 +2287,10 @@ public class InternalSymgLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSymg.g:3597:10: ( ( '0' .. '9' )+ )
-            // InternalSymg.g:3597:12: ( '0' .. '9' )+
+            // InternalSymg.g:3627:10: ( ( '0' .. '9' )+ )
+            // InternalSymg.g:3627:12: ( '0' .. '9' )+
             {
-            // InternalSymg.g:3597:12: ( '0' .. '9' )+
+            // InternalSymg.g:3627:12: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -2304,7 +2304,7 @@ public class InternalSymgLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // InternalSymg.g:3597:13: '0' .. '9'
+            	    // InternalSymg.g:3627:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -2336,10 +2336,10 @@ public class InternalSymgLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSymg.g:3599:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // InternalSymg.g:3599:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalSymg.g:3629:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // InternalSymg.g:3629:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // InternalSymg.g:3599:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalSymg.g:3629:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -2357,10 +2357,10 @@ public class InternalSymgLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // InternalSymg.g:3599:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // InternalSymg.g:3629:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // InternalSymg.g:3599:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // InternalSymg.g:3629:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop4:
                     do {
                         int alt4=3;
@@ -2376,7 +2376,7 @@ public class InternalSymgLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // InternalSymg.g:3599:21: '\\\\' .
+                    	    // InternalSymg.g:3629:21: '\\\\' .
                     	    {
                     	    match('\\'); 
                     	    matchAny(); 
@@ -2384,7 +2384,7 @@ public class InternalSymgLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // InternalSymg.g:3599:28: ~ ( ( '\\\\' | '\"' ) )
+                    	    // InternalSymg.g:3629:28: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -2409,10 +2409,10 @@ public class InternalSymgLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalSymg.g:3599:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // InternalSymg.g:3629:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // InternalSymg.g:3599:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // InternalSymg.g:3629:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop5:
                     do {
                         int alt5=3;
@@ -2428,7 +2428,7 @@ public class InternalSymgLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // InternalSymg.g:3599:54: '\\\\' .
+                    	    // InternalSymg.g:3629:54: '\\\\' .
                     	    {
                     	    match('\\'); 
                     	    matchAny(); 
@@ -2436,7 +2436,7 @@ public class InternalSymgLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // InternalSymg.g:3599:61: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // InternalSymg.g:3629:61: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -2479,12 +2479,12 @@ public class InternalSymgLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSymg.g:3601:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // InternalSymg.g:3601:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // InternalSymg.g:3631:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // InternalSymg.g:3631:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // InternalSymg.g:3601:24: ( options {greedy=false; } : . )*
+            // InternalSymg.g:3631:24: ( options {greedy=false; } : . )*
             loop7:
             do {
                 int alt7=2;
@@ -2509,7 +2509,7 @@ public class InternalSymgLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalSymg.g:3601:52: .
+            	    // InternalSymg.g:3631:52: .
             	    {
             	    matchAny(); 
 
@@ -2539,12 +2539,12 @@ public class InternalSymgLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSymg.g:3603:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalSymg.g:3603:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalSymg.g:3633:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalSymg.g:3633:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // InternalSymg.g:3603:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalSymg.g:3633:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop8:
             do {
                 int alt8=2;
@@ -2557,7 +2557,7 @@ public class InternalSymgLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // InternalSymg.g:3603:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalSymg.g:3633:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2577,7 +2577,7 @@ public class InternalSymgLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalSymg.g:3603:40: ( ( '\\r' )? '\\n' )?
+            // InternalSymg.g:3633:40: ( ( '\\r' )? '\\n' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -2586,9 +2586,9 @@ public class InternalSymgLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // InternalSymg.g:3603:41: ( '\\r' )? '\\n'
+                    // InternalSymg.g:3633:41: ( '\\r' )? '\\n'
                     {
-                    // InternalSymg.g:3603:41: ( '\\r' )?
+                    // InternalSymg.g:3633:41: ( '\\r' )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -2597,7 +2597,7 @@ public class InternalSymgLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // InternalSymg.g:3603:41: '\\r'
+                            // InternalSymg.g:3633:41: '\\r'
                             {
                             match('\r'); 
 
@@ -2629,10 +2629,10 @@ public class InternalSymgLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSymg.g:3605:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalSymg.g:3605:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalSymg.g:3635:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalSymg.g:3635:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalSymg.g:3605:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalSymg.g:3635:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt11=0;
             loop11:
             do {
@@ -2686,8 +2686,8 @@ public class InternalSymgLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSymg.g:3607:16: ( . )
-            // InternalSymg.g:3607:18: .
+            // InternalSymg.g:3637:16: ( . )
+            // InternalSymg.g:3637:18: .
             {
             matchAny(); 
 

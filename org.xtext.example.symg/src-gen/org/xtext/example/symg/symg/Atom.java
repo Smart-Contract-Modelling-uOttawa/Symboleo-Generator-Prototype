@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.xtext.example.symg.symg.Atom#getEventProposition <em>Event Proposition</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.Atom#getSituationProposition <em>Situation Proposition</em>}</li>
+ *   <li>{@link org.xtext.example.symg.symg.Atom#getInner <em>Inner</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.Atom#getPoint <em>Point</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.Atom#getInterval <em>Interval</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.Atom#getBool <em>Bool</em>}</li>
@@ -70,6 +71,28 @@ public interface Atom extends EObject
    * @generated
    */
   void setSituationProposition(SitProp value);
+
+  /**
+   * Returns the value of the '<em><b>Inner</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Inner</em>' containment reference.
+   * @see #setInner(Proposition)
+   * @see org.xtext.example.symg.symg.SymgPackage#getAtom_Inner()
+   * @model containment="true"
+   * @generated
+   */
+  Proposition getInner();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.symg.symg.Atom#getInner <em>Inner</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Inner</em>' containment reference.
+   * @see #getInner()
+   * @generated
+   */
+  void setInner(Proposition value);
 
   /**
    * Returns the value of the '<em><b>Point</b></em>' containment reference.

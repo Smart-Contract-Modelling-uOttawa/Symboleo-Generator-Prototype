@@ -16,6 +16,7 @@ import org.xtext.example.symg.symg.Atom;
 import org.xtext.example.symg.symg.EventProp;
 import org.xtext.example.symg.symg.Interval;
 import org.xtext.example.symg.symg.Point;
+import org.xtext.example.symg.symg.Proposition;
 import org.xtext.example.symg.symg.SitProp;
 import org.xtext.example.symg.symg.SymgPackage;
 
@@ -29,6 +30,7 @@ import org.xtext.example.symg.symg.SymgPackage;
  * <ul>
  *   <li>{@link org.xtext.example.symg.symg.impl.AtomImpl#getEventProposition <em>Event Proposition</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.impl.AtomImpl#getSituationProposition <em>Situation Proposition</em>}</li>
+ *   <li>{@link org.xtext.example.symg.symg.impl.AtomImpl#getInner <em>Inner</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.impl.AtomImpl#getPoint <em>Point</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.impl.AtomImpl#getInterval <em>Interval</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.impl.AtomImpl#getBool <em>Bool</em>}</li>
@@ -57,6 +59,16 @@ public class AtomImpl extends MinimalEObjectImpl.Container implements Atom
    * @ordered
    */
   protected SitProp situationProposition;
+
+  /**
+   * The cached value of the '{@link #getInner() <em>Inner</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getInner()
+   * @generated
+   * @ordered
+   */
+  protected Proposition inner;
 
   /**
    * The cached value of the '{@link #getPoint() <em>Point</em>}' containment reference.
@@ -225,6 +237,56 @@ public class AtomImpl extends MinimalEObjectImpl.Container implements Atom
    * @generated
    */
   @Override
+  public Proposition getInner()
+  {
+    return inner;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetInner(Proposition newInner, NotificationChain msgs)
+  {
+    Proposition oldInner = inner;
+    inner = newInner;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SymgPackage.ATOM__INNER, oldInner, newInner);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setInner(Proposition newInner)
+  {
+    if (newInner != inner)
+    {
+      NotificationChain msgs = null;
+      if (inner != null)
+        msgs = ((InternalEObject)inner).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SymgPackage.ATOM__INNER, null, msgs);
+      if (newInner != null)
+        msgs = ((InternalEObject)newInner).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SymgPackage.ATOM__INNER, null, msgs);
+      msgs = basicSetInner(newInner, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SymgPackage.ATOM__INNER, newInner, newInner));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Point getPoint()
   {
     return point;
@@ -358,6 +420,8 @@ public class AtomImpl extends MinimalEObjectImpl.Container implements Atom
         return basicSetEventProposition(null, msgs);
       case SymgPackage.ATOM__SITUATION_PROPOSITION:
         return basicSetSituationProposition(null, msgs);
+      case SymgPackage.ATOM__INNER:
+        return basicSetInner(null, msgs);
       case SymgPackage.ATOM__POINT:
         return basicSetPoint(null, msgs);
       case SymgPackage.ATOM__INTERVAL:
@@ -380,6 +444,8 @@ public class AtomImpl extends MinimalEObjectImpl.Container implements Atom
         return getEventProposition();
       case SymgPackage.ATOM__SITUATION_PROPOSITION:
         return getSituationProposition();
+      case SymgPackage.ATOM__INNER:
+        return getInner();
       case SymgPackage.ATOM__POINT:
         return getPoint();
       case SymgPackage.ATOM__INTERVAL:
@@ -405,6 +471,9 @@ public class AtomImpl extends MinimalEObjectImpl.Container implements Atom
         return;
       case SymgPackage.ATOM__SITUATION_PROPOSITION:
         setSituationProposition((SitProp)newValue);
+        return;
+      case SymgPackage.ATOM__INNER:
+        setInner((Proposition)newValue);
         return;
       case SymgPackage.ATOM__POINT:
         setPoint((Point)newValue);
@@ -435,6 +504,9 @@ public class AtomImpl extends MinimalEObjectImpl.Container implements Atom
       case SymgPackage.ATOM__SITUATION_PROPOSITION:
         setSituationProposition((SitProp)null);
         return;
+      case SymgPackage.ATOM__INNER:
+        setInner((Proposition)null);
+        return;
       case SymgPackage.ATOM__POINT:
         setPoint((Point)null);
         return;
@@ -462,6 +534,8 @@ public class AtomImpl extends MinimalEObjectImpl.Container implements Atom
         return eventProposition != null;
       case SymgPackage.ATOM__SITUATION_PROPOSITION:
         return situationProposition != null;
+      case SymgPackage.ATOM__INNER:
+        return inner != null;
       case SymgPackage.ATOM__POINT:
         return point != null;
       case SymgPackage.ATOM__INTERVAL:

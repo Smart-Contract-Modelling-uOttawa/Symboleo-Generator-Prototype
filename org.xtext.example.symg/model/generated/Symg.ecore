@@ -110,6 +110,8 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="situationProposition" eType="#//SitProp"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inner" eType="#//Proposition"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="point" eType="#//Point"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="interval" eType="#//Interval"
@@ -151,7 +153,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SitName">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="SitName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="declName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="oState" eType="#//oState"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="pState" eType="#//pState"

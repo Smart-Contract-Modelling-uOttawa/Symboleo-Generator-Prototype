@@ -160,7 +160,14 @@ public class SymgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Atom returns Atom
 	 *
 	 * Constraint:
-	 *     (eventProposition=EventProp | situationProposition=SitProp | (point=Point interval=Interval) | bool='TRUE' | bool='FALSE')
+	 *     (
+	 *         eventProposition=EventProp | 
+	 *         situationProposition=SitProp | 
+	 *         inner=Proposition | 
+	 *         (point=Point interval=Interval) | 
+	 *         bool='TRUE' | 
+	 *         bool='FALSE'
+	 *     )
 	 */
 	protected void sequence_Atom(ISerializationContext context, Atom semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -492,7 +499,7 @@ public class SymgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         SitName=ID | 
+	 *         declName=ID | 
 	 *         oState=oState | 
 	 *         pState=pState | 
 	 *         cState=cState | 

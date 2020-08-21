@@ -861,13 +861,22 @@ public interface SymgPackage extends EPackage
   int ATOM__SITUATION_PROPOSITION = 1;
 
   /**
+   * The feature id for the '<em><b>Inner</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATOM__INNER = 2;
+
+  /**
    * The feature id for the '<em><b>Point</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATOM__POINT = 2;
+  int ATOM__POINT = 3;
 
   /**
    * The feature id for the '<em><b>Interval</b></em>' containment reference.
@@ -876,7 +885,7 @@ public interface SymgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATOM__INTERVAL = 3;
+  int ATOM__INTERVAL = 4;
 
   /**
    * The feature id for the '<em><b>Bool</b></em>' attribute.
@@ -885,7 +894,7 @@ public interface SymgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATOM__BOOL = 4;
+  int ATOM__BOOL = 5;
 
   /**
    * The number of structural features of the '<em>Atom</em>' class.
@@ -894,7 +903,7 @@ public interface SymgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATOM_FEATURE_COUNT = 5;
+  int ATOM_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link org.xtext.example.symg.symg.impl.SitPropImpl <em>Sit Prop</em>}' class.
@@ -1117,13 +1126,13 @@ public interface SymgPackage extends EPackage
   int SIT_NAME = 23;
 
   /**
-   * The feature id for the '<em><b>Sit Name</b></em>' attribute.
+   * The feature id for the '<em><b>Decl Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SIT_NAME__SIT_NAME = 0;
+  int SIT_NAME__DECL_NAME = 0;
 
   /**
    * The feature id for the '<em><b>OState</b></em>' containment reference.
@@ -2238,6 +2247,17 @@ public interface SymgPackage extends EPackage
   EReference getAtom_SituationProposition();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.xtext.example.symg.symg.Atom#getInner <em>Inner</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Inner</em>'.
+   * @see org.xtext.example.symg.symg.Atom#getInner()
+   * @see #getAtom()
+   * @generated
+   */
+  EReference getAtom_Inner();
+
+  /**
    * Returns the meta object for the containment reference '{@link org.xtext.example.symg.symg.Atom#getPoint <em>Point</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2498,15 +2518,15 @@ public interface SymgPackage extends EPackage
   EClass getSitName();
 
   /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.symg.symg.SitName#getSitName <em>Sit Name</em>}'.
+   * Returns the meta object for the attribute '{@link org.xtext.example.symg.symg.SitName#getDeclName <em>Decl Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Sit Name</em>'.
-   * @see org.xtext.example.symg.symg.SitName#getSitName()
+   * @return the meta object for the attribute '<em>Decl Name</em>'.
+   * @see org.xtext.example.symg.symg.SitName#getDeclName()
    * @see #getSitName()
    * @generated
    */
-  EAttribute getSitName_SitName();
+  EAttribute getSitName_DeclName();
 
   /**
    * Returns the meta object for the containment reference '{@link org.xtext.example.symg.symg.SitName#getOState <em>OState</em>}'.
@@ -3465,6 +3485,14 @@ public interface SymgPackage extends EPackage
     EReference ATOM__SITUATION_PROPOSITION = eINSTANCE.getAtom_SituationProposition();
 
     /**
+     * The meta object literal for the '<em><b>Inner</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATOM__INNER = eINSTANCE.getAtom_Inner();
+
+    /**
      * The meta object literal for the '<em><b>Point</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3665,12 +3693,12 @@ public interface SymgPackage extends EPackage
     EClass SIT_NAME = eINSTANCE.getSitName();
 
     /**
-     * The meta object literal for the '<em><b>Sit Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Decl Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SIT_NAME__SIT_NAME = eINSTANCE.getSitName_SitName();
+    EAttribute SIT_NAME__DECL_NAME = eINSTANCE.getSitName_DeclName();
 
     /**
      * The meta object literal for the '<em><b>OState</b></em>' containment reference feature.
