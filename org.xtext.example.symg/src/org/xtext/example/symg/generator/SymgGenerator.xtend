@@ -401,7 +401,7 @@ class SymgGenerator extends AbstractGenerator {
 		
 		for (i : 0..< prop.junctions.length) {
 			resProp.append("(")
-			eventNumber = prop.junctions.get(i).obligationCompileAnds(resProp, eventNumber, oblName, declEvents, events)
+			prop.junctions.get(i).obligationCompileAnds(resProp, eventNumber, oblName, declEvents, events)
 			resProp.append(")")
 			events.clear() // clear hashmap when moving to new or
 			if (i < prop.junctions.length - 1) {
@@ -511,9 +511,9 @@ class SymgGenerator extends AbstractGenerator {
 		if (atom.inner != null) {
 			eventNumber = atom.inner.obligationCompileOrs(res, eventNumber, oblName, declEvents, events)
 		}
-//		if (atom.situationProposition != null) {
-//			atom.situationProposition.obligationCompileSituationProp(res, d, oblName)
-//		}
+		if (atom.situationProposition != null) {
+			eventNumber = atom.situationProposition.obligationCompileSituationProp(res, eventNumber, oblName, declEvents, events)
+		}
 //		if (atom.point != null && atom.interval != null) {
 //			atom.point.obligationCompileWithin(atom.interval, res, d)
 //		}
@@ -563,65 +563,41 @@ class SymgGenerator extends AbstractGenerator {
 				// time point is a relative time
 				if (eProp.point.eventName.declName != null) {
 					// the time point referenced is also a declaration
-					if (!events.containsKey(eProp.point.eventName.declName)) {
-						decl.append(",within(E" + eventNumber + ",performer(E" + eventNumber + "," + oblName + ")),")
-						decl.append(eProp.point.eventName.declName + "(E" + eventNumber + "),")
-						decl.append("happens(E" + eventNumber + ",T" + eventNumber + ")")
-						events.put(eProp.point.eventName.declName, eventNumber.toString)
-						eventNumber += 1
-					}
-					var pNumber = events.get(eProp.point.eventName.declName)
-					res.append("happens(E" + eNumber + ",T" + pNumber)
+					eventNumber = eProp.point.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
 					
-					// make the time relative based on the tempOp keyword
-					switch (eProp.point.tempOp) {
-						case 'BEFORE': res.append("-")
-						case 'AFTER': res.append("+")
-						case '+': res.append("+")
-						case '-': res.append("-")	
-					}
-					
-					res.append(eProp.point.pointConst.type)
-					res.append(")")
-					res.append(decl.toString)
+					res.append("happens(E" + eNumber + ",T" + events.get(eProp.point.eventName.declName))
 				}
 				else {
 					// the time point referenced is a oEvent, cEvent or pEvent
-					res.append("happens(E" + eNumber + ",")
-					eProp.point.eventName.compileEvent(res)
-					
-					// make the time relative based on the tempOp keyword
-					switch (eProp.point.tempOp) {
-						case 'BEFORE': res.append("-")
-						case 'AFTER': res.append("+")
-						case '+': res.append("+")
-						case '-': res.append("-")	
-					}
-					
-					res.append(eProp.point.pointConst.type)
-					res.append(")")
+					var eventString = new StringBuilder()
+					eProp.point.eventName.compileEvent(eventString)
+					eventNumber = eventString.toString.compileAddEvent(decl, eventNumber, oblName, events)
+					res.append("happens(E" + eNumber + ",T" + events.get(eventString.toString))
 				}
+				
+				// make the time relative based on the tempOp keyword
+				eProp.point.tempOp.compileTempOp(res)
+					
+				res.append(eProp.point.pointConst.type + ")")
+				res.append(decl.toString)
 			}
 			else if (eProp.point.eventName != null) {
 				// time point is an event
 				if (eProp.point.eventName.declName != null) {
 					// the time point is also a declaration
-					if (!events.containsKey(eProp.point.eventName.declName)) {
-						decl.append(",within(E" + eventNumber + ",performer(E" + eventNumber + "," + oblName + ")),")
-						decl.append(eProp.point.eventName.declName + "(E" + eventNumber + "),")
-						decl.append("happens(E" + eventNumber + ",T" + eventNumber + ")")
-						events.put(eProp.point.eventName.declName, eventNumber.toString)
-						eventNumber += 1
-					}
-					var pNumber = events.get(eProp.point.eventName.declName)
-					res.append("happens(E" + eNumber + ",T" + pNumber + ")")
-					res.append(decl.toString)
+					eventNumber = eProp.point.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+
+					res.append("happens(E" + eNumber + ",T" + events.get(eProp.point.eventName.declName) + ")")
 				}
 				else {
-					res.append("happens(E" + eNumber + ",")
-					eProp.point.eventName.compileEvent(res)
-					res.append(")")
+					
+					var eventString = new StringBuilder()
+					eProp.point.eventName.compileEvent(eventString)
+					eventNumber = eventString.toString.compileAddEvent(decl, eventNumber, oblName, events)
+					res.append("happens(E" + eNumber + ",T" + events.get(eventString.toString) + ")")
 				}
+				
+				res.append(decl.toString)
 			}
 			else {
 				// time point is a constant
@@ -648,63 +624,43 @@ class SymgGenerator extends AbstractGenerator {
 				// time point is a relative time
 				if (eProp.point.eventName.declName != null) {
 					// the time point is a declaration
-					if (!events.containsKey(eProp.point.eventName.declName)) {
-						decl.append(",within(E" + eventNumber + ",performer(E" + eventNumber + "," + oblName + ")),")
-						decl.append(eProp.point.eventName.declName + "(E" + eventNumber + "),")
-						decl.append("happens(E" + eventNumber + ",T" + eventNumber + ")")
-						events.put(eProp.point.eventName.declName, eventNumber.toString)
-						eventNumber += 1
-					}
-					var pNumber = events.get(eProp.point.eventName.declName)
-					res.append("T" + pNumber)
-					
-					// make the time relative based on the tempOp keyword
-					switch (eProp.point.tempOp) {
-						case 'BEFORE': res.append("-")
-						case 'AFTER': res.append("+")
-						case '+': res.append("+")
-						case '-': res.append("-")	
-					}
-					
-					res.append(eProp.point.pointConst.type)
+					eventNumber = eProp.point.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+					res.append("T" + events.get(eProp.point.eventName.declName))
 				}
 				else {
 					// the time point is just an event
-					eProp.point.eventName.compileEvent(res)
-					
-					// make the time relative based on the tempOp keyword
-					switch (eProp.point.tempOp) {
-						case 'BEFORE': res.append("-")
-						case 'AFTER': res.append("+")
-						case '+': res.append("+")
-						case '-': res.append("-")	
-					}
-					
-					res.append(eProp.point.pointConst.type)
+					var eventString = new StringBuilder()
+					eProp.point.eventName.compileEvent(eventString)
+					eventNumber = eventString.toString.compileAddEvent(decl, eventNumber, oblName, events)
+					res.append("T" + events.get(eventString.toString))
 				}
+				
+				// make the time relative based on the tempOp keyword
+				eProp.point.tempOp.compileTempOp(res)
+					
+				res.append(eProp.point.pointConst.type)
 			}
 			else if (eProp.point.eventName != null) {
-				// time point is a event
+				// time point is an event
 				if (eProp.point.eventName.declName != null) {
 					// time point is also a declaration
-					if (!events.containsKey(eProp.point.eventName.declName)) {
-						decl.append(",within(E" + eventNumber + ",performer(E" + eventNumber + "," + oblName + ")),")
-						decl.append(eProp.point.eventName.declName + "(E" + eventNumber + "),")
-						decl.append("happens(E" + eventNumber + ",T" + eventNumber + ")")
-						events.put(eProp.point.eventName.declName, eventNumber.toString)
-						eventNumber += 1
-					}
-					var pNumber = events.get(eProp.point.eventName.declName)
-					res.append("T" + pNumber)
+					eventNumber = eProp.point.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+					
+					res.append("T" + events.get(eProp.point.eventName.declName))
 				}
 				else {
-					eProp.point.eventName.compileEvent(res)
+					// the time point is just an event
+					var eventString = new StringBuilder()
+					eProp.point.eventName.compileEvent(eventString)
+					eventNumber = eventString.toString.compileAddEvent(decl, eventNumber, oblName, events)
+					res.append("T" + events.get(eventString.toString))
 				}
 			}
 			else {
 				// time point is a constant
 				res.append(eProp.point.pointConst.type)
 			}
+			
 			res.append(")")
 			res.append(decl.toString)
 		}
@@ -712,19 +668,27 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
-	def obligationCompileSituationProp(SitProp sProp, StringBuilder res, int d, String oblName) {
-		//compile interval
-		sProp.interval.compileInterval(res, d)
-		res.append(",")
+	/**
+	 * Helper function to generate code from an atom (occurs function)
+	 * @param eProp situation and interval
+	 * @param res StringBuilder result
+	 * @param d next available event numbering
+	 * @param oblName name of obligation
+	 * @param declEvents HashSet containing the names of all declarations that are events
+	 * @param events HashMap of all events that have been seen in this or as well as their corresponding event numbers
+	 * 
+	 * @return d the highest event numbering seen in the atom
+	 */
+	def obligationCompileSituationProp(SitProp sProp, StringBuilder res, int d, String oblName, HashSet<String> declEvents, HashMap<String, String> events) {
+		var eventNumber = d
+		var decl = new StringBuilder()
 		
-		//compile situation (similar to a state)
+		//compile the situation
 		if (sProp.situationName != null) {
-			// is this referring to the value of an attribute in a declaration or something?
+			//situation is a declaration
 		}
 		else {
-			// potentially not right
-			// initiates means the end state after an event
-			res.append("initiates(E" + d + ",")
+			res.append("occurs(")
 			if (sProp.OSituationName != null) {
 				sProp.OSituationName.compileOState(res)
 			}
@@ -734,62 +698,188 @@ class SymgGenerator extends AbstractGenerator {
 			if (sProp.PSituationName != null) {
 				sProp.PSituationName.compilePState(res)
 			}
+			res.append(",")
+			// compile interval
+			if (sProp.interval.unnamed != null) {
+				// interval is unnamed
+				res.append("_")
+			}
+			else if (sProp.interval.start != null && sProp.interval.end != null) {
+				// interval is two points
+				res.append("[")
+				// compile start
+				if (sProp.interval.start.unnamed != null) {
+					res.append("_")
+				}
+				else if (sProp.interval.start.tempOp != null) {
+					// start is a relative time
+					if (sProp.interval.start.eventName.declName != null) {
+						// relative time is a declaration
+						eventNumber = sProp.interval.start.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+						
+						var sNumber = events.get(sProp.interval.start.eventName.declName)
+						res.append("T" + sNumber)
+					}
+					else {
+						// relative time is just an event	
+						var eventString = new StringBuilder()
+						sProp.interval.start.eventName.compileEvent(eventString)
+						eventNumber = eventString.toString.compileAddEvent(decl, eventNumber, oblName, events)
+						res.append("T" + events.get(eventString.toString))
+					}
+					
+					// make the time relative to the tempOp
+					sProp.interval.start.tempOp.compileTempOp(res)
+					res.append(sProp.interval.start.pointConst.type)
+				}
+				else if (sProp.interval.start.eventName != null) {
+					// start is an event
+					if (sProp.interval.start.eventName.declName != null) {
+						// event is a declaration
+						eventNumber = sProp.interval.start.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+						
+						var sNumber = events.get(sProp.interval.start.eventName.declName)
+						res.append("T" + sNumber)
+					}
+					else {
+						// relative time is just an event	
+						var eventString = new StringBuilder()
+						sProp.interval.start.eventName.compileEvent(eventString)
+						eventNumber = eventString.toString.compileAddEvent(decl, eventNumber, oblName, events)
+						res.append("T" + events.get(eventString.toString))
+					}
+				}
+				else {
+					res.append(sProp.interval.start.pointConst.type)
+				}
+				
+				res.append(",")
+				
+				// compile end
+				if (sProp.interval.end.unnamed != null) {
+					res.append("_")
+				}
+				else if (sProp.interval.end.tempOp != null) {
+					// start is a relative time
+					if (sProp.interval.end.eventName.declName != null) {
+						// relative time is a declaration
+						eventNumber = sProp.interval.end.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+						
+						var eNumber = events.get(sProp.interval.end.eventName.declName)
+						res.append("T" + eNumber)
+					}
+					else {
+						// relative time is just an event	
+						var eventString = new StringBuilder()
+						sProp.interval.end.eventName.compileEvent(eventString)
+						eventNumber = eventString.toString.compileAddEvent(decl, eventNumber, oblName, events)
+						res.append("T" + events.get(eventString.toString))
+					}
+					
+					// make the time relative to the tempOp
+					sProp.interval.end.tempOp.compileTempOp(res)
+					res.append(sProp.interval.end.pointConst.type)
+				}
+				else if (sProp.interval.end.eventName != null) {
+					// start is an event
+					if (sProp.interval.end.eventName.declName != null) {
+						// event is a declaration
+						eventNumber = sProp.interval.end.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+						
+						var eNumber = events.get(sProp.interval.end.eventName.declName)
+						res.append("T" + eNumber)
+					}
+					else {
+						// relative time is just an event	
+						var eventString = new StringBuilder()
+						sProp.interval.end.eventName.compileEvent(eventString)
+						eventNumber = eventString.toString.compileAddEvent(decl, eventNumber, oblName, events)
+						res.append("T" + events.get(eventString.toString))
+					}
+				}
+				else {
+					res.append(sProp.interval.end.pointConst.type)
+				}
+				res.append("]")
+			}
+			else if (sProp.interval.situationName != null) {
+				// the interval is a situation
+			}
+			else {
+				
+			}
 			res.append(")")
+			res.append(decl.toString)
+		}
+		
+		return eventNumber
+	}
+	
+	/**
+	 * Helper function to add declaration event to events and add's references to result
+	 * @param declEvent String declaration name
+	 * @param res StringBuilder result string
+	 * @param d next available event numbering
+	 * @param oblName name of obligation
+	 * @param events HashMap mapping events to their event numbering
+	 * 
+	 * @return next available eventNumber
+	 */
+	def compileAddDeclEvent(String declEvent, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
+		var eventNumber = d
+		
+		if (!events.containsKey(declEvent)) {
+			res.append(",within(E" + eventNumber + ",performer(E" + eventNumber + "," + oblName + ")),")
+			res.append(declEvent + "(E" + eventNumber + "),")
+			res.append("happens(E" + eventNumber + ",T" + eventNumber + ")")
+			events.put(declEvent, eventNumber.toString)
+			eventNumber += 1
+		}
+		
+		return eventNumber
+	}
+	
+	/**
+	 * Helper function to add oEvent,cEvent,pEvent to events
+	 * @param event String event name
+	 * @param res StringBuilder res
+	 * @param d next available event numbering
+	 * @param oblName name of obligation
+	 * @param events HashMap mapping events to their event numbering
+	 * 
+	 * @return next available eventNumber
+	 */
+	def compileAddEvent(String event, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
+		var eventNumber = d
+		
+		if (!events.containsKey(event)) {
+			res.append(",happens(" + event + ",T" + eventNumber + ")")
+			events.put(event, eventNumber.toString)
+			eventNumber += 1
+		}
+		
+		return eventNumber
+	}
+	
+	/**
+	 * Helper function to add operator to res
+	 * @param tempOp String representing the operator
+	 * @param res StringBuilder result string
+	 */
+	def compileTempOp(String TempOp, StringBuilder res) {
+		switch (TempOp) {
+			case 'BEFORE': res.append("-")
+			case 'AFTER': res.append("+")
+			case '+': res.append("+")
+			case '-': res.append("-")	
 		}
 	}
 	
 	/**
-	 * Helper function to generate code for a point
-	 * @param point point in time
-	 * @param res StringBuilde result
-	 * @param d next available event numbering
-	 * @param oblName name of obligation
-	 * @param declEvents HashSet containing the names of all declarations that are events
-	 * @param events HashMap of all events that have been seen in this or as well as their corresponding event numbers
-	 * 
-	 * @return d the highest event numbering seen in the atom
+	 * Helper function to determine what event a sitname is
+	 * @param event SitName
+	 * @param res StringBuilder result
 	 */
-//	def compilePoint(Point point, StringBuilder res, int d, String oblName, HashSet<String> declEvents, HashMap<String, String> events) {
-//		var eventNumber = d
-//		
-//		if (point.unnamed != null) {
-//			res.append("happens(E" + d + ",_)")
-//		}
-//		else {
-//			if (point.tempOp != null) {
-//				// 5 DAYS AFTER paid
-//				// happens(E0,T0),happens(E1,T1),paid(E1),T0+5=T1
-//				res.append("happens(E" + d + ",T" + d + "),")
-//				res.append("happens(E" + (d+1) + ",T" + (d+1) + "),")
-//				point.eventName.compileEvent(res, d+1)
-//				res.append(",")
-//				res.append("T" + d)
-//				if (point.tempOp.equals('BEFORE')) {
-//					res.append("-")
-//				}
-//				else {
-//					res.append("+")
-//				}
-//				res.append(point.pointConst.type + "=T" + (d+1))
-//			}
-//			else {
-//				if (point.pointConst != null) {
-//					// happens(delivered, 180)
-//					// happens(E0,180), delivered(E0)
-//					res.append("happens(E" + d + "," + point.pointConst.type + ")")
-//				}
-//				else {
-//					// happens(delivered,oTRIGGERED(o2))
-//					// happens(E0,T0), initiates(E0,trigger(o2)) -> T0
-//					res.append("happens(E" + d + ",T" + d + "),")
-//					point.eventName.compileEvent(res, d)
-//				}
-//			}
-//		}
-//		
-//		return eventNumber
-//	}
-	
 	def compileEvent(SitName event, StringBuilder res) {
 		if (event.OEvent != null) {
 			event.OEvent.compileOEvent(res)
@@ -840,31 +930,11 @@ class SymgGenerator extends AbstractGenerator {
 		}
 	}
 	
-	def compileInterval(Interval interval, StringBuilder res, int d) {
-		if (interval.unnamed != null) {
-			res.append("happens(E" + d + ",T" + d + ")")
-		}
-		else {
-			if (interval.intConst != null) {
-				// where does AT fit into this?
-				// what is this?
-			}
-			else {
-				if (interval.situationName != null) {
-					// within(E0,oViolation(o2))
-					res.append("within(E" + d + ",")
-					interval.situationName.compileState(res)
-					res.append(")")
-				}
-				else {
-					// two time point interval
-					// assuming the points will for sure be situations
-					res.append("occurs(E" + d + "," + interval.start.eventName.declName + "," + interval.end.eventName.declName + ")")
-				}
-			}
-		}
-	}
-	
+	/**
+	 * Helper function to determine what state a sitname is
+	 * @param state SitName
+	 * @param res StringBuilder result
+	 */
 	def compileState(SitName state, StringBuilder res) {
 		if (state.OState != null) {
 			state.OState.compileOState(res)
