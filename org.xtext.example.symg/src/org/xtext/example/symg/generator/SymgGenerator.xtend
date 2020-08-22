@@ -804,9 +804,29 @@ class SymgGenerator extends AbstractGenerator {
 			}
 			else if (sProp.interval.situationName != null) {
 				// the interval is a situation
+				res.append("[")
+				if (sProp.interval.situationName.declName != null) {
+					// the situation is a declaration
+					eventNumber = sProp.interval.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
+					res.append("T" + events.get(sProp.interval.situationName.declName))
+					res.append(",")
+					eventNumber = ("\\+" + sProp.interval.situationName.declName).compileAddDeclSit(decl, eventNumber, oblName, events)
+					res.append("T" + events.get("\\+" + sProp.interval.situationName.declName))
+				}
+				else {
+					// situation is oState, cState, pState
+					var sitString = new StringBuilder()
+					sProp.interval.situationName.compileState(sitString)
+					eventNumber = sitString.toString.compileAddSit(decl, eventNumber, oblName, events)
+					res.append("T" + events.get(sitString.toString))
+					res.append(",")
+					eventNumber = ("\\+" + sitString.toString).compileAddSit(decl, eventNumber, oblName, events)
+					res.append("T" + events.get("\\+" + sitString.toString))
+				}
+				res.append("]")
 			}
 			else {
-				
+				// ????
 			}
 			res.append(")")
 			res.append(decl.toString)
@@ -842,7 +862,7 @@ class SymgGenerator extends AbstractGenerator {
 	/**
 	 * Helper function to add oEvent,cEvent,pEvent to events
 	 * @param event String event name
-	 * @param res StringBuilder res
+	 * @param res StringBuilder result
 	 * @param d next available event numbering
 	 * @param oblName name of obligation
 	 * @param events HashMap mapping events to their event numbering
@@ -858,6 +878,51 @@ class SymgGenerator extends AbstractGenerator {
 			eventNumber += 1
 		}
 		
+		return eventNumber
+	}
+	
+	/**
+	 * Helper function to add oState,cState,pState to events
+	 * @param situation String situation name
+	 * @param res StringBuilder result
+	 * @param d next available event numbering
+	 * @param oblName name of obligation
+	 * @param events HashMap mapping events to their event numbering
+	 * 
+	 * @return next available eventNumber
+	 */
+	def compileAddSit(String situation, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
+		var eventNumber = d
+		
+		if (!events.containsKey(situation)) {
+			res.append(",initiates(E" + eventNumber + "," + situation + "),")
+			res.append("happens(E" + eventNumber + ",T" + eventNumber + ")")
+			events.put(situation, eventNumber.toString)
+			eventNumber += 1
+		}
+		return eventNumber
+	}
+	
+	/**
+	 * Helper function to add situation declaration to events
+	 * @param situation String situation name
+	 * @param res StringBuilder result
+	 * @param d next available event numbering
+	 * @param oblName name of obligation
+	 * @param events HashMap mapping events to their event numbering
+	 * 
+	 * @return next available eventNumber
+	 */
+	def compileAddDeclSit(String declSit, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
+		var eventNumber = d
+		
+		if (!events.containsKey(declSit)) {
+			res.append(",initiates(E" + eventNumber + ",S" + eventNumber + "),")
+			res.append("happens(E" + eventNumber + ",T" + eventNumber + "),")
+			res.append(declSit + "(S" + eventNumber + ")")
+			events.put(declSit, eventNumber.toString)
+			eventNumber += 1
+		}
 		return eventNumber
 	}
 	
