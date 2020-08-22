@@ -260,47 +260,11 @@ class SymgGenerator extends AbstractGenerator {
 		res.append("\n## Obligations\n")
 		// compiling obligations
 		for (i : 0 ..< model.obligations.length) {
-			model.obligations.get(i).compileObligations(i+1, res, declEvents)
+			model.obligations.get(i).compileObligations(i+1, res)
 		}
-		
-//		res.append("\n## Powers\n")
-//		// compiling powers
-//		for(i : 0..< model.powers.length) {
-//			model.powers.get(i).compilePowers(i+1, res, declNames)
-//		}
-//		
-//		res.append("\n## Surviving Obligations\n")
-//		// compiling surviving obligations
-//		for (i : 0..< model.sobligations.length) {
-//			model.sobligations.get(i).compileSObligations(i+1, res, declNames)
-//		}
 		
 		return res.toString
 	}
-	
-//	def compileSObligations(Obligation obl, int i, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declNames) {
-//		res.append("SO(X)\t:-\tSO" + i + "(X).\n")
-//		res.append("SO" + i + "(" + obl.name + ").\n")
-//		res.append("associate(" + obl.name + ",cArgToCan).\n\n")
-//		res.append("initially(debtor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n")
-//		res.append("initially(creditor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n\n")
-////		obl.antecedent.compileAntecedent(obl.name, res, declNames)
-////		obl.trigger.compileTrigger(obl.name, res, declNames)
-//		obl.consequent.compileOConsequent(obl.name, res, declNames)
-//		res.append("\n\n")
-//	}
-//	
-//	def compilePowers(Power power, int i, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declNames) {
-//		// this is probably just wrong (I do not think powers are handled the same as obligations)
-//		res.append("P(X)\t:-\tP" + i + "(X).\n")
-//		res.append("P" + i + "(" + power.name + ").\n")
-//		res.append("associate(" + power.name + ",cArgToCan).\n\n")
-//		res.append("initially(debtor(X,P))\t:-\tP" + i + "(X),initially(bind(" + power.role1 + ",P)).\n")
-//		res.append("initially(creditor(X,P))\t:-\tP" + i + "(X),initially(bind(" + power.role1 + ",P)).\n\n")
-////		power.antecedent.compileAntecedent(power.name, res, declNames)
-////		power.trigger.compileTrigger(power.name, res, declNames)
-//		power.consequent.compileOConsequent(power.name, res, declNames)
-//	}
 	
 	/**
 	 * checks the "root" type of each contract parameter and returns it
@@ -325,67 +289,40 @@ class SymgGenerator extends AbstractGenerator {
 	/**
 	 * Generate prolog code for obligation
 	 */
-	def compileObligations(Obligation obl, int i, StringBuilder res, HashSet<String> declEvents) {
+	def compileObligations(Obligation obl, int i, StringBuilder res) {
 		res.append("O(X)\t:-\tO" + i + "(X).\n")
 		res.append("O" + i + "(" + obl.name + ").\n")
 		res.append("associate(" + obl.name + ",cArgToCan).\n\n")
 		res.append("initially(debtor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n")
 		res.append("initially(creditor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n\n")
 //		obl.antecedent.compileAntecedent(obl.name, res, declNames)
-//		obl.trigger.compileTrigger(obl.name, res, declNames)
-		obl.consequent.compileOConsequent(obl.name, res, declEvents)
+		obl.trigger.compileOTrigger(obl.name, res)
+		obl.consequent.compileOConsequent(obl.name, res)
 		res.append("\n\n")
 	}
-	
-//	/**
-//	 * Helper function to generate code for antecedent
-//	 */
-//	def compileAntecedent(Proposition prop, String oblName, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declNames) {
-//		var ant = new StringBuilder()
-//		
-//		ant.append("ant(" + oblName + ")\t:-\t")
-//		for (i : 0..< prop.junctions.length) {
-//			ant.append("(")
-//			prop.junctions.get(i).obligationCompileAnds(ant, 0, oblName, declNames)
-//			ant.append(")")
-//			if (i < prop.junctions.length - 1) {
-//				ant.append(" ; ")
-//			}
-//		}
-//		ant.append(".\n")
-//		
-//		res.append(ant.toString)
-//	}
 	
 	/**
 	 * Helper function to generate code for consequent
 	 */
-	def compileOConsequent(Proposition prop, String oblName, StringBuilder res, HashSet<String> declEvents) {
+	def compileOConsequent(Proposition prop, String oblName, StringBuilder res) {
 		res.append("initiates(E0, cons(" + oblName + "))\t:-\t")
-		prop.obligationCompileOrs(res, oblName, declEvents)
+		prop.obligationCompileOrs(res, oblName)
 		res.append(".\n")
 	}
 	
-//	def compileTrigger(Proposition trigger, String oblName, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declNames) {
-//		if (trigger == null) {
-//			res.append("initiates(E0,trigger(" + oblName + "))\t:-\thappens(E0,_),initiates(E0,inEffect(cArgToCan)).\n")
-//			return
-//		}
-//		
-//		var trig = new StringBuilder()
-//		trig.append("initiates(E0, trigger(" + oblName + "))\t:-\t")
-//		for (i : 0..< trigger.junctions.length) {
-//			trig.append("(")
-//			trigger.junctions.get(i).obligationCompileAnds(trig, 0, oblName, declNames)
-//			trig.append(")")
-//			if (i < trigger.junctions.length - 1) {
-//				trig.append(" ; ")
-//			}
-//		}
-//		trig.append(".\n")
-//		
-//		res.append(trig.toString)
-//	}
+	/**
+	 * Helper function to generate code for trigger
+	 */
+	 def compileOTrigger(Proposition prop, String oblName, StringBuilder res) {
+	 	res.append("initiates(E0, trigger(" + oblName + "))\t:-\t")
+	 	if (prop != null) {
+	 		prop.obligationCompileOrs(res, oblName)
+	 	}
+	 	else {
+	 		res.append("happens(E0,_),initiates(E0,inEffect(cArgToCan))")
+	 	}
+	 	res.append(".\n")
+	 }
 
 	/**
 	 * Compiles the prolog code for all the ors in an and
@@ -394,14 +331,14 @@ class SymgGenerator extends AbstractGenerator {
 	 * @param oblName name of obligation
 	 * @param declEvents HashSet containing the names of all declarations that are events
 	 */
-	def obligationCompileOrs(Proposition prop, StringBuilder res, String oblName, HashSet<String> declEvents) {
+	def obligationCompileOrs(Proposition prop, StringBuilder res, String oblName) {
 		var resProp = new StringBuilder()
 		var events = new HashMap<String, String>() // maps value of event to some time number that it corresponds to
 		var eventNumber = 0
 		
 		for (i : 0..< prop.junctions.length) {
 			resProp.append("(")
-			prop.junctions.get(i).obligationCompileAnds(resProp, eventNumber, oblName, declEvents, events)
+			prop.junctions.get(i).obligationCompileAnds(resProp, eventNumber, oblName, events)
 			resProp.append(")")
 			events.clear() // clear hashmap when moving to new or
 			if (i < prop.junctions.length - 1) {
@@ -412,7 +349,7 @@ class SymgGenerator extends AbstractGenerator {
 		res.append(resProp.toString)
 	}
 	
-	def obligationCompileOrs(Proposition prop, StringBuilder res, int d, String oblName, HashSet<String> declEvents, HashMap<String, String> events) {
+	def obligationCompileOrs(Proposition prop, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var resProp = new StringBuilder()
 		var eventNumber = d
 		var mx = d 
@@ -423,7 +360,7 @@ class SymgGenerator extends AbstractGenerator {
 				eventsCopy.put(key, events.get(key))
 			}
 			resProp.append("(")
-			mx = Math.max(mx, prop.junctions.get(i).obligationCompileAnds(resProp, eventNumber, oblName, declEvents, eventsCopy))
+			mx = Math.max(mx, prop.junctions.get(i).obligationCompileAnds(resProp, eventNumber, oblName, eventsCopy))
 			resProp.append(")")
 			if (i < prop.junctions.length - 1) {
 				resProp.append(" ; ")
@@ -445,14 +382,14 @@ class SymgGenerator extends AbstractGenerator {
 	 * 
 	 * @return d the highest event numbering seen in the atom
 	 */
-	def int obligationCompileAnds(Junction or, StringBuilder res, int d, String oblName, HashSet<String> declEvents, HashMap<String, String> events) {
+	def int obligationCompileAnds(Junction or, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		for (i : 0..< or.negativeAtoms.length) {
 			/**
 			 * compile through each AND. throughout the process we keep counting from the previous d (ex. happens(E1, T1) AND happens(E2, T2)).
 			 * Here, we maintain the events that have been seen.
 			 */
-			eventNumber = or.negativeAtoms.get(i).obligationCompileNegs(res, eventNumber, oblName, declEvents, events)
+			eventNumber = or.negativeAtoms.get(i).obligationCompileNegs(res, eventNumber, oblName, events)
 			if (i < or.negativeAtoms.length - 1) {
 				res.append(',')
 			}
@@ -472,15 +409,15 @@ class SymgGenerator extends AbstractGenerator {
 	 * 
 	 * @return d the highest event numbering seen in the atom
 	 */
-	def obligationCompileNegs(Negation atom, StringBuilder res, int d, String oblName, HashSet<String> declEvents, HashMap<String, String> events) {
+	def obligationCompileNegs(Negation atom, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		if (atom.negated) {
 			res.append("\\+(")
-			eventNumber = atom.atomicExpression.obligationCompileAtom(res, eventNumber, oblName, declEvents, events)
+			eventNumber = atom.atomicExpression.obligationCompileAtom(res, eventNumber, oblName, events)
 			res.append(")")
 		}
 		else {
-			eventNumber = atom.atomicExpression.obligationCompileAtom(res, eventNumber, oblName, declEvents, events)
+			eventNumber = atom.atomicExpression.obligationCompileAtom(res, eventNumber, oblName, events)
 		}
 		
 		return eventNumber
@@ -497,7 +434,7 @@ class SymgGenerator extends AbstractGenerator {
 	 * 
 	 * @return d the highest event numbering seen in the atom
 	 */
-	def obligationCompileAtom(Atom atom, StringBuilder res, int d, String oblName, HashSet<String> declEvents, HashMap<String, String> events) {
+	def obligationCompileAtom(Atom atom, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		if (atom.bool == 'TRUE') {
 			res.append("TRUE")	
@@ -506,26 +443,20 @@ class SymgGenerator extends AbstractGenerator {
 			res.append("FALSE")
 		}
 		if (atom.eventProposition != null) {
-			eventNumber = atom.eventProposition.obligationCompileEventProp(res, eventNumber, oblName, declEvents, events)
+			eventNumber = atom.eventProposition.obligationCompileEventProp(res, eventNumber, oblName, events)
 		}
 		if (atom.inner != null) {
-			eventNumber = atom.inner.obligationCompileOrs(res, eventNumber, oblName, declEvents, events)
+			eventNumber = atom.inner.obligationCompileOrs(res, eventNumber, oblName, events)
 		}
 		if (atom.situationProposition != null) {
-			eventNumber = atom.situationProposition.obligationCompileSituationProp(res, eventNumber, oblName, declEvents, events)
+			eventNumber = atom.situationProposition.obligationCompileSituationProp(res, eventNumber, oblName, events)
 		}
-//		if (atom.point != null && atom.interval != null) {
-//			atom.point.obligationCompileWithin(atom.interval, res, d)
-//		}
+		if (atom.point != null && atom.interval != null) {
+			// the atom is a point within an interval
+		}
 
 		return eventNumber
 	}
-	
-//	def obligationCompileWithin(Point point, Interval interval, StringBuilder res, int d) {
-//		point.compilePoint(res, d)
-//		res.append(",")
-//		interval.compileInterval(res, d+1)
-//	}
 	
 	/**
 	 * Helper function to generate code from an atom (happens function)
@@ -538,7 +469,7 @@ class SymgGenerator extends AbstractGenerator {
 	 * 
 	 * @return d the highest event numbering seen in the atom
 	 */	
-	def obligationCompileEventProp(EventProp eProp, StringBuilder res, int d, String oblName, HashSet<String> declEvents, HashMap<String, String> events) {
+	def obligationCompileEventProp(EventProp eProp, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		var decl = new StringBuilder()
 		
@@ -679,7 +610,7 @@ class SymgGenerator extends AbstractGenerator {
 	 * 
 	 * @return d the highest event numbering seen in the atom
 	 */
-	def obligationCompileSituationProp(SitProp sProp, StringBuilder res, int d, String oblName, HashSet<String> declEvents, HashMap<String, String> events) {
+	def obligationCompileSituationProp(SitProp sProp, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		var decl = new StringBuilder()
 		
