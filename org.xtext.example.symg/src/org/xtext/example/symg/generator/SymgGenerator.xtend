@@ -739,6 +739,25 @@ class SymgGenerator extends AbstractGenerator {
 			}
 			res.append("]")
 		}
+		else if (sProp.interval.situationName != null && sProp.interval.tempOp != null) {
+			// the interval is a situation with a temp op
+			res.append("[")
+			if (sProp.interval.situationName.declName != null) {
+				// the situation is a declaration
+				eventNumber = sProp.interval.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
+				res.append("T" + events.get(sProp.interval.situationName.declName))
+				sProp.interval.tempOp.compileTempOp(res)
+				res.append(sProp.interval.intConst.type)
+			}
+			else {
+				// the situation is oState, cState, pState
+				var sitString = new StringBuilder()
+				sProp.interval.situationName.compileState(sitString)
+				eventNumber = sitString.toString.compileAddSit(decl, eventNumber, oblName, events)
+				res.append("T" + events.get(sitString.toString))
+			}
+			res.append(",_]")
+		}
 		else if (sProp.interval.situationName != null) {
 			// the interval is a situation
 			res.append("[")
@@ -746,9 +765,6 @@ class SymgGenerator extends AbstractGenerator {
 				// the situation is a declaration
 				eventNumber = sProp.interval.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
 				res.append("T" + events.get(sProp.interval.situationName.declName))
-				res.append(",")
-				eventNumber = ("\\+" + sProp.interval.situationName.declName).compileAddDeclSit(decl, eventNumber, oblName, events)
-				res.append("T" + events.get("\\+" + sProp.interval.situationName.declName))
 			}
 			else {
 				// situation is oState, cState, pState
@@ -756,14 +772,8 @@ class SymgGenerator extends AbstractGenerator {
 				sProp.interval.situationName.compileState(sitString)
 				eventNumber = sitString.toString.compileAddSit(decl, eventNumber, oblName, events)
 				res.append("T" + events.get(sitString.toString))
-				res.append(",")
-				eventNumber = ("\\+" + sitString.toString).compileAddSit(decl, eventNumber, oblName, events)
-				res.append("T" + events.get("\\+" + sitString.toString))
 			}
-			res.append("]")
-		}
-		else {
-			// ????
+			res.append(",_]")
 		}
 			
 		res.append(")")
@@ -829,13 +839,118 @@ class SymgGenerator extends AbstractGenerator {
 		}
 		else if (interval.start != null && interval.end != null) {
 			// interval is two points
+			if (interval.start.unnamed != null) {
+				start.append("_")
+			}
+			else if (interval.start.tempOp != null) {
+				if (interval.start.eventName.declName != null) {
+					eventNumber = interval.start.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+					start.append("T" + events.get(interval.start.eventName.declName))
+				}
+				else {
+					var eventString = new StringBuilder()
+					interval.start.eventName.compileEvent(eventString)
+					eventNumber = eventString.toString.compileAddEvent(decl, eventNumber, oblName, events)
+					start.append("T" + events.get(eventString.toString))
+				}
+				
+				interval.start.tempOp.compileTempOp(start)
+				start.append(interval.start.pointConst.type)
+			}
+			else if (interval.start.eventName != null) {
+				if (interval.start.eventName.declName != null) {
+					eventNumber = interval.start.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+					start.append("T" + events.get(interval.start.eventName.declName))
+				}
+				else {
+					var eventString = new StringBuilder()
+					interval.start.eventName.compileEvent(eventString)
+					eventNumber = eventString.toString.compileAddEvent(decl, eventNumber, oblName, events)
+					start.append("T" + events.get(eventString.toString))
+				}
+			}
+			else {
+				start.append(interval.start.pointConst.type)
+			}
+			
+			if (interval.end.unnamed != null) {
+				end.append("_")
+			}
+			else if (interval.end.tempOp != null) {
+				if (interval.end.eventName.declName != null) {
+					eventNumber = interval.end.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+					end.append("T" + events.get(interval.end.eventName.declName))
+				}
+				else {
+					var eventString = new StringBuilder()
+					interval.end.eventName.compileEvent(eventString)
+					eventNumber = eventString.toString.compileAddEvent(decl, eventNumber, oblName, events)
+					end.append("T" + events.get(eventString.toString))
+				}
+				
+				interval.end.tempOp.compileTempOp(end)
+				end.append(interval.end.pointConst.type)
+			}
+			else if (interval.end.eventName != null) {
+				if (interval.end.eventName.declName != null) {
+					eventNumber = interval.end.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+					end.append("T" + events.get(interval.end.eventName.declName))
+				}
+				else {
+					var eventString = new StringBuilder()
+					interval.end.eventName.compileEvent(eventString)
+					eventNumber = eventString.toString.compileAddEvent(decl, eventNumber, oblName, events)
+					end.append("T" + events.get(eventString.toString))
+				}
+			}
+			else {
+				end.append(interval.end.pointConst.type)
+			}
+			
+			if (start.toString != "_") {
+				res.append(start.toString + "<=" + time.toString)
+			}
+			if (start.toString != "_" && end.toString != "_") {
+				res.append(",")
+			}
+			if (end.toString != "_") {
+				res.append(time.toString + "<=" + end.toString)
+			}
+		}
+		else if (interval.situationName != null && interval.tempOp != null) {
+			if (interval.situationName.declName != null) {
+				eventNumber = interval.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
+				start.append("T" + events.get(interval.situationName.declName))
+			}
+			else {
+				var sitString = new StringBuilder()
+				interval.situationName.compileState(sitString)
+				eventNumber = sitString.toString.compileAddSit(decl, eventNumber, oblName, events)
+				start.append("T" + events.get(sitString.toString))
+			}
+			
+			interval.tempOp.compileTempOp(start)
+			start.append(interval.intConst.type)
+			
+			res.append(start.toString + "<=" + time.toString)
 		}
 		else if (interval.situationName != null) {
 			// interval is a situation
+			if (interval.situationName.declName != null) {
+				eventNumber = interval.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
+				start.append("T" + events.get(interval.situationName.declName))
+			}
+			else {
+				var sitString = new StringBuilder()
+				interval.situationName.compileState(sitString)
+				eventNumber = sitString.toString.compileAddSit(decl, eventNumber, oblName, events)
+				start.append("T" + events.get(sitString.toString))
+			}
+			
+			res.append(start.toString + "<=" + time.toString)
 		}
-		else {
-			// ???
-		}
+		
+		res.append(decl.toString)
 		return eventNumber
 	}
 	
