@@ -158,7 +158,7 @@ class SymgGenerator extends AbstractGenerator {
 		var dates = new HashSet<String>()
 		var roles = new HashSet<String>()
 		var assets = new HashSet<String>()
-		var underscoreAfter = 0
+		var underscoreAfter = model.parameters.length + 1
 		var underscoreBefore = 0
 		
 		// compiling domain
@@ -180,7 +180,6 @@ class SymgGenerator extends AbstractGenerator {
 					dates.add(param.name)
 				}
 				
-				underscoreAfter += 1
 			}
 		}
 		
@@ -197,7 +196,6 @@ class SymgGenerator extends AbstractGenerator {
 			
 			if (parentType.equals('ASSET')) {
 				assets.add(declaration.name)
-				underscoreAfter += 1
 			}
 			if (parentType.equals('EVENT')) {
 				// keeps track of all declarations that are events
@@ -213,7 +211,6 @@ class SymgGenerator extends AbstractGenerator {
 		}
 		
 		// initialize contract
-		// I'm guessing length of contract = #roles + #dates + #assets + 1
 		res.append("\n## Contract\n")	
 		res.append("c(X)\t:-\t")
 		contractUnderscoreHelper(model.contractName, underscoreBefore, underscoreAfter, res)
@@ -228,18 +225,13 @@ class SymgGenerator extends AbstractGenerator {
 			underscoreBefore += 1
 		}
 		
-		for (date : dates) {
-			res.append(date + "(X)\t:-\t")
-			contractUnderscoreHelper(model.contractName, underscoreBefore, underscoreAfter, res)
-			underscoreAfter -= 1
-			underscoreBefore += 1
-		}
-		
-		for (asset : assets) {
-			res.append(asset + "(X)")
-			contractUnderscoreHelper(model.contractName, underscoreBefore, underscoreAfter, res)
-			underscoreAfter -= 1
-			underscoreBefore += 1
+		for (param : model.parameters) {
+			if (!roles.contains(param.name)) {
+				res.append(param.name + "(X)\t:-\t")
+				contractUnderscoreHelper(model.contractName, underscoreBefore, underscoreAfter, res)
+				underscoreAfter -= 1
+				underscoreBefore += 1	
+			}
 		}
 		
 		res.append("initially(form(X))\t:-\t")
@@ -263,6 +255,12 @@ class SymgGenerator extends AbstractGenerator {
 			model.obligations.get(i).compileObligations(i+1, res)
 		}
 		
+		res.append("\n## Powers\n")
+		// compiling powers
+		for (i : 0 ..< model.powers.length) {
+			model.powers.get(i).compilePowers(i+1, res)	
+		}	
+			
 		return res.toString
 	}
 	
@@ -294,11 +292,28 @@ class SymgGenerator extends AbstractGenerator {
 		res.append("O" + i + "(" + obl.name + ").\n")
 		res.append("associate(" + obl.name + ",cArgToCan).\n\n")
 		res.append("initially(debtor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n")
-		res.append("initially(creditor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n\n")
-//		obl.antecedent.compileAntecedent(obl.name, res, declNames)
+		res.append("initially(creditor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role2 + ",P)).\n\n")
+		obl.antecedent.compileOAntecedent(obl.name, res)
 		obl.trigger.compileOTrigger(obl.name, res)
 		obl.consequent.compileOConsequent(obl.name, res)
 		res.append("\n\n")
+	}
+	
+	def compilePowers(Power pow, int i, StringBuilder res) {
+		res.append("P(X)\t:-\tP" + i + "(X).\n")
+		res.append("P" + i + "(" + pow.name + ").\n")
+		res.append("associate(" + pow.name + ",cArgToCan).\n\n")
+		res.append("initially(debtor(X,P))\t:-\tP" + i + "(X),initially(bind(" + pow.role1 + ",P)).\n")
+		res.append("initially(creditor(X,P))\t:-\tP" + i + "(X),initially(bind(" + pow.role2 + ",P)).\n\n")
+	}
+	
+	/**
+	 * Helper function to generate code for antecedent
+	 */
+	def compileOAntecedent(Proposition prop, String oblName, StringBuilder res) {
+		res.append("ant(" + oblName + ")\t:-\t")
+		prop.obligationCompileOrs(res, oblName)
+		res.append(".\n")
 	}
 	
 	/**
@@ -442,6 +457,7 @@ class SymgGenerator extends AbstractGenerator {
 		if (atom.bool == 'FALSE') {
 			res.append("FALSE")
 		}
+		
 		if (atom.eventProposition != null) {
 			eventNumber = atom.eventProposition.obligationCompileEventProp(res, eventNumber, oblName, events)
 		}
@@ -1134,7 +1150,7 @@ class SymgGenerator extends AbstractGenerator {
 	def compileOState(oState state, StringBuilder res) {
 		switch (state.oblState) {
 			case 'oCREATE': res.append('create(' + state.oblName + ')')
-			case 'oINEFFECT': res.append('ineffect(' + state.oblName + ')')
+			case 'oINEFFECT': res.append('resumption(' + state.oblName + ')')
 			case 'oSUSPENSION': res.append('suspension(' + state.oblName + ')')
 			case 'oSUCCESSFUL_TERMINATION': res.append('successfulTermination(' + state.oblName + ')')
 			case 'oUNSUCCESSFUL_TERMINATION': res.append('unsuccessfulTermination(' + state.oblName + ')')
@@ -1147,7 +1163,7 @@ class SymgGenerator extends AbstractGenerator {
 	def compileCState(cState state, StringBuilder res) {
 		switch (state.contrState) {
 			case 'cFORM': res.append('form(' + state.contractName + ')')
-			case 'cINEFFECT': res.append('ineffect(' + state.contractName + ')')
+			case 'cINEFFECT': res.append('resumption(' + state.contractName + ')')
 			case 'cSUSPENSION': res.append('suspension(' + state.contractName + ')')
 			case 'cSUCCESSFUL_TERMINATION': res.append('successfulTermination(' + state.contractName + ')')
 			case 'cUNSECCESSFUL_TERMINATION': res.append('unsuccessfulTermination(' + state.contractName + ')')
@@ -1158,7 +1174,7 @@ class SymgGenerator extends AbstractGenerator {
 	def compilePState(pState state, StringBuilder res) {
 		switch (state.powState) {
 			case 'pCREATE': res.append('create(' + state.powName + ')')
-			case 'pINEFFECT': res.append('ineffect(' + state.powName + ')')
+			case 'pINEFFECT': res.append('resumption(' + state.powName + ')')
 			case 'pSUSPENSION': res.append('suspension(' + state.powName + ')')
 			case 'pSUCCESSFUL_TERMINATION': res.append('successfulTermination(' + state.powName + ')')
 			case 'pUNSUCCESSFUL_TERMINATION': res.append('unsuccessfulTermination(' + state.powName + ')')
