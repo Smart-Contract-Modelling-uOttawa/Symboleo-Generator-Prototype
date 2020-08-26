@@ -491,13 +491,13 @@ class SymgGenerator extends AbstractGenerator {
 		}
 		else {
 			if (eProp.OEventName != null) {
-				eProp.OEventName.compileOEvent(res)
+				res.append(eProp.OEventName.compileOEvent)
 			}
 			if (eProp.CEventName != null) {
-				eProp.CEventName.compileCEvent(res)
+				res.append(eProp.CEventName.compileCEvent)
 			}
 			if (eProp.PEventName != null) {
-				eProp.PEventName.compilePEvent(res)
+				res.append(eProp.PEventName.compilePEvent)
 			}
 		}
 		res.append(",")
@@ -519,15 +519,12 @@ class SymgGenerator extends AbstractGenerator {
 				res.append("T" + events.get(point.eventName.declName))
 			}
 			else {
-				var eString = new StringBuilder()
-				point.eventName.compileEvent(eString)
-				eventNumber = eString.toString.compileAddEvent(decl, eventNumber, oblName, events)
-				res.append("T" + events.get(eString.toString))
+				eventNumber = point.eventName.compileEvent.compileAddEvent(decl, eventNumber, oblName, events)
+				res.append("T" + events.get(point.eventName.compileEvent))
 			}
 			
 			if (point.tempOp != null) {
-				point.tempOp.compileTempOp(res)
-				res.append(point.pointConst.type)
+				res.append(point.tempOp.compileTempOp + point.pointConst.type)
 			}
 		}
 		else {
@@ -537,17 +534,6 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber	
 	}
 	
-	/**
-	 * Helper function to generate code from an atom (occurs function)
-	 * @param eProp situation and interval
-	 * @param res StringBuilder result
-	 * @param d next available event numbering
-	 * @param oblName name of obligation
-	 * @param declEvents HashSet containing the names of all declarations that are events
-	 * @param events HashMap of all events that have been seen in this or as well as their corresponding event numbers
-	 * 
-	 * @return d the highest event numbering seen in the atom
-	 */
 	def obligationCompileSituationProp(SitProp sProp, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		var decl = new StringBuilder()
@@ -561,13 +547,13 @@ class SymgGenerator extends AbstractGenerator {
 		}
 		else {
 			if (sProp.OSituationName != null) {
-				sProp.OSituationName.compileOState(res)
+				res.append(sProp.OSituationName.compileOState)
 			}
 			if (sProp.CSituationName != null) {
-				sProp.CSituationName.compileCState(res)
+				res.append(sProp.CSituationName.compileCState)
 			}
 			if (sProp.PSituationName != null) {
-				sProp.PSituationName.compilePState(res)
+				res.append(sProp.PSituationName.compilePState)
 			}
 		}
 		res.append(",")
@@ -606,15 +592,12 @@ class SymgGenerator extends AbstractGenerator {
 				}
 				else {
 					// the situation is oState, cState, pState
-					var sitString = new StringBuilder()
-					sProp.interval.situationName.compileState(sitString)
-					eventNumber = sitString.toString.compileAddSit(decl, eventNumber, oblName, events)
-					res.append("T" + events.get(sitString.toString))
+					eventNumber = sProp.interval.situationName.compileState.compileAddSit(decl, eventNumber, oblName, events)
+					res.append("T" + events.get(sProp.interval.situationName.compileState))
 				}
 				
 				if (sProp.interval.tempOp != null) {
-					sProp.interval.tempOp.compileTempOp(res)
-					res.append(sProp.interval.intConst.type)
+					res.append(sProp.interval.tempOp.compileTempOp + sProp.interval.intConst.type)
 				}
 				
 				res.append(",_])")
@@ -627,9 +610,6 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
-	/**
-	 * Helper function to generate code from a atom (within)
-	 */
 	def obligationCompilePointInInterval(Point point, Interval interval, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		var decl = new StringBuilder()
@@ -661,15 +641,12 @@ class SymgGenerator extends AbstractGenerator {
 				}
 				else {
 					// the situation is an oState, cState, pState
-					var sitString = new StringBuilder()
-					interval.situationName.compileState(sitString)
-					eventNumber = sitString.toString.compileAddSit(decl, eventNumber, oblName, events)
-					start.append("T" + events.get(sitString.toString))
+					eventNumber = interval.situationName.compileState.compileAddSit(decl, eventNumber, oblName, events)
+					start.append("T" + events.get(interval.situationName.compileState))
 				}
 				
 				if (interval.tempOp != null) {
-					interval.tempOp.compileTempOp(start)
-					start.append(interval.intConst.type)
+					start.append(interval.tempOp.compileTempOp + interval.intConst.type)
 				}
 				
 				
@@ -691,16 +668,6 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
-	/**
-	 * Helper function to add declaration event to events and add's references to result
-	 * @param declEvent String declaration name
-	 * @param res StringBuilder result string
-	 * @param d next available event numbering
-	 * @param oblName name of obligation
-	 * @param events HashMap mapping events to their event numbering
-	 * 
-	 * @return next available eventNumber
-	 */
 	def compileAddDeclEvent(String declEvent, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		
@@ -715,16 +682,6 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
-	/**
-	 * Helper function to add oEvent,cEvent,pEvent to events
-	 * @param event String event name
-	 * @param res StringBuilder result
-	 * @param d next available event numbering
-	 * @param oblName name of obligation
-	 * @param events HashMap mapping events to their event numbering
-	 * 
-	 * @return next available eventNumber
-	 */
 	def compileAddEvent(String event, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		
@@ -737,16 +694,6 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
-	/**
-	 * Helper function to add oState,cState,pState to events
-	 * @param situation String situation name
-	 * @param res StringBuilder result
-	 * @param d next available event numbering
-	 * @param oblName name of obligation
-	 * @param events HashMap mapping events to their event numbering
-	 * 
-	 * @return next available eventNumber
-	 */
 	def compileAddSit(String situation, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		
@@ -759,16 +706,6 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
-	/**
-	 * Helper function to add situation declaration to events
-	 * @param situation String situation name
-	 * @param res StringBuilder result
-	 * @param d next available event numbering
-	 * @param oblName name of obligation
-	 * @param events HashMap mapping events to their event numbering
-	 * 
-	 * @return next available eventNumber
-	 */
 	def compileAddDeclSit(String declSit, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		
@@ -782,123 +719,108 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
-	/**
-	 * Helper function to add operator to res
-	 * @param tempOp String representing the operator
-	 * @param res StringBuilder result string
-	 */
-	def compileTempOp(String TempOp, StringBuilder res) {
+	def compileTempOp(String TempOp) {
 		switch (TempOp) {
-			case 'BEFORE': res.append("-")
-			case 'AFTER': res.append("+")
-			case '+': res.append("+")
-			case '-': res.append("-")	
+			case 'BEFORE': return "-"
+			case 'AFTER': return "+"
+			case '+': return "+"
+			case '-': return "-"
 		}
 	}
 	
-	/**
-	 * Helper function to determine what event a sitname is
-	 * @param event SitName
-	 * @param res StringBuilder result
-	 */
-	def compileEvent(SitName event, StringBuilder res) {
+	def compileEvent(SitName event) {
 		if (event.OEvent != null) {
-			event.OEvent.compileOEvent(res)
+			return event.OEvent.compileOEvent
 		}	
 		if (event.CEvent != null) {
-			event.CEvent.compileCEvent(res)
+			return event.CEvent.compileCEvent
 		}
 		if (event.PEvent != null) {
-			event.PEvent.compilePEvent(res)
+			return event.PEvent.compilePEvent
 		}
 	}
 	
-	def compileOEvent(oEvent event, StringBuilder res) {
+	def compileOEvent(oEvent event) {
 		switch (event.oblEvent) {
-			case 'oTRIGGERED': res.append('trigger(' + event.oblName + ')')
-			case 'oACTIVATED': res.append('activate(' + event.oblName + ')')
-			case 'oSUSPENDED': res.append('suspend(' + event.oblName + ')')
-			case 'oRESUMED': res.append('resume(' + event.oblName + ')')
-			case 'oDISCHARGED': res.append('discharge(' + event.oblName + ')')
-			case 'oEXPIRED': res.append('expire(' + event.oblName + ')')
-			case 'oFULFILLED': res.append('fulfill(' + event.oblName + ')')
-			case'oVIOLATED': res.append('violate(' + event.oblName + ')')
-			case 'oTERMINATED': res.append('terminate(' + event.oblName + ')')
+			case 'oTRIGGERED': return 'trigger(' + event.oblName + ')'
+			case 'oACTIVATED': return 'activate(' + event.oblName + ')'
+			case 'oSUSPENDED': return 'suspend(' + event.oblName + ')'
+			case 'oRESUMED': return 'resume(' + event.oblName + ')'
+			case 'oDISCHARGED': return 'discharge(' + event.oblName + ')'
+			case 'oEXPIRED': return 'expire(' + event.oblName + ')'
+			case 'oFULFILLED': return 'fulfill(' + event.oblName + ')'
+			case'oVIOLATED': return 'violate(' + event.oblName + ')'
+			case 'oTERMINATED': return 'terminate(' + event.oblName + ')'
 		}
 	}
 	
-	def compileCEvent(cEvent event, StringBuilder res) {
+	def compileCEvent(cEvent event) {
 		switch (event.contrEvent) {
-			case 'cACTIVATED': res.append('activate(' + event.contrName + ')')
-			case 'cSUSPENDED': res.append('suspend(' + event.contrName + ')')
-			case 'cRESUMED': res.append('resume(' + event.contrName + ')')
-			case 'cFULFILLED_ACTIVE_OBLS': res.append('fulfill(' + event.contrName + ')')
-			case 'cREVOKED_PARTY': res.append('revoke(' + event.contrName + ')')
-			case 'cASSIGNED_PARTY': res.append('assignParty(' + event.contrName + ')')
-			case 'cTERMINATED': res.append('terminate(' + event.contrName + ')')
+			case 'cACTIVATED': return 'activate(' + event.contrName + ')'
+			case 'cSUSPENDED': return 'suspend(' + event.contrName + ')'
+			case 'cRESUMED': return 'resume(' + event.contrName + ')'
+			case 'cFULFILLED_ACTIVE_OBLS': return 'fulfill(' + event.contrName + ')'
+			case 'cREVOKED_PARTY': return 'revoke(' + event.contrName + ')'
+			case 'cASSIGNED_PARTY': return 'assignParty(' + event.contrName + ')'
+			case 'cTERMINATED': return 'terminate(' + event.contrName + ')'
 		}
 	}
 	
-	def compilePEvent(pEvent event, StringBuilder res) {
+	def compilePEvent(pEvent event) {
 		switch (event.powEvent) {
-			case 'pTRIGGERED': res.append('trigger(' + event.powName + ')')
-			case 'pACTIVATED': res.append('activate(' + event.powName + ')')
-			case 'pSUSPENDED': res.append('suspend(' + event.powName + ')')
-			case 'pRESUMED': res.append('resume(' + event.powName + ')')
-			case 'pEXERTED': res.append('exert(' + event.powName + ')')
-			case 'pEXPIRED': res.append('expire(' + event.powName + ')')
-			case 'pTERMINATED': res.append('terminate(' + event.powName + ')')
+			case 'pTRIGGERED': return 'trigger(' + event.powName + ')'
+			case 'pACTIVATED': return 'activate(' + event.powName + ')'
+			case 'pSUSPENDED': return 'suspend(' + event.powName + ')'
+			case 'pRESUMED': return 'resume(' + event.powName + ')'
+			case 'pEXERTED': return 'exert(' + event.powName + ')'
+			case 'pEXPIRED': return 'expire(' + event.powName + ')'
+			case 'pTERMINATED': return 'terminate(' + event.powName + ')'
 		}
 	}
 	
-	/**
-	 * Helper function to determine what state a sitname is
-	 * @param state SitName
-	 * @param res StringBuilder result
-	 */
-	def compileState(SitName state, StringBuilder res) {
+	def compileState(SitName state) {
 		if (state.OState != null) {
-			state.OState.compileOState(res)
+			return state.OState.compileOState
 		}
 		if (state.CState != null) {
-			state.CState.compileCState(res)
+			return state.CState.compileCState
 		}
 		if (state.PState != null) {
-			state.PState.compilePState(res)
+			return state.PState.compilePState
 		}
 	}
 	
-	def compileOState(oState state, StringBuilder res) {
+	def compileOState(oState state) {
 		switch (state.oblState) {
-			case 'oCREATE': res.append('create(' + state.oblName + ')')
-			case 'oINEFFECT': res.append('resumption(' + state.oblName + ')')
-			case 'oSUSPENSION': res.append('suspension(' + state.oblName + ')')
-			case 'oSUCCESSFUL_TERMINATION': res.append('successfulTermination(' + state.oblName + ')')
-			case 'oUNSUCCESSFUL_TERMINATION': res.append('unsuccessfulTermination(' + state.oblName + ')')
-			case 'oVIOLATION': res.append('violation(' + state.oblName + ')')
-			case 'oFULFILLMENT': res.append('fulfillment(' + state.oblName + ')')
-			case 'oDISCHARGE': res.append('discharge(' + state.oblName + ')')
+			case 'oCREATE': return 'create(' + state.oblName + ')'
+			case 'oINEFFECT': return 'resumption(' + state.oblName + ')'
+			case 'oSUSPENSION': return 'suspension(' + state.oblName + ')'
+			case 'oSUCCESSFUL_TERMINATION': return 'successfulTermination(' + state.oblName + ')'
+			case 'oUNSUCCESSFUL_TERMINATION': return 'unsuccessfulTermination(' + state.oblName + ')'
+			case 'oVIOLATION': return 'violation(' + state.oblName + ')'
+			case 'oFULFILLMENT': return 'fulfillment(' + state.oblName + ')'
+			case 'oDISCHARGE': return 'discharge(' + state.oblName + ')'
 		}
 	}
 	
-	def compileCState(cState state, StringBuilder res) {
+	def compileCState(cState state) {
 		switch (state.contrState) {
-			case 'cFORM': res.append('form(' + state.contractName + ')')
-			case 'cINEFFECT': res.append('resumption(' + state.contractName + ')')
-			case 'cSUSPENSION': res.append('suspension(' + state.contractName + ')')
-			case 'cSUCCESSFUL_TERMINATION': res.append('successfulTermination(' + state.contractName + ')')
-			case 'cUNSECCESSFUL_TERMINATION': res.append('unsuccessfulTermination(' + state.contractName + ')')
-			case 'cUNASSIGN': res.append('unassign(' + state.contractName + ')')
+			case 'cFORM': return 'form(' + state.contractName + ')'
+			case 'cINEFFECT': return 'resumption(' + state.contractName + ')'
+			case 'cSUSPENSION': return 'suspension(' + state.contractName + ')'
+			case 'cSUCCESSFUL_TERMINATION': return 'successfulTermination(' + state.contractName + ')'
+			case 'cUNSECCESSFUL_TERMINATION': return 'unsuccessfulTermination(' + state.contractName + ')'
+			case 'cUNASSIGN': return 'unassign(' + state.contractName + ')'
 		}
 	}
 	
-	def compilePState(pState state, StringBuilder res) {
+	def compilePState(pState state) {
 		switch (state.powState) {
-			case 'pCREATE': res.append('create(' + state.powName + ')')
-			case 'pINEFFECT': res.append('resumption(' + state.powName + ')')
-			case 'pSUSPENSION': res.append('suspension(' + state.powName + ')')
-			case 'pSUCCESSFUL_TERMINATION': res.append('successfulTermination(' + state.powName + ')')
-			case 'pUNSUCCESSFUL_TERMINATION': res.append('unsuccessfulTermination(' + state.powName + ')')
+			case 'pCREATE': return 'create(' + state.powName + ')'
+			case 'pINEFFECT': return 'resumption(' + state.powName + ')'
+			case 'pSUSPENSION': return 'suspension(' + state.powName + ')'
+			case 'pSUCCESSFUL_TERMINATION': return 'successfulTermination(' + state.powName + ')'
+			case 'pUNSUCCESSFUL_TERMINATION': return 'unsuccessfulTermination(' + state.powName + ')'
 		}
 	}
 	
