@@ -261,6 +261,12 @@ class SymgGenerator extends AbstractGenerator {
 			model.powers.get(i).compilePowers(i+1, res)	
 		}	
 			
+//		res.append("\n## Surviving Obligations\n")
+//		// compiling surviving obligations
+//		for (i : 0..< model.sobligations.length) {
+//			model.sobligations.get(i).compileSObligations(i+1, res)
+//		}
+		
 		return res.toString
 	}
 	
@@ -294,7 +300,7 @@ class SymgGenerator extends AbstractGenerator {
 		res.append("initially(debtor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n")
 		res.append("initially(creditor(X,P))\t:-\tO" + i + "(X),initially(bind(" + obl.role2 + ",P)).\n\n")
 		obl.antecedent.compileOAntecedent(obl.name, res)
-		obl.trigger.compileOTrigger(obl.name, res)
+		obl.trigger.compileTrigger(obl.name, res)
 		obl.consequent.compileOConsequent(obl.name, res)
 		res.append("\n\n")
 	}
@@ -305,6 +311,9 @@ class SymgGenerator extends AbstractGenerator {
 		res.append("associate(" + pow.name + ",cArgToCan).\n\n")
 		res.append("initially(debtor(X,P))\t:-\tP" + i + "(X),initially(bind(" + pow.role1 + ",P)).\n")
 		res.append("initially(creditor(X,P))\t:-\tP" + i + "(X),initially(bind(" + pow.role2 + ",P)).\n\n")
+		pow.trigger.compileTrigger(pow.name, res)
+		pow.consequent.compilePConsequent(pow.name, res)
+		res.append("\n\n")
 	}
 	
 	/**
@@ -325,10 +334,102 @@ class SymgGenerator extends AbstractGenerator {
 		res.append(".\n")
 	}
 	
-	/**
-	 * Helper function to generate code for trigger
-	 */
-	 def compileOTrigger(Proposition prop, String oblName, StringBuilder res) {
+	def compilePConsequent(Proposition prop, String powName, StringBuilder res) {
+		res.append("happens(exerted(" + powName + "), T0))\t:-\t")
+		prop.powerCompileOrs(res, powName)
+		res.append(".\n")
+	}
+	
+	def powerCompileOrs(Proposition prop, StringBuilder res, String powName) {
+		var resProp = new StringBuilder()
+		var events = new HashMap<String, String>()
+		var eventNumber = 0
+		
+		for (i : 0..< prop.junctions.length) {
+			resProp.append("(")
+			prop.junctions.get(i).powerCompileAnds(resProp, eventNumber, powName, events)
+			resProp.append(")")
+			if (i < prop.junctions.length - 1) {
+				resProp.append(" ; ")
+			}
+			events.clear() // clear hashmap when moving to new or
+		}
+		
+		res.append(resProp.toString)
+	}
+	
+	def powerCompileAnds(Junction or, StringBuilder res, int d, String powName, HashMap<String, String> events) {
+		var eventNumber = d
+		for (i : 0..< or.negativeAtoms.length) {
+			eventNumber = or.negativeAtoms.get(i).powerCompileNegs(res, eventNumber, powName, events)
+			if (i < or.negativeAtoms.length - 1) {
+				res.append(',')
+			}
+		}
+		return eventNumber
+	}
+	
+	def powerCompileNegs(Negation atom, StringBuilder res, int d, String powName, HashMap<String, String> events) {
+		var eventNumber = d
+		if (atom.negated) {
+			res.append("\\+(")
+			eventNumber = atom.atomicExpression.powerCompileAtom(res, eventNumber, powName, events)
+			res.append(")")
+		}
+		else {
+			eventNumber = atom.atomicExpression.powerCompileAtom(res, eventNumber, powName, events)
+		}
+		return eventNumber
+	}
+	
+	def powerCompileAtom(Atom atom, StringBuilder res, int d, String powName, HashMap<String, String> events) {
+		var eventNumber = d
+		if (atom.bool == 'TRUE') {
+			res.append("TRUE")
+		}
+		if (atom.bool == 'FALSE') {
+			res.append("FALSE")
+		}
+		
+		if (atom.eventProposition != null) {
+			eventNumber = atom.eventProposition.obligationCompileEventProp(res, eventNumber, powName, events)
+		}
+		if (atom.situationProposition != null) {
+			eventNumber = atom.situationProposition.powerCompileSituationProp(res, eventNumber, powName, events)
+		}
+		
+		return eventNumber
+	}
+	
+	def powerCompileSituationProp(SitProp sProp, StringBuilder res, int d, String powName, HashMap<String, String> events) {
+		var eventNumber = d
+		var decl = new StringBuilder()
+		var String[] causes
+		
+		//find the event that creates the situation
+		if (sProp.situationName != null) {
+			//situation is a declaration
+		}
+		else {
+			// compile interval
+			if (sProp.interval.unnamed != null) {
+				
+			}
+			
+			if (sProp.OSituationName != null) {
+				causes = sProp.OSituationName.mapOStateToEvent.split(",")
+			}
+			if (sProp.CSituationName != null) {
+				causes = sProp.CSituationName.mapCStateToEvent.split(",")
+			}
+			if (sProp.PSituationName != null) {
+				causes = sProp.PSituationName.mapPStateToEvent.split(",")
+			}
+		}
+		return eventNumber
+	}
+	
+	def compileTrigger(Proposition prop, String oblName, StringBuilder res) {
 	 	res.append("initiates(E0, trigger(" + oblName + "))\t:-\t")
 	 	if (prop != null) {
 	 		prop.obligationCompileOrs(res, oblName)
@@ -339,13 +440,6 @@ class SymgGenerator extends AbstractGenerator {
 	 	res.append(".\n")
 	 }
 
-	/**
-	 * Compiles the prolog code for all the ors in an and
-	 * @param proposition (antecedent\consequent\trigger)
-	 * @param res StringBuilder result
-	 * @param oblName name of obligation
-	 * @param declEvents HashSet containing the names of all declarations that are events
-	 */
 	def obligationCompileOrs(Proposition prop, StringBuilder res, String oblName) {
 		var resProp = new StringBuilder()
 		var events = new HashMap<String, String>() // maps value of event to some time number that it corresponds to
@@ -386,17 +480,6 @@ class SymgGenerator extends AbstractGenerator {
 		return mx
 	}
 	
-	/**
-	 * Helper function to generate code for all ands in an or
-	 * @param junction (part between OR of a proposition)
-	 * @param res StringBuilder result
-	 * @param d current event number
-	 * @param oblName name of obligation
-	 * @param declEvents HashSet containing the names of all declarations that are events
-	 * @param events HashMap of all events that have been seen in this or as well as their corresponding event numbers
-	 * 
-	 * @return d the highest event numbering seen in the atom
-	 */
 	def int obligationCompileAnds(Junction or, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		for (i : 0..< or.negativeAtoms.length) {
@@ -413,17 +496,6 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
-	/**
-	 * Helper function to generate code for negative atoms
-	 * @param atom Negation Atomic unit in proposition (possibly negated)
-	 * @param res StringBuilder result
-	 * @param d next available event numbering
-	 * @param oblName name of obligation
-	 * @param declEvents HashSet containing the names of all declarations that are events
-	 * @param events HashMap of all events that have been seen in this or as well as their corresponding event numbers
-	 * 
-	 * @return d the highest event numbering seen in the atom
-	 */
 	def obligationCompileNegs(Negation atom, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		if (atom.negated) {
@@ -438,17 +510,6 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
-	/**
-	 * Helper function to generate code from an atom
-	 * @param atom Atomic unit in proposition
-	 * @param res StringBuilder result
-	 * @param d next available event numbering
-	 * @param oblName name of obligation
-	 * @param declEvents HashSet containing the names of all declarations that are events
-	 * @param events HashMap of all events that have been seen in this or as well as their corresponding event numbers
-	 * 
-	 * @return d the highest event numbering seen in the atom
-	 */
 	def obligationCompileAtom(Atom atom, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		if (atom.bool == 'TRUE') {
@@ -742,39 +803,39 @@ class SymgGenerator extends AbstractGenerator {
 	
 	def compileOEvent(oEvent event) {
 		switch (event.oblEvent) {
-			case 'oTRIGGERED': return 'trigger(' + event.oblName + ')'
-			case 'oACTIVATED': return 'activate(' + event.oblName + ')'
-			case 'oSUSPENDED': return 'suspend(' + event.oblName + ')'
-			case 'oRESUMED': return 'resume(' + event.oblName + ')'
-			case 'oDISCHARGED': return 'discharge(' + event.oblName + ')'
-			case 'oEXPIRED': return 'expire(' + event.oblName + ')'
-			case 'oFULFILLED': return 'fulfill(' + event.oblName + ')'
-			case'oVIOLATED': return 'violate(' + event.oblName + ')'
-			case 'oTERMINATED': return 'terminate(' + event.oblName + ')'
+			case 'oTRIGGERED': return 'triggered(' + event.oblName + ')'
+			case 'oACTIVATED': return 'activated(' + event.oblName + ')'
+			case 'oSUSPENDED': return 'suspended(' + event.oblName + ')'
+			case 'oRESUMED': return 'resumed(' + event.oblName + ')'
+			case 'oDISCHARGED': return 'discharged(' + event.oblName + ')'
+			case 'oEXPIRED': return 'expired(' + event.oblName + ')'
+			case 'oFULFILLED': return 'fulfilled(' + event.oblName + ')'
+			case'oVIOLATED': return 'violated(' + event.oblName + ')'
+			case 'oTERMINATED': return 'terminated(' + event.oblName + ')'
 		}
 	}
 	
 	def compileCEvent(cEvent event) {
 		switch (event.contrEvent) {
-			case 'cACTIVATED': return 'activate(' + event.contrName + ')'
-			case 'cSUSPENDED': return 'suspend(' + event.contrName + ')'
-			case 'cRESUMED': return 'resume(' + event.contrName + ')'
-			case 'cFULFILLED_ACTIVE_OBLS': return 'fulfill(' + event.contrName + ')'
-			case 'cREVOKED_PARTY': return 'revoke(' + event.contrName + ')'
-			case 'cASSIGNED_PARTY': return 'assignParty(' + event.contrName + ')'
-			case 'cTERMINATED': return 'terminate(' + event.contrName + ')'
+			case 'cACTIVATED': return 'activated(' + event.contrName + ')'
+			case 'cSUSPENDED': return 'suspended(' + event.contrName + ')'
+			case 'cRESUMED': return 'resumed(' + event.contrName + ')'
+			case 'cFULFILLED_ACTIVE_OBLS': return 'fulfilled(' + event.contrName + ')'
+			case 'cREVOKED_PARTY': return 'revoked(' + event.contrName + ')'
+			case 'cASSIGNED_PARTY': return 'assigned(' + event.contrName + ')'
+			case 'cTERMINATED': return 'terminated(' + event.contrName + ')'
 		}
 	}
 	
 	def compilePEvent(pEvent event) {
 		switch (event.powEvent) {
-			case 'pTRIGGERED': return 'trigger(' + event.powName + ')'
-			case 'pACTIVATED': return 'activate(' + event.powName + ')'
-			case 'pSUSPENDED': return 'suspend(' + event.powName + ')'
-			case 'pRESUMED': return 'resume(' + event.powName + ')'
-			case 'pEXERTED': return 'exert(' + event.powName + ')'
-			case 'pEXPIRED': return 'expire(' + event.powName + ')'
-			case 'pTERMINATED': return 'terminate(' + event.powName + ')'
+			case 'pTRIGGERED': return 'triggered(' + event.powName + ')'
+			case 'pACTIVATED': return 'activated(' + event.powName + ')'
+			case 'pSUSPENDED': return 'suspended(' + event.powName + ')'
+			case 'pRESUMED': return 'resumed(' + event.powName + ')'
+			case 'pEXERTED': return 'exerted(' + event.powName + ')'
+			case 'pEXPIRED': return 'expired(' + event.powName + ')'
+			case 'pTERMINATED': return 'terminated(' + event.powName + ')'
 		}
 	}
 	
@@ -793,9 +854,8 @@ class SymgGenerator extends AbstractGenerator {
 	def compileOState(oState state) {
 		switch (state.oblState) {
 			case 'oCREATE': return 'create(' + state.oblName + ')'
-			case 'oINEFFECT': return 'resumption(' + state.oblName + ')'
+			case 'oINEFFECT': return 'ineffect(' + state.oblName + ')'
 			case 'oSUSPENSION': return 'suspension(' + state.oblName + ')'
-			case 'oSUCCESSFUL_TERMINATION': return 'successfulTermination(' + state.oblName + ')'
 			case 'oUNSUCCESSFUL_TERMINATION': return 'unsuccessfulTermination(' + state.oblName + ')'
 			case 'oVIOLATION': return 'violation(' + state.oblName + ')'
 			case 'oFULFILLMENT': return 'fulfillment(' + state.oblName + ')'
@@ -806,7 +866,7 @@ class SymgGenerator extends AbstractGenerator {
 	def compileCState(cState state) {
 		switch (state.contrState) {
 			case 'cFORM': return 'form(' + state.contractName + ')'
-			case 'cINEFFECT': return 'resumption(' + state.contractName + ')'
+			case 'cINEFFECT': return 'ineffect(' + state.contractName + ')'
 			case 'cSUSPENSION': return 'suspension(' + state.contractName + ')'
 			case 'cSUCCESSFUL_TERMINATION': return 'successfulTermination(' + state.contractName + ')'
 			case 'cUNSECCESSFUL_TERMINATION': return 'unsuccessfulTermination(' + state.contractName + ')'
@@ -817,10 +877,55 @@ class SymgGenerator extends AbstractGenerator {
 	def compilePState(pState state) {
 		switch (state.powState) {
 			case 'pCREATE': return 'create(' + state.powName + ')'
-			case 'pINEFFECT': return 'resumption(' + state.powName + ')'
+			case 'pINEFFECT': return 'ineffect(' + state.powName + ')'
 			case 'pSUSPENSION': return 'suspension(' + state.powName + ')'
 			case 'pSUCCESSFUL_TERMINATION': return 'successfulTermination(' + state.powName + ')'
 			case 'pUNSUCCESSFUL_TERMINATION': return 'unsuccessfulTermination(' + state.powName + ')'
+		}
+	}
+	
+	
+	def mapStateToEvent(SitName state) {
+		if (state.OState != null) {
+			return state.OState.mapOStateToEvent
+		}
+		if (state.CState != null) {
+			return state.CState.mapCStateToEvent
+		}
+		if (state.PState != null) {
+			return state.PState.mapPStateToEvent
+		}
+	}
+	
+	def mapOStateToEvent(oState state) {
+		switch (state.oblState) {
+			case 'oCREATE': return 'triggered(' + state.oblName + ')'
+			case 'oINEFFECT': return 'resumed(' + state.oblName + '),activated(' + state.oblName + '),triggered(' + state.oblName + ')'
+			case 'oSUSPENSION': return 'suspended(' + state.oblName + ')'
+			case 'oUNSUCCESSFUL_TERMINATION': return 'terminated(' + state.oblName + ')'
+			case 'oVIOLATION': return 'violated(' + state.oblName + ')'
+			case 'oFULFILLMENT': return 'fulfilled(' + state.oblName + ')'
+			case 'oDISCHARGE': return 'discharged(' + state.oblName + '),expired(' + state.oblName + ')'
+		}
+	}
+	
+	def mapCStateToEvent(cState state) {
+		switch (state.contrState) {
+			case 'cINEFFECT': return 'activated(' + state.contractName + '),assigned(' + state.contractName + '),resumed(' + state.contractName + ')'
+			case 'cSUSPENSION': return 'suspended(' + state.contractName + ')'
+			case 'cSUCCESSFUL_TERMINATION': return 'fulfilled(' + state.contractName + ')'
+			case 'cUNSECCESSFUL_TERMINATION': return 'terminated(' + state.contractName + ')'
+			case 'cUNASSIGN': return 'revoked(' + state.contractName + ')'
+		}
+	}
+	
+	def mapPStateToEvent(pState state) {
+		switch (state.powState) {
+			case 'pCREATE': return 'triggered(' + state.powName + ')'
+			case 'pINEFFECT': return 'triggered(' + state.powName + '),activated(' + state.powName + '),resumed(' + state.powName + ')'
+			case 'pSUSPENSION': return 'suspended(' + state.powName + ')'
+			case 'pSUCCESSFUL_TERMINATION': return 'exerted(' + state.powName + ')'
+			case 'pUNSUCCESSFUL_TERMINATION': return 'terminated(' + state.powName + '),expired(' + state.powName + ')'
 		}
 	}
 	
