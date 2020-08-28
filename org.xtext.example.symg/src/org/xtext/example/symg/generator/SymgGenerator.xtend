@@ -411,11 +411,7 @@ class SymgGenerator extends AbstractGenerator {
 			//situation is a declaration
 		}
 		else {
-			// compile interval
-			if (sProp.interval.unnamed != null) {
-				
-			}
-			
+			// compile situation
 			if (sProp.OSituationName != null) {
 				causes = sProp.OSituationName.mapOStateToEvent.split(",")
 			}
@@ -425,6 +421,95 @@ class SymgGenerator extends AbstractGenerator {
 			if (sProp.PSituationName != null) {
 				causes = sProp.PSituationName.mapPStateToEvent.split(",")
 			}
+			
+			// compile interval
+			if (sProp.interval.unnamed != null) {
+				res.append("(")
+				for (i : 0..< causes.length) {
+					res.append("happens(" + causes.get(i) + ",_)")
+					if (i < causes.length - 1) {
+						res.append(" ; ")
+					}
+				}
+				res.append(")")
+			}
+			else {
+				if (sProp.interval.start != null && sProp.interval.end != null) {
+					var start = new StringBuilder()
+					var end = new StringBuilder()
+					
+					eventNumber = sProp.interval.start.compilePoint(start, decl, eventNumber, powName, events)
+					eventNumber = sProp.interval.end.compilePoint(end, decl, eventNumber, powName, events)
+					
+					res.append("(")
+					for (i : 0..< causes.length) {
+						if (!events.containsKey(causes.get(i))) {
+							events.put(causes.get(i), eventNumber.toString)
+						}
+						res.append("happens(" + causes.get(i) + ",T" + events.get(causes.get(i)) + ")")
+						if (i < causes.length - 1) {
+							res.append(" ; ")
+						}
+					}
+					res.append("),")
+					res.append(start.toString + "<=T" + eventNumber + "<=" + end.toString)
+					eventNumber += 1
+				}
+				else {
+					if (sProp.interval.situationName != null) {
+						eventNumber = sProp.interval.situationName.declName.compileAddDeclSit(decl, eventNumber, powName, events)
+						res.append("(")
+						for (i : 0..< causes.length) {
+							if (!events.containsKey(causes.get(i))) {
+								events.put(causes.get(i), eventNumber.toString)
+							}
+							res.append("happens(" + causes.get(i) + ",T" + events.get(causes.get(i)))
+							if (sProp.interval.tempOp != null) {
+								res.append(sProp.interval.tempOp.compileTempOp)
+								res.append(sProp.interval.intConst.type)
+							}
+							res.append(")")
+							if (i < causes.length - 1) {
+								res.append(" ; ")
+							}
+						}
+						res.append("),")
+						res.append("T" + events.get(sProp.interval.situationName.declName))
+						if (sProp.interval.tempOp != null) {
+							res.append(sProp.interval.tempOp.compileTempOp + sProp.interval.intConst.type)
+						}
+						res.append("<=T" + eventNumber)
+						eventNumber += 1
+					}
+					else {
+						eventNumber = sProp.interval.situationName.compileState.compileAddSit(decl, eventNumber, powName, events)
+						res.append("(")
+						for (i : 0..< causes.length) {
+							if (!events.containsKey(causes.get(i))) {
+								events.put(causes.get(i), eventNumber.toString)
+							}
+							res.append("happens(" + causes.get(i) + ",T" + events.get(causes.get(i)))
+							if (sProp.interval.tempOp != null) {
+								res.append(sProp.interval.tempOp.compileTempOp)
+								res.append(sProp.interval.intConst.type)
+							}
+							res.append(")")
+							if (i < causes.length - 1) {
+								res.append(" ; ")
+							}
+						}
+						res.append("),")
+						res.append("T" + events.get(sProp.interval.situationName.compileState))
+						if (sProp.interval.tempOp != null) {
+							res.append(sProp.interval.tempOp.compileTempOp + sProp.interval.intConst.type)
+						}
+						res.append("<=T" + eventNumber)
+						eventNumber += 1
+					}
+				}
+			}
+			
+			res.append(decl.toString)
 		}
 		return eventNumber
 	}
