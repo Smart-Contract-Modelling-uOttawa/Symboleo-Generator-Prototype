@@ -261,11 +261,11 @@ class SymgGenerator extends AbstractGenerator {
 			model.powers.get(i).compilePowers(i+1, res)	
 		}	
 			
-//		res.append("\n## Surviving Obligations\n")
-//		// compiling surviving obligations
-//		for (i : 0..< model.sobligations.length) {
-//			model.sobligations.get(i).compileSObligations(i+1, res)
-//		}
+		res.append("\n## Surviving Obligations\n")
+		// compiling surviving obligations
+		for (i : 0..< model.sobligations.length) {
+			model.sobligations.get(i).compileSObligations(i+1, res)
+		}
 		
 		return res.toString
 	}
@@ -290,8 +290,16 @@ class SymgGenerator extends AbstractGenerator {
 		return bType.name
 	}
 	
+	//-----------------------------------------------------------------------//
+	//-------------------------Obligation Generator--------------------------//
+	//-----------------------------------------------------------------------//
+	
 	/**
 	 * Generate prolog code for obligation
+	 * 
+	 * @param Obligation obl obligation object
+	 * @param int i obligation number
+	 * @param StringBuilder res StringBuilder containing the result string
 	 */
 	def compileObligations(Obligation obl, int i, StringBuilder res) {
 		res.append("O(X)\t:-\tO" + i + "(X).\n")
@@ -302,17 +310,6 @@ class SymgGenerator extends AbstractGenerator {
 		obl.antecedent.compileOAntecedent(obl.name, res)
 		obl.trigger.compileTrigger(obl.name, res)
 		obl.consequent.compileOConsequent(obl.name, res)
-		res.append("\n\n")
-	}
-	
-	def compilePowers(Power pow, int i, StringBuilder res) {
-		res.append("P(X)\t:-\tP" + i + "(X).\n")
-		res.append("P" + i + "(" + pow.name + ").\n")
-		res.append("associate(" + pow.name + ",cArgToCan).\n\n")
-		res.append("initially(debtor(X,P))\t:-\tP" + i + "(X),initially(bind(" + pow.role1 + ",P)).\n")
-		res.append("initially(creditor(X,P))\t:-\tP" + i + "(X),initially(bind(" + pow.role2 + ",P)).\n\n")
-		pow.trigger.compileTrigger(pow.name, res)
-		pow.consequent.compilePConsequent(pow.name, res)
 		res.append("\n\n")
 	}
 	
@@ -334,10 +331,448 @@ class SymgGenerator extends AbstractGenerator {
 		res.append(".\n")
 	}
 	
+	/**
+	 * Helper function to generate code for trigger
+	 */
+	def compileTrigger(Proposition prop, String oblName, StringBuilder res) {
+	 	res.append("initiates(E0, trigger(" + oblName + "))\t:-\t")
+	 	if (prop != null) {
+	 		prop.obligationCompileOrs(res, oblName)
+	 	}
+	 	else {
+	 		res.append("happens(E0,_),initiates(E0,inEffect(cArgToCan))")
+	 	}
+	 	res.append(".\n")
+	 }
+	 
+	 /**
+	  * Compiles the ORs in a composite proposition and add's the returned string to res
+	  * 
+	  * @param Proposition prop a composite of atoms connected by ANDS
+	  * @param StringBuilder res StringBuilder containing result string
+	  * @param String oblName name of parent obligation
+	  */
+	def obligationCompileOrs(Proposition prop, StringBuilder res, String oblName) {
+		var resProp = new StringBuilder()
+		var events = new HashMap<String, String>() // maps value of event to some time number that it corresponds to
+		var eventNumber = 0
+		
+		for (i : 0..< prop.junctions.length) {
+			resProp.append("(")
+			prop.junctions.get(i).obligationCompileAnds(resProp, eventNumber, oblName, events)
+			resProp.append(")")
+			events.clear() // clear hashmap when moving to new or
+			if (i < prop.junctions.length - 1) {
+				resProp.append(" ; ")
+			}	
+		}
+		
+		res.append(resProp.toString)
+	}
+	
+	/**
+	 * Recursive function for ORs in case one of the atoms was a nested proposition (we would then need to compile all the ORS in that proposition)
+	 * 
+	  * @param Proposition prop a composite of atoms connected by ANDS
+	  * @param StringBuilder res StringBuilder containing result string
+	  * @param int d next available numbering for events
+	  * @param String oblName name of parent obligation
+	  * @param HashMap<String,String> events hashmap mapping events to an event number
+	  * 
+	  * @return max numbering of events in ORs
+	 */
+	def obligationCompileOrs(Proposition prop, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
+		var resProp = new StringBuilder()
+		var eventNumber = d
+		var mx = d 
+		
+		for (i : 0..< prop.junctions.length) {
+			var eventsCopy = new HashMap<String,String>() // deep copy of input events
+			for (key : events.keySet) {
+				eventsCopy.put(key, events.get(key))
+			}
+			resProp.append("(")
+			mx = Math.max(mx, prop.junctions.get(i).obligationCompileAnds(resProp, eventNumber, oblName, eventsCopy))
+			resProp.append(")")
+			if (i < prop.junctions.length - 1) {
+				resProp.append(" ; ")
+			}
+		}
+		
+		res.append(resProp.toString)
+		return mx
+	}
+	
+	/**
+	 * Compiles the ANDs in the composite junction and add's the returned string to res
+	 * 
+	 * @param Junction or a junction in the proposition (is a composite of atoms connected by ANDs)
+	 * @param StringBuilder res StringBuilder containing result string
+	 * @param int d next available numbering for events
+	 * @param String oblName name of parent obligation
+	 * @param HashMap<String,String> events hashmap mapping events to an event number
+	 * 
+	 * @return next available numbering for event
+	 */
+	def int obligationCompileAnds(Junction or, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
+		var eventNumber = d
+		for (i : 0..< or.negativeAtoms.length) {
+			/**
+			 * compile through each AND. throughout the process we keep counting from the previous d (ex. happens(E1, T1) AND happens(E2, T2)).
+			 * Here, we maintain the events that have been seen.
+			 */
+			eventNumber = or.negativeAtoms.get(i).obligationCompileNegs(res, eventNumber, oblName, events)
+			if (i < or.negativeAtoms.length - 1) {
+				res.append(',')
+			}
+		}
+		
+		return eventNumber
+	}
+	
+	/**
+	 * Compiles the atom (possibly negated) and add's the returned string to res
+	 * 
+	 * @param Negation atom atom that is possibly negated
+	 * @param StringBuilder res StringBuilder containing result string
+	 * @param int d next available numbering for events
+	 * @param String oblName name of parent obligation
+	 * @param HashMap<String,String> events hashmap mapping events to an event number
+	 * 
+	 * @return next available numbering for event
+	 */
+	def obligationCompileNegs(Negation atom, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
+		var eventNumber = d
+		if (atom.negated) {
+			res.append("\\+(")
+			eventNumber = atom.atomicExpression.obligationCompileAtom(res, eventNumber, oblName, events)
+			res.append(")")
+		}
+		else {
+			eventNumber = atom.atomicExpression.obligationCompileAtom(res, eventNumber, oblName, events)
+		}
+		
+		return eventNumber
+	}
+	
+	/**
+	 * Compiles the atom and add's the returned string to res
+	 * 
+	 * @param Atom atom atomic expression
+	 * @param StringBuilder res StringBuilder containing result string
+	 * @param int d next available numbering for events
+	 * @param String oblName name of parent obligation
+	 * @param HashMap<String,String> events hashmap mapping events to an event number
+	 * 
+	 * @return next available numbering for event
+	 */
+	def obligationCompileAtom(Atom atom, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
+		var eventNumber = d
+		if (atom.bool == 'TRUE') {
+			res.append("TRUE")	
+		}
+		if (atom.bool == 'FALSE') {
+			res.append("FALSE")
+		}
+		
+		if (atom.eventProposition != null) {
+			eventNumber = atom.eventProposition.obligationCompileEventProp(res, eventNumber, oblName, events)
+		}
+		if (atom.inner != null) {
+			eventNumber = atom.inner.obligationCompileOrs(res, eventNumber, oblName, events)
+		}
+		if (atom.situationProposition != null) {
+			eventNumber = atom.situationProposition.obligationCompileSituationProp(res, eventNumber, oblName, events)
+		}
+		if (atom.point != null && atom.interval != null) {
+			eventNumber = atom.point.obligationCompilePointInInterval(atom.interval, res, eventNumber, oblName, events)
+		}
+
+		return eventNumber
+	}
+	
+	/**
+	 * Compiles the atom (happens event)
+	 * 
+	 * @param EventProp eProp event and time pair
+	 * @param StringBuilder res StringBuilder containing result string
+	 * @param int d next available numbering for events
+	 * @param String oblName name of parent obligation
+	 * @param HashMap<String,String> events hashmap mapping events to an event number
+	 * 
+	 * @return next available numbering for event
+	 */
+	def obligationCompileEventProp(EventProp eProp, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
+		var eventNumber = d
+		var decl = new StringBuilder()
+		
+		res.append("happens(")
+		if (eProp.eventName != null) {
+			// event is a declaration
+			if (!events.containsKey(eProp.eventName.name)) {
+				decl.append(",within(E" + eventNumber + ",performer(E" + eventNumber + "," + oblName + ")),")
+				decl.append(eProp.eventName.name + "(E" + eventNumber + ")")
+				events.put(eProp.eventName.name, eventNumber.toString)
+				eventNumber += 1
+			}
+			res.append("E" + events.get(eProp.eventName.name))
+		}
+		else {
+			if (eProp.OEventName != null) {
+				res.append(eProp.OEventName.compileOEvent)
+			}
+			if (eProp.CEventName != null) {
+				res.append(eProp.CEventName.compileCEvent)
+			}
+			if (eProp.PEventName != null) {
+				res.append(eProp.PEventName.compilePEvent)
+			}
+		}
+		res.append(",")
+		eventNumber = eProp.point.compilePoint(res, decl, eventNumber, oblName, events)
+		res.append(")")
+		res.append(decl.toString)
+		return eventNumber
+	}
+	
+	/**
+	 * Helper function to compile a point in time
+	 */
+	def compilePoint(Point point, StringBuilder res, StringBuilder decl, int d, String oblName, HashMap<String, String> events) {
+		var eventNumber = d
+		
+		if (point.unnamed != null) {
+			res.append("_")
+		}
+		else if (point.eventName != null) {
+			if (point.eventName.declName != null) {
+				eventNumber = point.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+				res.append("T" + events.get(point.eventName.declName))
+			}
+			else {
+				eventNumber = point.eventName.compileEvent.compileAddEvent(decl, eventNumber, oblName, events)
+				res.append("T" + events.get(point.eventName.compileEvent))
+			}
+			
+			if (point.tempOp != null) {
+				res.append(point.tempOp.compileTempOp + point.pointConst.type)
+			}
+		}
+		else {
+			res.append(point.pointConst.type)
+		}
+		
+		return eventNumber	
+	}
+	
+	/**
+	 * Compiles the atom (occurs)
+	 * 
+	 * @param SitProp sProp situation and interval pair
+	 * @param StringBuilder res StringBuilder containing result string
+	 * @param int d next available numbering for events
+	 * @param String oblName name of parent obligation
+	 * @param HashMap<String,String> events hashmap mapping events to an event number
+	 * 
+	 * @return next available numbering for event
+	 */
+	def obligationCompileSituationProp(SitProp sProp, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
+		var eventNumber = d
+		var decl = new StringBuilder()
+		
+		//compile the situation
+		res.append("occurs(")
+		if (sProp.situationName != null) {
+			//situation is a declaration
+			eventNumber = sProp.situationName.compileAddDeclSit(decl,eventNumber, oblName, events)
+			res.append("S" + events.get(sProp.situationName))
+		}
+		else {
+			if (sProp.OSituationName != null) {
+				res.append(sProp.OSituationName.compileOState)
+			}
+			if (sProp.CSituationName != null) {
+				res.append(sProp.CSituationName.compileCState)
+			}
+			if (sProp.PSituationName != null) {
+				res.append(sProp.PSituationName.compilePState)
+			}
+		}
+		res.append(",")
+		
+		// compile interval
+		if (sProp.interval.unnamed != null) {
+			// interval is unnamed
+			res.append("_)")
+		}
+		else {
+			res.append("[")
+			if (sProp.interval.start != null && sProp.interval.end != null) {
+				// interval is two points
+				var start = new StringBuilder()
+				var end = new StringBuilder()
+				// compile start
+				eventNumber = sProp.interval.start.compilePoint(res, decl, eventNumber, oblName, events)
+				sProp.interval.start.compilePoint(start, decl, eventNumber, oblName, events)				
+				res.append(",")
+				// compile end
+				eventNumber = sProp.interval.end.compilePoint(res, decl, eventNumber, oblName, events)
+				sProp.interval.end.compilePoint(end, decl, eventNumber, oblName, events)
+				res.append("]),")
+				
+				// if neither point is null then start is before end
+				if (start.toString != "_" && end.toString != "_") {
+					res.append(start.toString + "<=" + end.toString)
+				}
+			}
+			else {
+				// interval is a situation
+				if (sProp.interval.situationName.declName != null) {
+					// the situation is a declaration
+					eventNumber = sProp.interval.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
+					res.append("T" + events.get(sProp.interval.situationName.declName))
+				}
+				else {
+					// the situation is oState, cState, pState
+					eventNumber = sProp.interval.situationName.compileState.compileAddSit(decl, eventNumber, oblName, events)
+					res.append("T" + events.get(sProp.interval.situationName.compileState))
+				}
+				
+				if (sProp.interval.tempOp != null) {
+					res.append(sProp.interval.tempOp.compileTempOp + sProp.interval.intConst.type)
+				}
+				
+				res.append(",_])")
+			}
+			
+		}
+			
+		res.append(decl.toString)
+			
+		return eventNumber
+	}
+	
+	/**
+	 * Compiles the atom (point within interval)
+	 * 
+	 * @param Point point point in time
+	 * @param Interval interval interval in time
+	 * @param StringBuilder res StringBuilder containing result string
+	 * @param int d next available numbering for events
+	 * @param String oblName name of parent obligation
+	 * @param HashMap<String,String> events hashmap mapping events to an event number
+	 * 
+	 * @return next available numbering for event
+	 */
+	def obligationCompilePointInInterval(Point point, Interval interval, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
+		var eventNumber = d
+		var decl = new StringBuilder()
+		var time = new StringBuilder()
+		var start = new StringBuilder()
+		var end = new StringBuilder()
+		
+		// compile point
+		eventNumber = point.compilePoint(time, decl, eventNumber, oblName, events)
+		
+		// compile interval
+		if (interval.unnamed != null) {
+			// I think this should be invalid
+		}
+		else {
+			if (interval.start != null && interval.end != null) {
+				// interval is two points
+				// compile start
+				eventNumber = interval.start.compilePoint(start, decl, eventNumber, oblName, events)
+				// compile end
+				eventNumber = interval.end.compilePoint(end, decl, eventNumber, oblName, events)
+			}
+			else {
+				// interval is a situation
+				if (interval.situationName.declName != null) {
+					// the situation is a declaration
+					eventNumber = interval.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
+					start.append("T" + events.get(interval.situationName.declName))
+				}
+				else {
+					// the situation is an oState, cState, pState
+					eventNumber = interval.situationName.compileState.compileAddSit(decl, eventNumber, oblName, events)
+					start.append("T" + events.get(interval.situationName.compileState))
+				}
+				
+				if (interval.tempOp != null) {
+					start.append(interval.tempOp.compileTempOp + interval.intConst.type)
+				}
+				
+				
+			}
+			
+			// ensure that start <= point <= end times
+			if (start.toString != "_" && start.toString != "") {
+				res.append(start.toString + "<=" + time.toString)
+			}
+			if (start.toString != "_" && end.toString != "_" && start.toString != "" && end.toString != "") {
+				res.append(",")
+			}
+			if (end.toString != "_" && end.toString != "") {
+				res.append(time.toString + "<=" + end.toString)
+			}
+		}
+		
+		res.append(decl.toString)
+		return eventNumber
+	}
+	
+	//-----------------------------------------------------------------------//
+	//-------------------Surviving Obligation Generator----------------------//
+	//-----------------------------------------------------------------------//
+	
+	/**
+	 * Generates prolog code for Surviving Obligations
+	 * 
+	 * @param Obligation obl surviving obligation
+	 * @param int i obligation number
+	 * @param StringBuilder res StringBuilder containing the result string
+	 */
+	def compileSObligations(Obligation obl, int i, StringBuilder res) {
+		res.append("SO(X)\t:-\tSO" + i + "(X).\n")
+		res.append("SO" + i + "(" + obl.name + ").\n")
+		res.append("associate(" + obl.name + ",cArgToCan).\n\n")
+		res.append("initially(debtor(X,P))\t:-\tSO" + i + "(X),initially(bind(" + obl.role1 + ",P)).\n")
+		res.append("initially(creditor(X,P))\t:-\tSO" + i + "(X),initially(bind(" + obl.role2 + ",P)).\n\n")
+		obl.antecedent.compileOAntecedent(obl.name, res)
+		obl.trigger.compileTrigger(obl.name, res)
+		obl.consequent.compileOConsequent(obl.name, res)
+		res.append("\n\n")
+	}
+	
+	//-----------------------------------------------------------------------//
+	//---------------------------Power Generator-----------------------------//
+	//-----------------------------------------------------------------------//
+	
+	def compilePowers(Power pow, int i, StringBuilder res) {
+		res.append("P(X)\t:-\tP" + i + "(X).\n")
+		res.append("P" + i + "(" + pow.name + ").\n")
+		res.append("associate(" + pow.name + ",cArgToCan).\n\n")
+		res.append("initially(debtor(X,P))\t:-\tP" + i + "(X),initially(bind(" + pow.role1 + ",P)).\n")
+		res.append("initially(creditor(X,P))\t:-\tP" + i + "(X),initially(bind(" + pow.role2 + ",P)).\n\n")
+		pow.trigger.compileTrigger(pow.name, res)
+		pow.consequent.compilePConsequent(pow.name, res)
+		res.append("\n\n")
+	}
+	
 	def compilePConsequent(Proposition prop, String powName, StringBuilder res) {
+		for (or : prop.junctions) {
+			or.powerCompileStates(res, powName)
+			res.append("\t:-\tcons(" + powName + ").\n")
+		}
+		
 		res.append("happens(exerted(" + powName + "), T0))\t:-\t")
 		prop.powerCompileOrs(res, powName)
 		res.append(".\n")
+	}
+	
+	def powerCompileStates(Junction or, StringBuilder res, String powName) {
+		
 	}
 	
 	def powerCompileOrs(Proposition prop, StringBuilder res, String powName) {
@@ -514,306 +949,13 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
-	def compileTrigger(Proposition prop, String oblName, StringBuilder res) {
-	 	res.append("initiates(E0, trigger(" + oblName + "))\t:-\t")
-	 	if (prop != null) {
-	 		prop.obligationCompileOrs(res, oblName)
-	 	}
-	 	else {
-	 		res.append("happens(E0,_),initiates(E0,inEffect(cArgToCan))")
-	 	}
-	 	res.append(".\n")
-	 }
-
-	def obligationCompileOrs(Proposition prop, StringBuilder res, String oblName) {
-		var resProp = new StringBuilder()
-		var events = new HashMap<String, String>() // maps value of event to some time number that it corresponds to
-		var eventNumber = 0
-		
-		for (i : 0..< prop.junctions.length) {
-			resProp.append("(")
-			prop.junctions.get(i).obligationCompileAnds(resProp, eventNumber, oblName, events)
-			resProp.append(")")
-			events.clear() // clear hashmap when moving to new or
-			if (i < prop.junctions.length - 1) {
-				resProp.append(" ; ")
-			}	
-		}
-		
-		res.append(resProp.toString)
-	}
+	//-----------------------------------------------------------------------//
+	//---------------------------Helper Functions----------------------------//
+	//-----------------------------------------------------------------------//
 	
-	def obligationCompileOrs(Proposition prop, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
-		var resProp = new StringBuilder()
-		var eventNumber = d
-		var mx = d 
-		
-		for (i : 0..< prop.junctions.length) {
-			var eventsCopy = new HashMap<String,String>() // deep copy of input events
-			for (key : events.keySet) {
-				eventsCopy.put(key, events.get(key))
-			}
-			resProp.append("(")
-			mx = Math.max(mx, prop.junctions.get(i).obligationCompileAnds(resProp, eventNumber, oblName, eventsCopy))
-			resProp.append(")")
-			if (i < prop.junctions.length - 1) {
-				resProp.append(" ; ")
-			}
-		}
-		
-		res.append(resProp.toString)
-		return mx
-	}
-	
-	def int obligationCompileAnds(Junction or, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
-		var eventNumber = d
-		for (i : 0..< or.negativeAtoms.length) {
-			/**
-			 * compile through each AND. throughout the process we keep counting from the previous d (ex. happens(E1, T1) AND happens(E2, T2)).
-			 * Here, we maintain the events that have been seen.
-			 */
-			eventNumber = or.negativeAtoms.get(i).obligationCompileNegs(res, eventNumber, oblName, events)
-			if (i < or.negativeAtoms.length - 1) {
-				res.append(',')
-			}
-		}
-		
-		return eventNumber
-	}
-	
-	def obligationCompileNegs(Negation atom, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
-		var eventNumber = d
-		if (atom.negated) {
-			res.append("\\+(")
-			eventNumber = atom.atomicExpression.obligationCompileAtom(res, eventNumber, oblName, events)
-			res.append(")")
-		}
-		else {
-			eventNumber = atom.atomicExpression.obligationCompileAtom(res, eventNumber, oblName, events)
-		}
-		
-		return eventNumber
-	}
-	
-	def obligationCompileAtom(Atom atom, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
-		var eventNumber = d
-		if (atom.bool == 'TRUE') {
-			res.append("TRUE")	
-		}
-		if (atom.bool == 'FALSE') {
-			res.append("FALSE")
-		}
-		
-		if (atom.eventProposition != null) {
-			eventNumber = atom.eventProposition.obligationCompileEventProp(res, eventNumber, oblName, events)
-		}
-		if (atom.inner != null) {
-			eventNumber = atom.inner.obligationCompileOrs(res, eventNumber, oblName, events)
-		}
-		if (atom.situationProposition != null) {
-			eventNumber = atom.situationProposition.obligationCompileSituationProp(res, eventNumber, oblName, events)
-		}
-		if (atom.point != null && atom.interval != null) {
-			eventNumber = atom.point.obligationCompilePointInInterval(atom.interval, res, eventNumber, oblName, events)
-		}
-
-		return eventNumber
-	}
-	
-	def obligationCompileEventProp(EventProp eProp, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
-		var eventNumber = d
-		var decl = new StringBuilder()
-		
-		res.append("happens(")
-		if (eProp.eventName != null) {
-			// event is a declaration
-			if (!events.containsKey(eProp.eventName.name)) {
-				decl.append(",within(E" + eventNumber + ",performer(E" + eventNumber + "," + oblName + ")),")
-				decl.append(eProp.eventName.name + "(E" + eventNumber + ")")
-				events.put(eProp.eventName.name, eventNumber.toString)
-				eventNumber += 1
-			}
-			res.append("E" + events.get(eProp.eventName.name))
-		}
-		else {
-			if (eProp.OEventName != null) {
-				res.append(eProp.OEventName.compileOEvent)
-			}
-			if (eProp.CEventName != null) {
-				res.append(eProp.CEventName.compileCEvent)
-			}
-			if (eProp.PEventName != null) {
-				res.append(eProp.PEventName.compilePEvent)
-			}
-		}
-		res.append(",")
-		eventNumber = eProp.point.compilePoint(res, decl, eventNumber, oblName, events)
-		res.append(")")
-		res.append(decl.toString)
-		return eventNumber
-	}
-	
-	def compilePoint(Point point, StringBuilder res, StringBuilder decl, int d, String oblName, HashMap<String, String> events) {
-		var eventNumber = d
-		
-		if (point.unnamed != null) {
-			res.append("_")
-		}
-		else if (point.eventName != null) {
-			if (point.eventName.declName != null) {
-				eventNumber = point.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
-				res.append("T" + events.get(point.eventName.declName))
-			}
-			else {
-				eventNumber = point.eventName.compileEvent.compileAddEvent(decl, eventNumber, oblName, events)
-				res.append("T" + events.get(point.eventName.compileEvent))
-			}
-			
-			if (point.tempOp != null) {
-				res.append(point.tempOp.compileTempOp + point.pointConst.type)
-			}
-		}
-		else {
-			res.append(point.pointConst.type)
-		}
-		
-		return eventNumber	
-	}
-	
-	def obligationCompileSituationProp(SitProp sProp, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
-		var eventNumber = d
-		var decl = new StringBuilder()
-		
-		//compile the situation
-		res.append("occurs(")
-		if (sProp.situationName != null) {
-			//situation is a declaration
-			eventNumber = sProp.situationName.compileAddDeclSit(decl,eventNumber, oblName, events)
-			res.append("S" + events.get(sProp.situationName))
-		}
-		else {
-			if (sProp.OSituationName != null) {
-				res.append(sProp.OSituationName.compileOState)
-			}
-			if (sProp.CSituationName != null) {
-				res.append(sProp.CSituationName.compileCState)
-			}
-			if (sProp.PSituationName != null) {
-				res.append(sProp.PSituationName.compilePState)
-			}
-		}
-		res.append(",")
-		
-		// compile interval
-		if (sProp.interval.unnamed != null) {
-			// interval is unnamed
-			res.append("_)")
-		}
-		else {
-			res.append("[")
-			if (sProp.interval.start != null && sProp.interval.end != null) {
-				// interval is two points
-				var start = new StringBuilder()
-				var end = new StringBuilder()
-				// compile start
-				eventNumber = sProp.interval.start.compilePoint(res, decl, eventNumber, oblName, events)
-				sProp.interval.start.compilePoint(start, decl, eventNumber, oblName, events)				
-				res.append(",")
-				// compile end
-				eventNumber = sProp.interval.end.compilePoint(res, decl, eventNumber, oblName, events)
-				sProp.interval.end.compilePoint(end, decl, eventNumber, oblName, events)
-				res.append("]),")
-				
-				// if neither point is null then start is before end
-				if (start.toString != "_" && end.toString != "_") {
-					res.append(start.toString + "<=" + end.toString)
-				}
-			}
-			else {
-				// interval is a situation
-				if (sProp.interval.situationName.declName != null) {
-					// the situation is a declaration
-					eventNumber = sProp.interval.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
-					res.append("T" + events.get(sProp.interval.situationName.declName))
-				}
-				else {
-					// the situation is oState, cState, pState
-					eventNumber = sProp.interval.situationName.compileState.compileAddSit(decl, eventNumber, oblName, events)
-					res.append("T" + events.get(sProp.interval.situationName.compileState))
-				}
-				
-				if (sProp.interval.tempOp != null) {
-					res.append(sProp.interval.tempOp.compileTempOp + sProp.interval.intConst.type)
-				}
-				
-				res.append(",_])")
-			}
-			
-		}
-			
-		res.append(decl.toString)
-			
-		return eventNumber
-	}
-	
-	def obligationCompilePointInInterval(Point point, Interval interval, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
-		var eventNumber = d
-		var decl = new StringBuilder()
-		var time = new StringBuilder()
-		var start = new StringBuilder()
-		var end = new StringBuilder()
-		
-		// compile point
-		eventNumber = point.compilePoint(time, decl, eventNumber, oblName, events)
-		
-		// compile interval
-		if (interval.unnamed != null) {
-			// I think this should be invalid
-		}
-		else {
-			if (interval.start != null && interval.end != null) {
-				// interval is two points
-				// compile start
-				eventNumber = interval.start.compilePoint(start, decl, eventNumber, oblName, events)
-				// compile end
-				eventNumber = interval.end.compilePoint(end, decl, eventNumber, oblName, events)
-			}
-			else {
-				// interval is a situation
-				if (interval.situationName.declName != null) {
-					// the situation is a declaration
-					eventNumber = interval.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
-					start.append("T" + events.get(interval.situationName.declName))
-				}
-				else {
-					// the situation is an oState, cState, pState
-					eventNumber = interval.situationName.compileState.compileAddSit(decl, eventNumber, oblName, events)
-					start.append("T" + events.get(interval.situationName.compileState))
-				}
-				
-				if (interval.tempOp != null) {
-					start.append(interval.tempOp.compileTempOp + interval.intConst.type)
-				}
-				
-				
-			}
-			
-			// ensure that start <= point <= end times
-			if (start.toString != "_") {
-				res.append(start.toString + "<=" + time.toString)
-			}
-			if (start.toString != "_" && end.toString != "_") {
-				res.append(",")
-			}
-			if (end.toString != "_") {
-				res.append(time.toString + "<=" + end.toString)
-			}
-		}
-		
-		res.append(decl.toString)
-		return eventNumber
-	}
-	
+	/**
+	 * Adds a declaration event to the events hashmap
+	 */
 	def compileAddDeclEvent(String declEvent, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		
@@ -828,6 +970,9 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
+	/**
+	 * Adds a regular event to the events hashmap
+	 */
 	def compileAddEvent(String event, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		
@@ -840,6 +985,9 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
+	/**
+	 * Adds a regular situation to the events hashmap
+	 */
 	def compileAddSit(String situation, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		
@@ -852,6 +1000,9 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
+	/**
+	 * Adds a declaration situation to the events hashmap
+	 */
 	def compileAddDeclSit(String declSit, StringBuilder res, int d, String oblName, HashMap<String, String> events) {
 		var eventNumber = d
 		
@@ -865,6 +1016,9 @@ class SymgGenerator extends AbstractGenerator {
 		return eventNumber
 	}
 	
+	/**
+	 * Returns String corresponding to a symboleo operator
+	 */
 	def compileTempOp(String TempOp) {
 		switch (TempOp) {
 			case 'BEFORE': return "-"
@@ -874,6 +1028,9 @@ class SymgGenerator extends AbstractGenerator {
 		}
 	}
 	
+	/**
+	 * Returns string corresponding to an event
+	 */
 	def compileEvent(SitName event) {
 		if (event.OEvent != null) {
 			return event.OEvent.compileOEvent
@@ -924,6 +1081,9 @@ class SymgGenerator extends AbstractGenerator {
 		}
 	}
 	
+	/**
+	 * Returns string corresponding to a situation
+	 */
 	def compileState(SitName state) {
 		if (state.OState != null) {
 			return state.OState.compileOState

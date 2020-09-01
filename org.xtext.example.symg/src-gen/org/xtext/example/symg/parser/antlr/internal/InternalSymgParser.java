@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalSymgParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'Domain'", "';'", "'endDomain'", "'Contract'", "'('", "','", "')'", "'Declarations'", "'Preconditions'", "'Postconditions'", "'Obligations'", "'Surviving'", "'Powers'", "'Constraints'", "'endContract'", "'isA'", "'with'", "':'", "'Enumeration'", "'NUMBER'", "'STRING'", "'DATE'", "'ASSET'", "'EVENT'", "'ROLE'", "'SITUATION'", "'CONTRACT'", "':='", "'->'", "'obligation'", "'power'", "'OR'", "'AND'", "'NOT'", "'happens'", "'occurs'", "'within'", "'TRUE'", "'FALSE'", "'['", "']'", "'UNNAMED_INTERVAL'", "'SECONDS'", "'MINUTES'", "'HOURS'", "'DAYS'", "'WEEKS'", "'MONTHS'", "'QUARTERS'", "'YEARS'", "'BEFORE'", "'AFTER'", "'AT'", "'WITHIN'", "'+'", "'-'", "'UNNAMED_POINT'", "'pTRIGGERED'", "'pACTIVATED'", "'pSUSPENDED'", "'pRESUMED'", "'pEXERTED'", "'pEXPIRED'", "'pTERMINATED'", "'cACTIVATED'", "'cSUSPENDED'", "'cRESUMED'", "'cFULFILLED_ACTIVE_OBLS'", "'cREVOKED_PARTY'", "'cASSIGNED_PARTY'", "'cTERMINATED'", "'oTRIGGERED'", "'oACTIVATED'", "'oSUSPENDED'", "'oRESUMED'", "'oDISCHARGED'", "'oEXPIRED'", "'oFULFILLED'", "'oVIOLATED'", "'oTERMINATED'", "'oCREATE'", "'oINEFFECT'", "'oSUSPENSION'", "'oSUCCESSFUL_TERMINATION'", "'oUNSUCCESSFUL_TERMINATION'", "'oVIOLATION'", "'oFULFILLMENT'", "'oDISCHARGE'", "'cFORM'", "'cINEFFECT'", "'cSUSPENSION'", "'cSUCCESSFUL_TERMINATION'", "'cUNSECCESSFUL_TERMINATION'", "'cUNASSIGN'", "'pCREATE'", "'pINEFFECT'", "'pSUSPENSION'", "'pSUCCESSFUL_TERMINATION'", "'pUNSUCCESSFUL_TERMINATION'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'Domain'", "';'", "'endDomain'", "'Contract'", "'('", "','", "')'", "'Declarations'", "'Preconditions'", "'Postconditions'", "'Obligations'", "'Surviving'", "'Powers'", "'Constraints'", "'endContract'", "'isA'", "'with'", "':'", "'Enumeration'", "'NUMBER'", "'STRING'", "'DATE'", "'ASSET'", "'EVENT'", "'ROLE'", "'SITUATION'", "'CONTRACT'", "':='", "'->'", "'obligation'", "'power'", "'OR'", "'AND'", "'NOT'", "'happens'", "'occurs'", "'within'", "'TRUE'", "'FALSE'", "'['", "']'", "'UNNAMED_INTERVAL'", "'SECONDS'", "'MINUTES'", "'HOURS'", "'DAYS'", "'WEEKS'", "'MONTHS'", "'QUARTERS'", "'YEARS'", "'BEFORE'", "'AFTER'", "'AT'", "'WITHIN'", "'+'", "'-'", "'UNNAMED_POINT'", "'pTRIGGERED'", "'pACTIVATED'", "'pSUSPENDED'", "'pRESUMED'", "'pEXERTED'", "'pEXPIRED'", "'pTERMINATED'", "'cACTIVATED'", "'cSUSPENDED'", "'cRESUMED'", "'cFULFILLED_ACTIVE_OBLS'", "'cREVOKED_PARTY'", "'cASSIGNED_PARTY'", "'cTERMINATED'", "'oTRIGGERED'", "'oACTIVATED'", "'oSUSPENDED'", "'oRESUMED'", "'oDISCHARGED'", "'oEXPIRED'", "'oFULFILLED'", "'oVIOLATED'", "'oTERMINATED'", "'oCREATE'", "'oINEFFECT'", "'oSUSPENSION'", "'oUNSUCCESSFUL_TERMINATION'", "'oVIOLATION'", "'oFULFILLMENT'", "'oDISCHARGE'", "'cFORM'", "'cINEFFECT'", "'cSUSPENSION'", "'cSUCCESSFUL_TERMINATION'", "'cUNSECCESSFUL_TERMINATION'", "'cUNASSIGN'", "'pCREATE'", "'pINEFFECT'", "'pSUSPENSION'", "'pSUCCESSFUL_TERMINATION'", "'pUNSUCCESSFUL_TERMINATION'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -121,7 +121,6 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
     public static final int T__108=108;
     public static final int T__89=89;
     public static final int T__107=107;
-    public static final int T__109=109;
     public static final int T__84=84;
     public static final int T__104=104;
     public static final int T__85=85;
@@ -652,7 +651,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                         int alt5=2;
                         int LA5_0 = input.LA(1);
 
-                        if ( ((LA5_0>=RULE_ID && LA5_0<=RULE_INT)||LA5_0==15||(LA5_0>=44 && LA5_0<=46)||(LA5_0>=48 && LA5_0<=49)||(LA5_0>=67 && LA5_0<=109)) ) {
+                        if ( ((LA5_0>=RULE_ID && LA5_0<=RULE_INT)||LA5_0==15||(LA5_0>=44 && LA5_0<=46)||(LA5_0>=48 && LA5_0<=49)||(LA5_0>=67 && LA5_0<=108)) ) {
                             alt5=1;
                         }
 
@@ -732,7 +731,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                         int alt7=2;
                         int LA7_0 = input.LA(1);
 
-                        if ( ((LA7_0>=RULE_ID && LA7_0<=RULE_INT)||LA7_0==15||(LA7_0>=44 && LA7_0<=46)||(LA7_0>=48 && LA7_0<=49)||(LA7_0>=67 && LA7_0<=109)) ) {
+                        if ( ((LA7_0>=RULE_ID && LA7_0<=RULE_INT)||LA7_0==15||(LA7_0>=44 && LA7_0<=46)||(LA7_0>=48 && LA7_0<=49)||(LA7_0>=67 && LA7_0<=108)) ) {
                             alt7=1;
                         }
 
@@ -1056,7 +1055,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                         int alt15=2;
                         int LA15_0 = input.LA(1);
 
-                        if ( ((LA15_0>=RULE_ID && LA15_0<=RULE_INT)||LA15_0==15||(LA15_0>=44 && LA15_0<=46)||(LA15_0>=48 && LA15_0<=49)||(LA15_0>=67 && LA15_0<=109)) ) {
+                        if ( ((LA15_0>=RULE_ID && LA15_0<=RULE_INT)||LA15_0==15||(LA15_0>=44 && LA15_0<=46)||(LA15_0>=48 && LA15_0<=49)||(LA15_0>=67 && LA15_0<=108)) ) {
                             alt15=1;
                         }
 
@@ -3378,7 +3377,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
             int alt26=2;
             int LA26_0 = input.LA(1);
 
-            if ( ((LA26_0>=RULE_ID && LA26_0<=RULE_INT)||LA26_0==15||(LA26_0>=44 && LA26_0<=46)||(LA26_0>=48 && LA26_0<=49)||(LA26_0>=67 && LA26_0<=109)) ) {
+            if ( ((LA26_0>=RULE_ID && LA26_0<=RULE_INT)||LA26_0==15||(LA26_0>=44 && LA26_0<=46)||(LA26_0>=48 && LA26_0<=49)||(LA26_0>=67 && LA26_0<=108)) ) {
                 alt26=1;
             }
             switch (alt26) {
@@ -3689,7 +3688,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
             int alt27=2;
             int LA27_0 = input.LA(1);
 
-            if ( ((LA27_0>=RULE_ID && LA27_0<=RULE_INT)||LA27_0==15||(LA27_0>=44 && LA27_0<=46)||(LA27_0>=48 && LA27_0<=49)||(LA27_0>=67 && LA27_0<=109)) ) {
+            if ( ((LA27_0>=RULE_ID && LA27_0<=RULE_INT)||LA27_0==15||(LA27_0>=44 && LA27_0<=46)||(LA27_0>=48 && LA27_0<=49)||(LA27_0>=67 && LA27_0<=108)) ) {
                 alt27=1;
             }
             switch (alt27) {
@@ -4508,7 +4507,6 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
             case 106:
             case 107:
             case 108:
-            case 109:
                 {
                 alt31=4;
                 }
@@ -4925,26 +4923,25 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
             case 95:
             case 96:
             case 97:
-            case 98:
                 {
                 alt32=2;
                 }
                 break;
+            case 98:
             case 99:
             case 100:
             case 101:
             case 102:
             case 103:
-            case 104:
                 {
                 alt32=3;
                 }
                 break;
+            case 104:
             case 105:
             case 106:
             case 107:
             case 108:
-            case 109:
                 {
                 alt32=4;
                 }
@@ -5928,26 +5925,25 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
             case 95:
             case 96:
             case 97:
-            case 98:
                 {
                 alt35=2;
                 }
                 break;
+            case 104:
             case 105:
             case 106:
             case 107:
             case 108:
-            case 109:
                 {
                 alt35=3;
                 }
                 break;
+            case 98:
             case 99:
             case 100:
             case 101:
             case 102:
             case 103:
-            case 104:
                 {
                 alt35=4;
                 }
@@ -6880,7 +6876,6 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
             case 106:
             case 107:
             case 108:
-            case 109:
                 {
                 alt38=1;
                 }
@@ -8518,7 +8513,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOblState"
-    // InternalSymg.g:3337:1: ruleOblState returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'oCREATE' | kw= 'oINEFFECT' | kw= 'oSUSPENSION' | kw= 'oSUCCESSFUL_TERMINATION' | kw= 'oUNSUCCESSFUL_TERMINATION' | kw= 'oVIOLATION' | kw= 'oFULFILLMENT' | kw= 'oDISCHARGE' ) ;
+    // InternalSymg.g:3337:1: ruleOblState returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'oCREATE' | kw= 'oINEFFECT' | kw= 'oSUSPENSION' | kw= 'oUNSUCCESSFUL_TERMINATION' | kw= 'oVIOLATION' | kw= 'oFULFILLMENT' | kw= 'oDISCHARGE' ) ;
     public final AntlrDatatypeRuleToken ruleOblState() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -8528,11 +8523,11 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSymg.g:3343:2: ( (kw= 'oCREATE' | kw= 'oINEFFECT' | kw= 'oSUSPENSION' | kw= 'oSUCCESSFUL_TERMINATION' | kw= 'oUNSUCCESSFUL_TERMINATION' | kw= 'oVIOLATION' | kw= 'oFULFILLMENT' | kw= 'oDISCHARGE' ) )
-            // InternalSymg.g:3344:2: (kw= 'oCREATE' | kw= 'oINEFFECT' | kw= 'oSUSPENSION' | kw= 'oSUCCESSFUL_TERMINATION' | kw= 'oUNSUCCESSFUL_TERMINATION' | kw= 'oVIOLATION' | kw= 'oFULFILLMENT' | kw= 'oDISCHARGE' )
+            // InternalSymg.g:3343:2: ( (kw= 'oCREATE' | kw= 'oINEFFECT' | kw= 'oSUSPENSION' | kw= 'oUNSUCCESSFUL_TERMINATION' | kw= 'oVIOLATION' | kw= 'oFULFILLMENT' | kw= 'oDISCHARGE' ) )
+            // InternalSymg.g:3344:2: (kw= 'oCREATE' | kw= 'oINEFFECT' | kw= 'oSUSPENSION' | kw= 'oUNSUCCESSFUL_TERMINATION' | kw= 'oVIOLATION' | kw= 'oFULFILLMENT' | kw= 'oDISCHARGE' )
             {
-            // InternalSymg.g:3344:2: (kw= 'oCREATE' | kw= 'oINEFFECT' | kw= 'oSUSPENSION' | kw= 'oSUCCESSFUL_TERMINATION' | kw= 'oUNSUCCESSFUL_TERMINATION' | kw= 'oVIOLATION' | kw= 'oFULFILLMENT' | kw= 'oDISCHARGE' )
-            int alt42=8;
+            // InternalSymg.g:3344:2: (kw= 'oCREATE' | kw= 'oINEFFECT' | kw= 'oSUSPENSION' | kw= 'oUNSUCCESSFUL_TERMINATION' | kw= 'oVIOLATION' | kw= 'oFULFILLMENT' | kw= 'oDISCHARGE' )
+            int alt42=7;
             switch ( input.LA(1) ) {
             case 91:
                 {
@@ -8567,11 +8562,6 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
             case 97:
                 {
                 alt42=7;
-                }
-                break;
-            case 98:
-                {
-                alt42=8;
                 }
                 break;
             default:
@@ -8616,56 +8606,45 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSymg.g:3363:3: kw= 'oSUCCESSFUL_TERMINATION'
+                    // InternalSymg.g:3363:3: kw= 'oUNSUCCESSFUL_TERMINATION'
                     {
                     kw=(Token)match(input,94,FOLLOW_2); 
 
                     			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getOblStateAccess().getOSUCCESSFUL_TERMINATIONKeyword_3());
+                    			newLeafNode(kw, grammarAccess.getOblStateAccess().getOUNSUCCESSFUL_TERMINATIONKeyword_3());
                     		
 
                     }
                     break;
                 case 5 :
-                    // InternalSymg.g:3369:3: kw= 'oUNSUCCESSFUL_TERMINATION'
+                    // InternalSymg.g:3369:3: kw= 'oVIOLATION'
                     {
                     kw=(Token)match(input,95,FOLLOW_2); 
 
                     			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getOblStateAccess().getOUNSUCCESSFUL_TERMINATIONKeyword_4());
+                    			newLeafNode(kw, grammarAccess.getOblStateAccess().getOVIOLATIONKeyword_4());
                     		
 
                     }
                     break;
                 case 6 :
-                    // InternalSymg.g:3375:3: kw= 'oVIOLATION'
+                    // InternalSymg.g:3375:3: kw= 'oFULFILLMENT'
                     {
                     kw=(Token)match(input,96,FOLLOW_2); 
 
                     			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getOblStateAccess().getOVIOLATIONKeyword_5());
+                    			newLeafNode(kw, grammarAccess.getOblStateAccess().getOFULFILLMENTKeyword_5());
                     		
 
                     }
                     break;
                 case 7 :
-                    // InternalSymg.g:3381:3: kw= 'oFULFILLMENT'
+                    // InternalSymg.g:3381:3: kw= 'oDISCHARGE'
                     {
                     kw=(Token)match(input,97,FOLLOW_2); 
 
                     			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getOblStateAccess().getOFULFILLMENTKeyword_6());
-                    		
-
-                    }
-                    break;
-                case 8 :
-                    // InternalSymg.g:3387:3: kw= 'oDISCHARGE'
-                    {
-                    kw=(Token)match(input,98,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getOblStateAccess().getODISCHARGEKeyword_7());
+                    			newLeafNode(kw, grammarAccess.getOblStateAccess().getODISCHARGEKeyword_6());
                     		
 
                     }
@@ -8693,7 +8672,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulecState"
-    // InternalSymg.g:3396:1: entryRulecState returns [EObject current=null] : iv_rulecState= rulecState EOF ;
+    // InternalSymg.g:3390:1: entryRulecState returns [EObject current=null] : iv_rulecState= rulecState EOF ;
     public final EObject entryRulecState() throws RecognitionException {
         EObject current = null;
 
@@ -8701,8 +8680,8 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSymg.g:3396:47: (iv_rulecState= rulecState EOF )
-            // InternalSymg.g:3397:2: iv_rulecState= rulecState EOF
+            // InternalSymg.g:3390:47: (iv_rulecState= rulecState EOF )
+            // InternalSymg.g:3391:2: iv_rulecState= rulecState EOF
             {
              newCompositeNode(grammarAccess.getCStateRule()); 
             pushFollow(FOLLOW_1);
@@ -8729,7 +8708,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulecState"
-    // InternalSymg.g:3403:1: rulecState returns [EObject current=null] : ( ( (lv_contrState_0_0= ruleContrState ) ) otherlv_1= '(' ( (lv_contractName_2_0= RULE_ID ) ) otherlv_3= ')' ) ;
+    // InternalSymg.g:3397:1: rulecState returns [EObject current=null] : ( ( (lv_contrState_0_0= ruleContrState ) ) otherlv_1= '(' ( (lv_contractName_2_0= RULE_ID ) ) otherlv_3= ')' ) ;
     public final EObject rulecState() throws RecognitionException {
         EObject current = null;
 
@@ -8743,17 +8722,17 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSymg.g:3409:2: ( ( ( (lv_contrState_0_0= ruleContrState ) ) otherlv_1= '(' ( (lv_contractName_2_0= RULE_ID ) ) otherlv_3= ')' ) )
-            // InternalSymg.g:3410:2: ( ( (lv_contrState_0_0= ruleContrState ) ) otherlv_1= '(' ( (lv_contractName_2_0= RULE_ID ) ) otherlv_3= ')' )
+            // InternalSymg.g:3403:2: ( ( ( (lv_contrState_0_0= ruleContrState ) ) otherlv_1= '(' ( (lv_contractName_2_0= RULE_ID ) ) otherlv_3= ')' ) )
+            // InternalSymg.g:3404:2: ( ( (lv_contrState_0_0= ruleContrState ) ) otherlv_1= '(' ( (lv_contractName_2_0= RULE_ID ) ) otherlv_3= ')' )
             {
-            // InternalSymg.g:3410:2: ( ( (lv_contrState_0_0= ruleContrState ) ) otherlv_1= '(' ( (lv_contractName_2_0= RULE_ID ) ) otherlv_3= ')' )
-            // InternalSymg.g:3411:3: ( (lv_contrState_0_0= ruleContrState ) ) otherlv_1= '(' ( (lv_contractName_2_0= RULE_ID ) ) otherlv_3= ')'
+            // InternalSymg.g:3404:2: ( ( (lv_contrState_0_0= ruleContrState ) ) otherlv_1= '(' ( (lv_contractName_2_0= RULE_ID ) ) otherlv_3= ')' )
+            // InternalSymg.g:3405:3: ( (lv_contrState_0_0= ruleContrState ) ) otherlv_1= '(' ( (lv_contractName_2_0= RULE_ID ) ) otherlv_3= ')'
             {
-            // InternalSymg.g:3411:3: ( (lv_contrState_0_0= ruleContrState ) )
-            // InternalSymg.g:3412:4: (lv_contrState_0_0= ruleContrState )
+            // InternalSymg.g:3405:3: ( (lv_contrState_0_0= ruleContrState ) )
+            // InternalSymg.g:3406:4: (lv_contrState_0_0= ruleContrState )
             {
-            // InternalSymg.g:3412:4: (lv_contrState_0_0= ruleContrState )
-            // InternalSymg.g:3413:5: lv_contrState_0_0= ruleContrState
+            // InternalSymg.g:3406:4: (lv_contrState_0_0= ruleContrState )
+            // InternalSymg.g:3407:5: lv_contrState_0_0= ruleContrState
             {
 
             					newCompositeNode(grammarAccess.getCStateAccess().getContrStateContrStateParserRuleCall_0_0());
@@ -8784,11 +8763,11 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getCStateAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalSymg.g:3434:3: ( (lv_contractName_2_0= RULE_ID ) )
-            // InternalSymg.g:3435:4: (lv_contractName_2_0= RULE_ID )
+            // InternalSymg.g:3428:3: ( (lv_contractName_2_0= RULE_ID ) )
+            // InternalSymg.g:3429:4: (lv_contractName_2_0= RULE_ID )
             {
-            // InternalSymg.g:3435:4: (lv_contractName_2_0= RULE_ID )
-            // InternalSymg.g:3436:5: lv_contractName_2_0= RULE_ID
+            // InternalSymg.g:3429:4: (lv_contractName_2_0= RULE_ID )
+            // InternalSymg.g:3430:5: lv_contractName_2_0= RULE_ID
             {
             lv_contractName_2_0=(Token)match(input,RULE_ID,FOLLOW_9); 
 
@@ -8837,7 +8816,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleContrState"
-    // InternalSymg.g:3460:1: entryRuleContrState returns [String current=null] : iv_ruleContrState= ruleContrState EOF ;
+    // InternalSymg.g:3454:1: entryRuleContrState returns [String current=null] : iv_ruleContrState= ruleContrState EOF ;
     public final String entryRuleContrState() throws RecognitionException {
         String current = null;
 
@@ -8845,8 +8824,8 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSymg.g:3460:50: (iv_ruleContrState= ruleContrState EOF )
-            // InternalSymg.g:3461:2: iv_ruleContrState= ruleContrState EOF
+            // InternalSymg.g:3454:50: (iv_ruleContrState= ruleContrState EOF )
+            // InternalSymg.g:3455:2: iv_ruleContrState= ruleContrState EOF
             {
              newCompositeNode(grammarAccess.getContrStateRule()); 
             pushFollow(FOLLOW_1);
@@ -8873,7 +8852,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleContrState"
-    // InternalSymg.g:3467:1: ruleContrState returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'cFORM' | kw= 'cINEFFECT' | kw= 'cSUSPENSION' | kw= 'cSUCCESSFUL_TERMINATION' | kw= 'cUNSECCESSFUL_TERMINATION' | kw= 'cUNASSIGN' ) ;
+    // InternalSymg.g:3461:1: ruleContrState returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'cFORM' | kw= 'cINEFFECT' | kw= 'cSUSPENSION' | kw= 'cSUCCESSFUL_TERMINATION' | kw= 'cUNSECCESSFUL_TERMINATION' | kw= 'cUNASSIGN' ) ;
     public final AntlrDatatypeRuleToken ruleContrState() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -8883,38 +8862,38 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSymg.g:3473:2: ( (kw= 'cFORM' | kw= 'cINEFFECT' | kw= 'cSUSPENSION' | kw= 'cSUCCESSFUL_TERMINATION' | kw= 'cUNSECCESSFUL_TERMINATION' | kw= 'cUNASSIGN' ) )
-            // InternalSymg.g:3474:2: (kw= 'cFORM' | kw= 'cINEFFECT' | kw= 'cSUSPENSION' | kw= 'cSUCCESSFUL_TERMINATION' | kw= 'cUNSECCESSFUL_TERMINATION' | kw= 'cUNASSIGN' )
+            // InternalSymg.g:3467:2: ( (kw= 'cFORM' | kw= 'cINEFFECT' | kw= 'cSUSPENSION' | kw= 'cSUCCESSFUL_TERMINATION' | kw= 'cUNSECCESSFUL_TERMINATION' | kw= 'cUNASSIGN' ) )
+            // InternalSymg.g:3468:2: (kw= 'cFORM' | kw= 'cINEFFECT' | kw= 'cSUSPENSION' | kw= 'cSUCCESSFUL_TERMINATION' | kw= 'cUNSECCESSFUL_TERMINATION' | kw= 'cUNASSIGN' )
             {
-            // InternalSymg.g:3474:2: (kw= 'cFORM' | kw= 'cINEFFECT' | kw= 'cSUSPENSION' | kw= 'cSUCCESSFUL_TERMINATION' | kw= 'cUNSECCESSFUL_TERMINATION' | kw= 'cUNASSIGN' )
+            // InternalSymg.g:3468:2: (kw= 'cFORM' | kw= 'cINEFFECT' | kw= 'cSUSPENSION' | kw= 'cSUCCESSFUL_TERMINATION' | kw= 'cUNSECCESSFUL_TERMINATION' | kw= 'cUNASSIGN' )
             int alt43=6;
             switch ( input.LA(1) ) {
-            case 99:
+            case 98:
                 {
                 alt43=1;
                 }
                 break;
-            case 100:
+            case 99:
                 {
                 alt43=2;
                 }
                 break;
-            case 101:
+            case 100:
                 {
                 alt43=3;
                 }
                 break;
-            case 102:
+            case 101:
                 {
                 alt43=4;
                 }
                 break;
-            case 103:
+            case 102:
                 {
                 alt43=5;
                 }
                 break;
-            case 104:
+            case 103:
                 {
                 alt43=6;
                 }
@@ -8928,9 +8907,9 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
             switch (alt43) {
                 case 1 :
-                    // InternalSymg.g:3475:3: kw= 'cFORM'
+                    // InternalSymg.g:3469:3: kw= 'cFORM'
                     {
-                    kw=(Token)match(input,99,FOLLOW_2); 
+                    kw=(Token)match(input,98,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getContrStateAccess().getCFORMKeyword_0());
@@ -8939,9 +8918,9 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSymg.g:3481:3: kw= 'cINEFFECT'
+                    // InternalSymg.g:3475:3: kw= 'cINEFFECT'
                     {
-                    kw=(Token)match(input,100,FOLLOW_2); 
+                    kw=(Token)match(input,99,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getContrStateAccess().getCINEFFECTKeyword_1());
@@ -8950,9 +8929,9 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSymg.g:3487:3: kw= 'cSUSPENSION'
+                    // InternalSymg.g:3481:3: kw= 'cSUSPENSION'
                     {
-                    kw=(Token)match(input,101,FOLLOW_2); 
+                    kw=(Token)match(input,100,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getContrStateAccess().getCSUSPENSIONKeyword_2());
@@ -8961,9 +8940,9 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSymg.g:3493:3: kw= 'cSUCCESSFUL_TERMINATION'
+                    // InternalSymg.g:3487:3: kw= 'cSUCCESSFUL_TERMINATION'
                     {
-                    kw=(Token)match(input,102,FOLLOW_2); 
+                    kw=(Token)match(input,101,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getContrStateAccess().getCSUCCESSFUL_TERMINATIONKeyword_3());
@@ -8972,9 +8951,9 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSymg.g:3499:3: kw= 'cUNSECCESSFUL_TERMINATION'
+                    // InternalSymg.g:3493:3: kw= 'cUNSECCESSFUL_TERMINATION'
                     {
-                    kw=(Token)match(input,103,FOLLOW_2); 
+                    kw=(Token)match(input,102,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getContrStateAccess().getCUNSECCESSFUL_TERMINATIONKeyword_4());
@@ -8983,9 +8962,9 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSymg.g:3505:3: kw= 'cUNASSIGN'
+                    // InternalSymg.g:3499:3: kw= 'cUNASSIGN'
                     {
-                    kw=(Token)match(input,104,FOLLOW_2); 
+                    kw=(Token)match(input,103,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getContrStateAccess().getCUNASSIGNKeyword_5());
@@ -9016,7 +8995,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulepState"
-    // InternalSymg.g:3514:1: entryRulepState returns [EObject current=null] : iv_rulepState= rulepState EOF ;
+    // InternalSymg.g:3508:1: entryRulepState returns [EObject current=null] : iv_rulepState= rulepState EOF ;
     public final EObject entryRulepState() throws RecognitionException {
         EObject current = null;
 
@@ -9024,8 +9003,8 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSymg.g:3514:47: (iv_rulepState= rulepState EOF )
-            // InternalSymg.g:3515:2: iv_rulepState= rulepState EOF
+            // InternalSymg.g:3508:47: (iv_rulepState= rulepState EOF )
+            // InternalSymg.g:3509:2: iv_rulepState= rulepState EOF
             {
              newCompositeNode(grammarAccess.getPStateRule()); 
             pushFollow(FOLLOW_1);
@@ -9052,7 +9031,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulepState"
-    // InternalSymg.g:3521:1: rulepState returns [EObject current=null] : ( ( (lv_powState_0_0= rulePowState ) ) otherlv_1= '(' ( (lv_powName_2_0= RULE_ID ) ) otherlv_3= ')' ) ;
+    // InternalSymg.g:3515:1: rulepState returns [EObject current=null] : ( ( (lv_powState_0_0= rulePowState ) ) otherlv_1= '(' ( (lv_powName_2_0= RULE_ID ) ) otherlv_3= ')' ) ;
     public final EObject rulepState() throws RecognitionException {
         EObject current = null;
 
@@ -9066,17 +9045,17 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSymg.g:3527:2: ( ( ( (lv_powState_0_0= rulePowState ) ) otherlv_1= '(' ( (lv_powName_2_0= RULE_ID ) ) otherlv_3= ')' ) )
-            // InternalSymg.g:3528:2: ( ( (lv_powState_0_0= rulePowState ) ) otherlv_1= '(' ( (lv_powName_2_0= RULE_ID ) ) otherlv_3= ')' )
+            // InternalSymg.g:3521:2: ( ( ( (lv_powState_0_0= rulePowState ) ) otherlv_1= '(' ( (lv_powName_2_0= RULE_ID ) ) otherlv_3= ')' ) )
+            // InternalSymg.g:3522:2: ( ( (lv_powState_0_0= rulePowState ) ) otherlv_1= '(' ( (lv_powName_2_0= RULE_ID ) ) otherlv_3= ')' )
             {
-            // InternalSymg.g:3528:2: ( ( (lv_powState_0_0= rulePowState ) ) otherlv_1= '(' ( (lv_powName_2_0= RULE_ID ) ) otherlv_3= ')' )
-            // InternalSymg.g:3529:3: ( (lv_powState_0_0= rulePowState ) ) otherlv_1= '(' ( (lv_powName_2_0= RULE_ID ) ) otherlv_3= ')'
+            // InternalSymg.g:3522:2: ( ( (lv_powState_0_0= rulePowState ) ) otherlv_1= '(' ( (lv_powName_2_0= RULE_ID ) ) otherlv_3= ')' )
+            // InternalSymg.g:3523:3: ( (lv_powState_0_0= rulePowState ) ) otherlv_1= '(' ( (lv_powName_2_0= RULE_ID ) ) otherlv_3= ')'
             {
-            // InternalSymg.g:3529:3: ( (lv_powState_0_0= rulePowState ) )
-            // InternalSymg.g:3530:4: (lv_powState_0_0= rulePowState )
+            // InternalSymg.g:3523:3: ( (lv_powState_0_0= rulePowState ) )
+            // InternalSymg.g:3524:4: (lv_powState_0_0= rulePowState )
             {
-            // InternalSymg.g:3530:4: (lv_powState_0_0= rulePowState )
-            // InternalSymg.g:3531:5: lv_powState_0_0= rulePowState
+            // InternalSymg.g:3524:4: (lv_powState_0_0= rulePowState )
+            // InternalSymg.g:3525:5: lv_powState_0_0= rulePowState
             {
 
             					newCompositeNode(grammarAccess.getPStateAccess().getPowStatePowStateParserRuleCall_0_0());
@@ -9107,11 +9086,11 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getPStateAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalSymg.g:3552:3: ( (lv_powName_2_0= RULE_ID ) )
-            // InternalSymg.g:3553:4: (lv_powName_2_0= RULE_ID )
+            // InternalSymg.g:3546:3: ( (lv_powName_2_0= RULE_ID ) )
+            // InternalSymg.g:3547:4: (lv_powName_2_0= RULE_ID )
             {
-            // InternalSymg.g:3553:4: (lv_powName_2_0= RULE_ID )
-            // InternalSymg.g:3554:5: lv_powName_2_0= RULE_ID
+            // InternalSymg.g:3547:4: (lv_powName_2_0= RULE_ID )
+            // InternalSymg.g:3548:5: lv_powName_2_0= RULE_ID
             {
             lv_powName_2_0=(Token)match(input,RULE_ID,FOLLOW_9); 
 
@@ -9160,7 +9139,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePowState"
-    // InternalSymg.g:3578:1: entryRulePowState returns [String current=null] : iv_rulePowState= rulePowState EOF ;
+    // InternalSymg.g:3572:1: entryRulePowState returns [String current=null] : iv_rulePowState= rulePowState EOF ;
     public final String entryRulePowState() throws RecognitionException {
         String current = null;
 
@@ -9168,8 +9147,8 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSymg.g:3578:48: (iv_rulePowState= rulePowState EOF )
-            // InternalSymg.g:3579:2: iv_rulePowState= rulePowState EOF
+            // InternalSymg.g:3572:48: (iv_rulePowState= rulePowState EOF )
+            // InternalSymg.g:3573:2: iv_rulePowState= rulePowState EOF
             {
              newCompositeNode(grammarAccess.getPowStateRule()); 
             pushFollow(FOLLOW_1);
@@ -9196,7 +9175,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePowState"
-    // InternalSymg.g:3585:1: rulePowState returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'pCREATE' | kw= 'pINEFFECT' | kw= 'pSUSPENSION' | kw= 'pSUCCESSFUL_TERMINATION' | kw= 'pUNSUCCESSFUL_TERMINATION' ) ;
+    // InternalSymg.g:3579:1: rulePowState returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'pCREATE' | kw= 'pINEFFECT' | kw= 'pSUSPENSION' | kw= 'pSUCCESSFUL_TERMINATION' | kw= 'pUNSUCCESSFUL_TERMINATION' ) ;
     public final AntlrDatatypeRuleToken rulePowState() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -9206,33 +9185,33 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSymg.g:3591:2: ( (kw= 'pCREATE' | kw= 'pINEFFECT' | kw= 'pSUSPENSION' | kw= 'pSUCCESSFUL_TERMINATION' | kw= 'pUNSUCCESSFUL_TERMINATION' ) )
-            // InternalSymg.g:3592:2: (kw= 'pCREATE' | kw= 'pINEFFECT' | kw= 'pSUSPENSION' | kw= 'pSUCCESSFUL_TERMINATION' | kw= 'pUNSUCCESSFUL_TERMINATION' )
+            // InternalSymg.g:3585:2: ( (kw= 'pCREATE' | kw= 'pINEFFECT' | kw= 'pSUSPENSION' | kw= 'pSUCCESSFUL_TERMINATION' | kw= 'pUNSUCCESSFUL_TERMINATION' ) )
+            // InternalSymg.g:3586:2: (kw= 'pCREATE' | kw= 'pINEFFECT' | kw= 'pSUSPENSION' | kw= 'pSUCCESSFUL_TERMINATION' | kw= 'pUNSUCCESSFUL_TERMINATION' )
             {
-            // InternalSymg.g:3592:2: (kw= 'pCREATE' | kw= 'pINEFFECT' | kw= 'pSUSPENSION' | kw= 'pSUCCESSFUL_TERMINATION' | kw= 'pUNSUCCESSFUL_TERMINATION' )
+            // InternalSymg.g:3586:2: (kw= 'pCREATE' | kw= 'pINEFFECT' | kw= 'pSUSPENSION' | kw= 'pSUCCESSFUL_TERMINATION' | kw= 'pUNSUCCESSFUL_TERMINATION' )
             int alt44=5;
             switch ( input.LA(1) ) {
-            case 105:
+            case 104:
                 {
                 alt44=1;
                 }
                 break;
-            case 106:
+            case 105:
                 {
                 alt44=2;
                 }
                 break;
-            case 107:
+            case 106:
                 {
                 alt44=3;
                 }
                 break;
-            case 108:
+            case 107:
                 {
                 alt44=4;
                 }
                 break;
-            case 109:
+            case 108:
                 {
                 alt44=5;
                 }
@@ -9246,9 +9225,9 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
             switch (alt44) {
                 case 1 :
-                    // InternalSymg.g:3593:3: kw= 'pCREATE'
+                    // InternalSymg.g:3587:3: kw= 'pCREATE'
                     {
-                    kw=(Token)match(input,105,FOLLOW_2); 
+                    kw=(Token)match(input,104,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getPowStateAccess().getPCREATEKeyword_0());
@@ -9257,9 +9236,9 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSymg.g:3599:3: kw= 'pINEFFECT'
+                    // InternalSymg.g:3593:3: kw= 'pINEFFECT'
                     {
-                    kw=(Token)match(input,106,FOLLOW_2); 
+                    kw=(Token)match(input,105,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getPowStateAccess().getPINEFFECTKeyword_1());
@@ -9268,9 +9247,9 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSymg.g:3605:3: kw= 'pSUSPENSION'
+                    // InternalSymg.g:3599:3: kw= 'pSUSPENSION'
                     {
-                    kw=(Token)match(input,107,FOLLOW_2); 
+                    kw=(Token)match(input,106,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getPowStateAccess().getPSUSPENSIONKeyword_2());
@@ -9279,9 +9258,9 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSymg.g:3611:3: kw= 'pSUCCESSFUL_TERMINATION'
+                    // InternalSymg.g:3605:3: kw= 'pSUCCESSFUL_TERMINATION'
                     {
-                    kw=(Token)match(input,108,FOLLOW_2); 
+                    kw=(Token)match(input,107,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getPowStateAccess().getPSUCCESSFUL_TERMINATIONKeyword_3());
@@ -9290,9 +9269,9 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSymg.g:3617:3: kw= 'pUNSUCCESSFUL_TERMINATION'
+                    // InternalSymg.g:3611:3: kw= 'pUNSUCCESSFUL_TERMINATION'
                     {
-                    kw=(Token)match(input,109,FOLLOW_2); 
+                    kw=(Token)match(input,108,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getPowStateAccess().getPUNSUCCESSFUL_TERMINATIONKeyword_4());
@@ -9374,18 +9353,22 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
             return "()* loopback of 530:4: ( ( (lv_attributes_4_0= ruleAttribute ) ) otherlv_5= ',' )*";
         }
     }
-    static final String dfa_8s = "\102\uffff";
-    static final String dfa_9s = "\1\uffff\1\56\72\uffff\6\56";
-    static final String dfa_10s = "\1\4\1\14\52\17\4\uffff\6\4\6\21\6\14";
-    static final String dfa_11s = "\1\155\1\102\52\17\4\uffff\6\4\6\21\6\102";
-    static final String dfa_12s = "\54\uffff\1\2\1\3\1\1\1\4\22\uffff";
-    static final String dfa_13s = "\102\uffff}>";
+    static final String dfa_8s = "\101\uffff";
+    static final String dfa_9s = "\1\uffff\1\55\71\uffff\6\55";
+    static final String dfa_10s = "\1\4\1\14\51\17\4\uffff\6\4\6\21\6\14";
+    static final String dfa_11s = "\1\154\1\102\51\17\4\uffff\6\4\6\21\6\102";
+    static final String dfa_12s = "\53\uffff\1\2\1\3\1\1\1\4\22\uffff";
+    static final String dfa_13s = "\101\uffff}>";
     static final String[] dfa_14s = {
-            "\1\1\55\uffff\1\54\1\uffff\1\55\17\uffff\1\45\1\46\1\47\1\50\1\51\1\52\1\53\1\36\1\37\1\40\1\41\1\42\1\43\1\44\1\25\1\26\1\27\1\30\1\31\1\32\1\33\1\34\1\35\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\17\1\20\1\21\1\22\1\23\1\24\1\12\1\13\1\14\1\15\1\16",
-            "\1\56\3\uffff\2\56\25\uffff\1\56\2\uffff\2\56\21\uffff\6\57",
-            "\1\60",
-            "\1\60",
-            "\1\60",
+            "\1\1\55\uffff\1\53\1\uffff\1\54\17\uffff\1\44\1\45\1\46\1\47\1\50\1\51\1\52\1\35\1\36\1\37\1\40\1\41\1\42\1\43\1\24\1\25\1\26\1\27\1\30\1\31\1\32\1\33\1\34\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\16\1\17\1\20\1\21\1\22\1\23\1\11\1\12\1\13\1\14\1\15",
+            "\1\55\3\uffff\2\55\25\uffff\1\55\2\uffff\2\55\21\uffff\6\56",
+            "\1\57",
+            "\1\57",
+            "\1\57",
+            "\1\57",
+            "\1\57",
+            "\1\57",
+            "\1\57",
             "\1\60",
             "\1\60",
             "\1\60",
@@ -9396,14 +9379,16 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
             "\1\61",
             "\1\61",
             "\1\61",
+            "\1\61",
             "\1\62",
             "\1\62",
             "\1\62",
             "\1\62",
             "\1\62",
             "\1\62",
-            "\1\63",
-            "\1\63",
+            "\1\62",
+            "\1\62",
+            "\1\62",
             "\1\63",
             "\1\63",
             "\1\63",
@@ -9418,17 +9403,11 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
             "\1\64",
             "\1\64",
             "\1\64",
-            "\1\65",
-            "\1\65",
-            "\1\65",
-            "\1\65",
-            "\1\65",
-            "\1\65",
-            "\1\65",
             "",
             "",
             "",
             "",
+            "\1\65",
             "\1\66",
             "\1\67",
             "\1\70",
@@ -9440,13 +9419,12 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
             "\1\76",
             "\1\77",
             "\1\100",
-            "\1\101",
-            "\1\56\3\uffff\2\56\25\uffff\1\56\2\uffff\2\56\21\uffff\6\57",
-            "\1\56\3\uffff\2\56\25\uffff\1\56\2\uffff\2\56\21\uffff\6\57",
-            "\1\56\3\uffff\2\56\25\uffff\1\56\2\uffff\2\56\21\uffff\6\57",
-            "\1\56\3\uffff\2\56\25\uffff\1\56\2\uffff\2\56\21\uffff\6\57",
-            "\1\56\3\uffff\2\56\25\uffff\1\56\2\uffff\2\56\21\uffff\6\57",
-            "\1\56\3\uffff\2\56\25\uffff\1\56\2\uffff\2\56\21\uffff\6\57"
+            "\1\55\3\uffff\2\55\25\uffff\1\55\2\uffff\2\55\21\uffff\6\56",
+            "\1\55\3\uffff\2\55\25\uffff\1\55\2\uffff\2\55\21\uffff\6\56",
+            "\1\55\3\uffff\2\55\25\uffff\1\55\2\uffff\2\55\21\uffff\6\56",
+            "\1\55\3\uffff\2\55\25\uffff\1\55\2\uffff\2\55\21\uffff\6\56",
+            "\1\55\3\uffff\2\55\25\uffff\1\55\2\uffff\2\55\21\uffff\6\56",
+            "\1\55\3\uffff\2\55\25\uffff\1\55\2\uffff\2\55\21\uffff\6\56"
     };
 
     static final short[] dfa_8 = DFA.unpackEncodedString(dfa_8s);
@@ -9487,13 +9465,13 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000003FC0000L});
     public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000003F80010L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0003700003F08030L,0x00003FFFFFFFFFF8L});
-    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0003700003E08030L,0x00003FFFFFFFFFF8L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0003700003F08030L,0x00001FFFFFFFFFF8L});
+    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0003700003E08030L,0x00001FFFFFFFFFF8L});
     public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000003C00010L});
     public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000200000L});
     public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000003800010L});
     public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000003000010L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0003700002008030L,0x00003FFFFFFFFFF8L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0003700002008030L,0x00001FFFFFFFFFF8L});
     public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000004000000L});
     public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000003FC0000010L});
     public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000008000002L});
@@ -9501,19 +9479,19 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000020000000L});
     public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000004000000000L});
     public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0003710000008030L,0x00003FFFFFFFFFF8L});
+    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0003710000008030L,0x00001FFFFFFFFFF8L});
     public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000008000000000L});
     public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000010000000000L});
-    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0003700000008030L,0x00003FFFFFFFFFF8L});
-    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0003720000008030L,0x00003FFFFFFFFFF8L});
+    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0003700000008030L,0x00001FFFFFFFFFF8L});
+    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0003720000008030L,0x00001FFFFFFFFFF8L});
     public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000020000000000L});
     public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000040000000002L});
     public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000080000000002L});
-    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000000000010L,0x00003FFFFFFFFFF0L});
-    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000000000000010L,0x00003FFFF8000000L});
+    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000000000010L,0x00001FFFFFFFFFF0L});
+    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000000000000010L,0x00001FFFF8000000L});
     public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0014000000000010L,0x00003FFFFFFFFFF0L});
-    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000000000000030L,0x00003FFFFFFFFFF8L});
+    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0014000000000010L,0x00001FFFFFFFFFF0L});
+    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000000000000030L,0x00001FFFFFFFFFF8L});
     public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0008000000000000L});
     public static final BitSet FOLLOW_40 = new BitSet(new long[]{0xE000000000000000L,0x0000000000000007L});
     public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000000000000020L});

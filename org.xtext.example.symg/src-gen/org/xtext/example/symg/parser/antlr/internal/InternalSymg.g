@@ -3360,34 +3360,28 @@ ruleOblState returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken(
 			newLeafNode(kw, grammarAccess.getOblStateAccess().getOSUSPENSIONKeyword_2());
 		}
 		    |
-		kw='oSUCCESSFUL_TERMINATION'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getOblStateAccess().getOSUCCESSFUL_TERMINATIONKeyword_3());
-		}
-		    |
 		kw='oUNSUCCESSFUL_TERMINATION'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getOblStateAccess().getOUNSUCCESSFUL_TERMINATIONKeyword_4());
+			newLeafNode(kw, grammarAccess.getOblStateAccess().getOUNSUCCESSFUL_TERMINATIONKeyword_3());
 		}
 		    |
 		kw='oVIOLATION'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getOblStateAccess().getOVIOLATIONKeyword_5());
+			newLeafNode(kw, grammarAccess.getOblStateAccess().getOVIOLATIONKeyword_4());
 		}
 		    |
 		kw='oFULFILLMENT'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getOblStateAccess().getOFULFILLMENTKeyword_6());
+			newLeafNode(kw, grammarAccess.getOblStateAccess().getOFULFILLMENTKeyword_5());
 		}
 		    |
 		kw='oDISCHARGE'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getOblStateAccess().getODISCHARGEKeyword_7());
+			newLeafNode(kw, grammarAccess.getOblStateAccess().getODISCHARGEKeyword_6());
 		}
 	)
 ;

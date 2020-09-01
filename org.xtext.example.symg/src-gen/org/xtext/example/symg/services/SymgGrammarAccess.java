@@ -1924,19 +1924,17 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Keyword cOCREATEKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
 		private final Keyword cOINEFFECTKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
 		private final Keyword cOSUSPENSIONKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
-		private final Keyword cOSUCCESSFUL_TERMINATIONKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
-		private final Keyword cOUNSUCCESSFUL_TERMINATIONKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
-		private final Keyword cOVIOLATIONKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
-		private final Keyword cOFULFILLMENTKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
-		private final Keyword cODISCHARGEKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
+		private final Keyword cOUNSUCCESSFUL_TERMINATIONKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cOVIOLATIONKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cOFULFILLMENTKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		private final Keyword cODISCHARGEKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
 		
 		//OblState:
-		//	'oCREATE' | 'oINEFFECT' | 'oSUSPENSION' | 'oSUCCESSFUL_TERMINATION'
+		//	'oCREATE' | 'oINEFFECT' | 'oSUSPENSION'
 		//	| 'oUNSUCCESSFUL_TERMINATION' | 'oVIOLATION' | 'oFULFILLMENT' | 'oDISCHARGE';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'oCREATE' | 'oINEFFECT' | 'oSUSPENSION' | 'oSUCCESSFUL_TERMINATION' | 'oUNSUCCESSFUL_TERMINATION' | 'oVIOLATION' |
-		//'oFULFILLMENT' | 'oDISCHARGE'
+		//'oCREATE' | 'oINEFFECT' | 'oSUSPENSION' | 'oUNSUCCESSFUL_TERMINATION' | 'oVIOLATION' | 'oFULFILLMENT' | 'oDISCHARGE'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//'oCREATE'
@@ -1948,20 +1946,17 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//'oSUSPENSION'
 		public Keyword getOSUSPENSIONKeyword_2() { return cOSUSPENSIONKeyword_2; }
 		
-		//'oSUCCESSFUL_TERMINATION'
-		public Keyword getOSUCCESSFUL_TERMINATIONKeyword_3() { return cOSUCCESSFUL_TERMINATIONKeyword_3; }
-		
 		//'oUNSUCCESSFUL_TERMINATION'
-		public Keyword getOUNSUCCESSFUL_TERMINATIONKeyword_4() { return cOUNSUCCESSFUL_TERMINATIONKeyword_4; }
+		public Keyword getOUNSUCCESSFUL_TERMINATIONKeyword_3() { return cOUNSUCCESSFUL_TERMINATIONKeyword_3; }
 		
 		//'oVIOLATION'
-		public Keyword getOVIOLATIONKeyword_5() { return cOVIOLATIONKeyword_5; }
+		public Keyword getOVIOLATIONKeyword_4() { return cOVIOLATIONKeyword_4; }
 		
 		//'oFULFILLMENT'
-		public Keyword getOFULFILLMENTKeyword_6() { return cOFULFILLMENTKeyword_6; }
+		public Keyword getOFULFILLMENTKeyword_5() { return cOFULFILLMENTKeyword_5; }
 		
 		//'oDISCHARGE'
-		public Keyword getODISCHARGEKeyword_7() { return cODISCHARGEKeyword_7; }
+		public Keyword getODISCHARGEKeyword_6() { return cODISCHARGEKeyword_6; }
 	}
 	public class CStateElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.symg.Symg.cState");
@@ -2612,7 +2607,7 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	}
 	
 	//OblState:
-	//	'oCREATE' | 'oINEFFECT' | 'oSUSPENSION' | 'oSUCCESSFUL_TERMINATION'
+	//	'oCREATE' | 'oINEFFECT' | 'oSUSPENSION'
 	//	| 'oUNSUCCESSFUL_TERMINATION' | 'oVIOLATION' | 'oFULFILLMENT' | 'oDISCHARGE';
 	public OblStateElements getOblStateAccess() {
 		return pOblState;
