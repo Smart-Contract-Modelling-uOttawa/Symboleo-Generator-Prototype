@@ -823,20 +823,42 @@ class SymgGenerator extends AbstractGenerator {
 	}
 	
 	def compilePConsequent(Proposition prop, String powName, StringBuilder res) {
-		var states = new HashSet<String>()
-		
-		for (or : prop.junctions) {
-			or.powerCompileStates(res, powName, states)
-			res.append("\t:-\tcons(" + powName + ").\n")
-		}
+		prop.powerCompileStates(res, powName)
 		
 		res.append("happens(exerted(" + powName + "), T0))\t:-\t")
 		prop.powerCompileOrs(res, powName)
 		res.append(".\n")
 	}
 	
-	def powerCompileStates(Junction or, StringBuilder res, String powName, HashSet<String> states) {
-		
+	def powerCompileStates(Proposition prop, StringBuilder res, String powName) {
+		 for (or : prop.junctions) {
+		 	or.powerCompileStates(res, powName)
+		 }
+	}
+	
+	def powerCompileStates(Junction or, StringBuilder res, String powName) {
+		 for (and : or.negativeAtoms) {
+		 	and.powerCompileStates(res, powName)
+		 }
+	}
+	
+	def powerCompileStates(Negation neg, StringBuilder res, String powName) {
+		neg.atomicExpression.powerCompileStates(res, powName)
+	}
+	
+	def powerCompileStates(Atom atom, StringBuilder res, String powName) {
+		if (atom.situationProposition != null) {
+			if (atom.situationProposition.CSituationName != null) {
+				res.append(atom.situationProposition.CSituationName.compileCState + "(cArgToCan)")
+			}
+			else if (atom.situationProposition.OSituationName != null) {
+				res.append(atom.situationProposition.OSituationName.compileOState + "(" + atom.situationProposition.OSituationName.oblName + ")")
+			}
+			else if (atom.situationProposition.PSituationName != null) {
+				res.append(atom.situationProposition.PSituationName.compilePState + "(" + atom.situationProposition.PSituationName.powName + ")")
+			}
+			res.append("\t:-\tcons(" + powName + ").\n")
+		}
 	}
 	
 	def powerCompileOrs(Proposition prop, StringBuilder res, String powName) {
