@@ -191,6 +191,16 @@ public class SymgAdapterFactory extends AdapterFactoryImpl
         return createIntervalAdapter();
       }
       @Override
+      public Adapter caseRelativeSituationPointBefore(RelativeSituationPointBefore object)
+      {
+        return createRelativeSituationPointBeforeAdapter();
+      }
+      @Override
+      public Adapter caseRelativeSituationPointAfter(RelativeSituationPointAfter object)
+      {
+        return createRelativeSituationPointAfterAdapter();
+      }
+      @Override
       public Adapter caseSitName(SitName object)
       {
         return createSitNameAdapter();
@@ -204,6 +214,16 @@ public class SymgAdapterFactory extends AdapterFactoryImpl
       public Adapter casePoint(Point object)
       {
         return createPointAdapter();
+      }
+      @Override
+      public Adapter caseRelativeEventPointBefore(RelativeEventPointBefore object)
+      {
+        return createRelativeEventPointBeforeAdapter();
+      }
+      @Override
+      public Adapter caseRelativeEventPointAfter(RelativeEventPointAfter object)
+      {
+        return createRelativeEventPointAfterAdapter();
       }
       @Override
       public Adapter casepEvent(pEvent object)
@@ -608,6 +628,36 @@ public class SymgAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.symg.symg.RelativeSituationPointBefore <em>Relative Situation Point Before</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.symg.symg.RelativeSituationPointBefore
+   * @generated
+   */
+  public Adapter createRelativeSituationPointBeforeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.symg.symg.RelativeSituationPointAfter <em>Relative Situation Point After</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.symg.symg.RelativeSituationPointAfter
+   * @generated
+   */
+  public Adapter createRelativeSituationPointAfterAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.xtext.example.symg.symg.SitName <em>Sit Name</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -648,6 +698,36 @@ public class SymgAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPointAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.symg.symg.RelativeEventPointBefore <em>Relative Event Point Before</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.symg.symg.RelativeEventPointBefore
+   * @generated
+   */
+  public Adapter createRelativeEventPointBeforeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.symg.symg.RelativeEventPointAfter <em>Relative Event Point After</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.symg.symg.RelativeEventPointAfter
+   * @generated
+   */
+  public Adapter createRelativeEventPointAfterAdapter()
   {
     return null;
   }

@@ -33,6 +33,10 @@ import org.xtext.example.symg.symg.PointConst;
 import org.xtext.example.symg.symg.Power;
 import org.xtext.example.symg.symg.Proposition;
 import org.xtext.example.symg.symg.Regular;
+import org.xtext.example.symg.symg.RelativeEventPointAfter;
+import org.xtext.example.symg.symg.RelativeEventPointBefore;
+import org.xtext.example.symg.symg.RelativeSituationPointAfter;
+import org.xtext.example.symg.symg.RelativeSituationPointBefore;
 import org.xtext.example.symg.symg.SitName;
 import org.xtext.example.symg.symg.SitProp;
 import org.xtext.example.symg.symg.SymgFactory;
@@ -220,6 +224,20 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass relativeSituationPointBeforeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass relativeSituationPointAfterEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass sitNameEClass = null;
 
   /**
@@ -235,6 +253,20 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
    * @generated
    */
   private EClass pointEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass relativeEventPointBeforeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass relativeEventPointAfterEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1311,20 +1343,9 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
    * @generated
    */
   @Override
-  public EAttribute getInterval_TempOp()
-  {
-    return (EAttribute)intervalEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EReference getInterval_IntConst()
   {
-    return (EReference)intervalEClass.getEStructuralFeatures().get(5);
+    return (EReference)intervalEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1335,7 +1356,40 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
   @Override
   public EAttribute getInterval_Unit()
   {
+    return (EAttribute)intervalEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getInterval_TempOp()
+  {
     return (EAttribute)intervalEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getRelativeSituationPointBefore()
+  {
+    return relativeSituationPointBeforeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getRelativeSituationPointAfter()
+  {
+    return relativeSituationPointAfterEClass;
   }
 
   /**
@@ -1512,6 +1566,28 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
   public EAttribute getPoint_TempOp()
   {
     return (EAttribute)pointEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getRelativeEventPointBefore()
+  {
+    return relativeEventPointBeforeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getRelativeEventPointAfter()
+  {
+    return relativeEventPointAfterEClass;
   }
 
   /**
@@ -1874,9 +1950,13 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
     createEReference(intervalEClass, INTERVAL__START);
     createEReference(intervalEClass, INTERVAL__END);
     createEAttribute(intervalEClass, INTERVAL__UNNAMED);
-    createEAttribute(intervalEClass, INTERVAL__TEMP_OP);
     createEReference(intervalEClass, INTERVAL__INT_CONST);
     createEAttribute(intervalEClass, INTERVAL__UNIT);
+    createEAttribute(intervalEClass, INTERVAL__TEMP_OP);
+
+    relativeSituationPointBeforeEClass = createEClass(RELATIVE_SITUATION_POINT_BEFORE);
+
+    relativeSituationPointAfterEClass = createEClass(RELATIVE_SITUATION_POINT_AFTER);
 
     sitNameEClass = createEClass(SIT_NAME);
     createEAttribute(sitNameEClass, SIT_NAME__DECL_NAME);
@@ -1896,6 +1976,10 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
     createEReference(pointEClass, POINT__POINT_CONST);
     createEAttribute(pointEClass, POINT__UNIT);
     createEAttribute(pointEClass, POINT__TEMP_OP);
+
+    relativeEventPointBeforeEClass = createEClass(RELATIVE_EVENT_POINT_BEFORE);
+
+    relativeEventPointAfterEClass = createEClass(RELATIVE_EVENT_POINT_AFTER);
 
     pEventEClass = createEClass(PEVENT);
     createEAttribute(pEventEClass, PEVENT__POW_EVENT);
@@ -1961,6 +2045,10 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
     basicTypeEClass.getESuperTypes().add(this.getCType());
     basicTypeEClass.getESuperTypes().add(this.getTypeName());
     ontoCTypeEClass.getESuperTypes().add(this.getCType());
+    relativeSituationPointBeforeEClass.getESuperTypes().add(this.getInterval());
+    relativeSituationPointAfterEClass.getESuperTypes().add(this.getInterval());
+    relativeEventPointBeforeEClass.getESuperTypes().add(this.getPoint());
+    relativeEventPointAfterEClass.getESuperTypes().add(this.getPoint());
 
     // Initialize classes and features; add operations and parameters
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2072,9 +2160,13 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
     initEReference(getInterval_Start(), this.getPoint(), null, "start", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getInterval_End(), this.getPoint(), null, "end", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getInterval_Unnamed(), ecorePackage.getEString(), "unnamed", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getInterval_TempOp(), ecorePackage.getEString(), "tempOp", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getInterval_IntConst(), this.getIntConst(), null, "intConst", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getInterval_Unit(), ecorePackage.getEString(), "unit", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getInterval_TempOp(), ecorePackage.getEString(), "tempOp", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(relativeSituationPointBeforeEClass, RelativeSituationPointBefore.class, "RelativeSituationPointBefore", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(relativeSituationPointAfterEClass, RelativeSituationPointAfter.class, "RelativeSituationPointAfter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(sitNameEClass, SitName.class, "SitName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSitName_DeclName(), ecorePackage.getEString(), "declName", null, 0, 1, SitName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2094,6 +2186,10 @@ public class SymgPackageImpl extends EPackageImpl implements SymgPackage
     initEReference(getPoint_PointConst(), this.getPointConst(), null, "pointConst", null, 0, 1, Point.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPoint_Unit(), ecorePackage.getEString(), "unit", null, 0, 1, Point.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPoint_TempOp(), ecorePackage.getEString(), "tempOp", null, 0, 1, Point.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(relativeEventPointBeforeEClass, RelativeEventPointBefore.class, "RelativeEventPointBefore", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(relativeEventPointAfterEClass, RelativeEventPointAfter.class, "RelativeEventPointAfter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(pEventEClass, pEvent.class, "pEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getpEvent_PowEvent(), ecorePackage.getEString(), "powEvent", null, 0, 1, pEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

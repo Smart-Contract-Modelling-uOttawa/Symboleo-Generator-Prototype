@@ -88,9 +88,13 @@ public class SymgFactoryImpl extends EFactoryImpl implements SymgFactory
       case SymgPackage.SIT_PROP: return createSitProp();
       case SymgPackage.EVENT_PROP: return createEventProp();
       case SymgPackage.INTERVAL: return createInterval();
+      case SymgPackage.RELATIVE_SITUATION_POINT_BEFORE: return createRelativeSituationPointBefore();
+      case SymgPackage.RELATIVE_SITUATION_POINT_AFTER: return createRelativeSituationPointAfter();
       case SymgPackage.SIT_NAME: return createSitName();
       case SymgPackage.INT_CONST: return createIntConst();
       case SymgPackage.POINT: return createPoint();
+      case SymgPackage.RELATIVE_EVENT_POINT_BEFORE: return createRelativeEventPointBefore();
+      case SymgPackage.RELATIVE_EVENT_POINT_AFTER: return createRelativeEventPointAfter();
       case SymgPackage.PEVENT: return createpEvent();
       case SymgPackage.CEVENT: return createcEvent();
       case SymgPackage.OEVENT: return createoEvent();
@@ -385,6 +389,30 @@ public class SymgFactoryImpl extends EFactoryImpl implements SymgFactory
    * @generated
    */
   @Override
+  public RelativeSituationPointBefore createRelativeSituationPointBefore()
+  {
+    RelativeSituationPointBeforeImpl relativeSituationPointBefore = new RelativeSituationPointBeforeImpl();
+    return relativeSituationPointBefore;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public RelativeSituationPointAfter createRelativeSituationPointAfter()
+  {
+    RelativeSituationPointAfterImpl relativeSituationPointAfter = new RelativeSituationPointAfterImpl();
+    return relativeSituationPointAfter;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public SitName createSitName()
   {
     SitNameImpl sitName = new SitNameImpl();
@@ -413,6 +441,30 @@ public class SymgFactoryImpl extends EFactoryImpl implements SymgFactory
   {
     PointImpl point = new PointImpl();
     return point;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public RelativeEventPointBefore createRelativeEventPointBefore()
+  {
+    RelativeEventPointBeforeImpl relativeEventPointBefore = new RelativeEventPointBeforeImpl();
+    return relativeEventPointBefore;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public RelativeEventPointAfter createRelativeEventPointAfter()
+  {
+    RelativeEventPointAfterImpl relativeEventPointAfter = new RelativeEventPointAfterImpl();
+    return relativeEventPointAfter;
   }
 
   /**

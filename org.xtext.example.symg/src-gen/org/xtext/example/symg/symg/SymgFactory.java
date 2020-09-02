@@ -231,6 +231,24 @@ public interface SymgFactory extends EFactory
   Interval createInterval();
 
   /**
+   * Returns a new object of class '<em>Relative Situation Point Before</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Relative Situation Point Before</em>'.
+   * @generated
+   */
+  RelativeSituationPointBefore createRelativeSituationPointBefore();
+
+  /**
+   * Returns a new object of class '<em>Relative Situation Point After</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Relative Situation Point After</em>'.
+   * @generated
+   */
+  RelativeSituationPointAfter createRelativeSituationPointAfter();
+
+  /**
    * Returns a new object of class '<em>Sit Name</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -256,6 +274,24 @@ public interface SymgFactory extends EFactory
    * @generated
    */
   Point createPoint();
+
+  /**
+   * Returns a new object of class '<em>Relative Event Point Before</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Relative Event Point Before</em>'.
+   * @generated
+   */
+  RelativeEventPointBefore createRelativeEventPointBefore();
+
+  /**
+   * Returns a new object of class '<em>Relative Event Point After</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Relative Event Point After</em>'.
+   * @generated
+   */
+  RelativeEventPointAfter createRelativeEventPointAfter();
 
   /**
    * Returns a new object of class '<em>pEvent</em>'.

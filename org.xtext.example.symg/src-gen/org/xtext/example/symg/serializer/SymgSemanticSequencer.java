@@ -35,6 +35,10 @@ import org.xtext.example.symg.symg.PointConst;
 import org.xtext.example.symg.symg.Power;
 import org.xtext.example.symg.symg.Proposition;
 import org.xtext.example.symg.symg.Regular;
+import org.xtext.example.symg.symg.RelativeEventPointAfter;
+import org.xtext.example.symg.symg.RelativeEventPointBefore;
+import org.xtext.example.symg.symg.RelativeSituationPointAfter;
+import org.xtext.example.symg.symg.RelativeSituationPointBefore;
 import org.xtext.example.symg.symg.SitName;
 import org.xtext.example.symg.symg.SitProp;
 import org.xtext.example.symg.symg.SymgPackage;
@@ -122,6 +126,18 @@ public class SymgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case SymgPackage.REGULAR:
 				sequence_Regular(context, (Regular) semanticObject); 
+				return; 
+			case SymgPackage.RELATIVE_EVENT_POINT_AFTER:
+				sequence_RelativeEventPointAfter(context, (RelativeEventPointAfter) semanticObject); 
+				return; 
+			case SymgPackage.RELATIVE_EVENT_POINT_BEFORE:
+				sequence_RelativeEventPointBefore(context, (RelativeEventPointBefore) semanticObject); 
+				return; 
+			case SymgPackage.RELATIVE_SITUATION_POINT_AFTER:
+				sequence_RelativeSituationPointAfter(context, (RelativeSituationPointAfter) semanticObject); 
+				return; 
+			case SymgPackage.RELATIVE_SITUATION_POINT_BEFORE:
+				sequence_RelativeSituationPointBefore(context, (RelativeSituationPointBefore) semanticObject); 
 				return; 
 			case SymgPackage.SIT_NAME:
 				sequence_SitName(context, (SitName) semanticObject); 
@@ -310,7 +326,7 @@ public class SymgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Interval returns Interval
 	 *
 	 * Constraint:
-	 *     (situationName=SitName | (start=Point end=Point) | unnamed='UNNAMED_INTERVAL' | (situationName=SitName tempOp=TempOp intConst=IntConst unit=Unit))
+	 *     (situationName=SitName | (start=Point end=Point) | unnamed='UNNAMED_INTERVAL')
 	 */
 	protected void sequence_Interval(ISerializationContext context, Interval semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -442,7 +458,7 @@ public class SymgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Point returns Point
 	 *
 	 * Constraint:
-	 *     (eventName=SitName | unnamed='UNNAMED_POINT' | pointConst=PointConst | (pointConst=PointConst unit=Unit tempOp=TempOp eventName=SitName))
+	 *     (eventName=SitName | unnamed='UNNAMED_POINT' | pointConst=PointConst)
 	 */
 	protected void sequence_Point(ISerializationContext context, Point semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -490,6 +506,118 @@ public class SymgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 */
 	protected void sequence_Regular(ISerializationContext context, Regular semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Point returns RelativeEventPointAfter
+	 *     RelativeEventPointAfter returns RelativeEventPointAfter
+	 *
+	 * Constraint:
+	 *     (eventName=SitName tempOp=TempOp unit=Unit pointConst=PointConst)
+	 */
+	protected void sequence_RelativeEventPointAfter(ISerializationContext context, RelativeEventPointAfter semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.POINT__EVENT_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.POINT__EVENT_NAME));
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.POINT__TEMP_OP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.POINT__TEMP_OP));
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.POINT__UNIT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.POINT__UNIT));
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.POINT__POINT_CONST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.POINT__POINT_CONST));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRelativeEventPointAfterAccess().getEventNameSitNameParserRuleCall_0_0(), semanticObject.getEventName());
+		feeder.accept(grammarAccess.getRelativeEventPointAfterAccess().getTempOpTempOpParserRuleCall_1_0(), semanticObject.getTempOp());
+		feeder.accept(grammarAccess.getRelativeEventPointAfterAccess().getUnitUnitParserRuleCall_2_0(), semanticObject.getUnit());
+		feeder.accept(grammarAccess.getRelativeEventPointAfterAccess().getPointConstPointConstParserRuleCall_3_0(), semanticObject.getPointConst());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Point returns RelativeEventPointBefore
+	 *     RelativeEventPointBefore returns RelativeEventPointBefore
+	 *
+	 * Constraint:
+	 *     (pointConst=PointConst unit=Unit tempOp=TempOp eventName=SitName)
+	 */
+	protected void sequence_RelativeEventPointBefore(ISerializationContext context, RelativeEventPointBefore semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.POINT__POINT_CONST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.POINT__POINT_CONST));
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.POINT__UNIT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.POINT__UNIT));
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.POINT__TEMP_OP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.POINT__TEMP_OP));
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.POINT__EVENT_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.POINT__EVENT_NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRelativeEventPointBeforeAccess().getPointConstPointConstParserRuleCall_0_0(), semanticObject.getPointConst());
+		feeder.accept(grammarAccess.getRelativeEventPointBeforeAccess().getUnitUnitParserRuleCall_1_0(), semanticObject.getUnit());
+		feeder.accept(grammarAccess.getRelativeEventPointBeforeAccess().getTempOpTempOpParserRuleCall_2_0(), semanticObject.getTempOp());
+		feeder.accept(grammarAccess.getRelativeEventPointBeforeAccess().getEventNameSitNameParserRuleCall_3_0(), semanticObject.getEventName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Interval returns RelativeSituationPointAfter
+	 *     RelativeSituationPointAfter returns RelativeSituationPointAfter
+	 *
+	 * Constraint:
+	 *     (situationName=SitName tempOp=TempOp intConst=IntConst unit=Unit)
+	 */
+	protected void sequence_RelativeSituationPointAfter(ISerializationContext context, RelativeSituationPointAfter semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.INTERVAL__SITUATION_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.INTERVAL__SITUATION_NAME));
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.INTERVAL__TEMP_OP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.INTERVAL__TEMP_OP));
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.INTERVAL__INT_CONST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.INTERVAL__INT_CONST));
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.INTERVAL__UNIT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.INTERVAL__UNIT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRelativeSituationPointAfterAccess().getSituationNameSitNameParserRuleCall_0_0(), semanticObject.getSituationName());
+		feeder.accept(grammarAccess.getRelativeSituationPointAfterAccess().getTempOpTempOpParserRuleCall_1_0(), semanticObject.getTempOp());
+		feeder.accept(grammarAccess.getRelativeSituationPointAfterAccess().getIntConstIntConstParserRuleCall_2_0(), semanticObject.getIntConst());
+		feeder.accept(grammarAccess.getRelativeSituationPointAfterAccess().getUnitUnitParserRuleCall_3_0(), semanticObject.getUnit());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Interval returns RelativeSituationPointBefore
+	 *     RelativeSituationPointBefore returns RelativeSituationPointBefore
+	 *
+	 * Constraint:
+	 *     (intConst=IntConst unit=Unit tempOp=TempOp situationName=SitName)
+	 */
+	protected void sequence_RelativeSituationPointBefore(ISerializationContext context, RelativeSituationPointBefore semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.INTERVAL__INT_CONST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.INTERVAL__INT_CONST));
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.INTERVAL__UNIT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.INTERVAL__UNIT));
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.INTERVAL__TEMP_OP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.INTERVAL__TEMP_OP));
+			if (transientValues.isValueTransient(semanticObject, SymgPackage.Literals.INTERVAL__SITUATION_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SymgPackage.Literals.INTERVAL__SITUATION_NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRelativeSituationPointBeforeAccess().getIntConstIntConstParserRuleCall_0_0(), semanticObject.getIntConst());
+		feeder.accept(grammarAccess.getRelativeSituationPointBeforeAccess().getUnitUnitParserRuleCall_1_0(), semanticObject.getUnit());
+		feeder.accept(grammarAccess.getRelativeSituationPointBeforeAccess().getTempOpTempOpParserRuleCall_2_0(), semanticObject.getTempOp());
+		feeder.accept(grammarAccess.getRelativeSituationPointBeforeAccess().getSituationNameSitNameParserRuleCall_3_0(), semanticObject.getSituationName());
+		feeder.finish();
 	}
 	
 	

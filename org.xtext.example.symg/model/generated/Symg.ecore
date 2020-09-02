@@ -147,11 +147,13 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="end" eType="#//Point" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unnamed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tempOp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="intConst" eType="#//IntConst"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tempOp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeSituationPointBefore" eSuperTypes="#//Interval"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeSituationPointAfter" eSuperTypes="#//Interval"/>
   <eClassifiers xsi:type="ecore:EClass" name="SitName">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="declName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="oState" eType="#//oState"
@@ -179,6 +181,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tempOp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeEventPointBefore" eSuperTypes="#//Point"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeEventPointAfter" eSuperTypes="#//Point"/>
   <eClassifiers xsi:type="ecore:EClass" name="pEvent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="powEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="powName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

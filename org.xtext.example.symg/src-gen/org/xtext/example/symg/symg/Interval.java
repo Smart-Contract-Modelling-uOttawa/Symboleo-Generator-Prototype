@@ -18,9 +18,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.xtext.example.symg.symg.Interval#getStart <em>Start</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.Interval#getEnd <em>End</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.Interval#getUnnamed <em>Unnamed</em>}</li>
- *   <li>{@link org.xtext.example.symg.symg.Interval#getTempOp <em>Temp Op</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.Interval#getIntConst <em>Int Const</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.Interval#getUnit <em>Unit</em>}</li>
+ *   <li>{@link org.xtext.example.symg.symg.Interval#getTempOp <em>Temp Op</em>}</li>
  * </ul>
  *
  * @see org.xtext.example.symg.symg.SymgPackage#getInterval()
@@ -118,28 +118,6 @@ public interface Interval extends EObject
   void setUnnamed(String value);
 
   /**
-   * Returns the value of the '<em><b>Temp Op</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Temp Op</em>' attribute.
-   * @see #setTempOp(String)
-   * @see org.xtext.example.symg.symg.SymgPackage#getInterval_TempOp()
-   * @model
-   * @generated
-   */
-  String getTempOp();
-
-  /**
-   * Sets the value of the '{@link org.xtext.example.symg.symg.Interval#getTempOp <em>Temp Op</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Temp Op</em>' attribute.
-   * @see #getTempOp()
-   * @generated
-   */
-  void setTempOp(String value);
-
-  /**
    * Returns the value of the '<em><b>Int Const</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -182,5 +160,27 @@ public interface Interval extends EObject
    * @generated
    */
   void setUnit(String value);
+
+  /**
+   * Returns the value of the '<em><b>Temp Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Temp Op</em>' attribute.
+   * @see #setTempOp(String)
+   * @see org.xtext.example.symg.symg.SymgPackage#getInterval_TempOp()
+   * @model
+   * @generated
+   */
+  String getTempOp();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.symg.symg.Interval#getTempOp <em>Temp Op</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Temp Op</em>' attribute.
+   * @see #getTempOp()
+   * @generated
+   */
+  void setTempOp(String value);
 
 } // Interval

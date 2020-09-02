@@ -116,7 +116,16 @@ EventProp:
 Interval:
 	situationName=SitName | '[' start=Point ',' end=Point ']'
 	| unnamed='UNNAMED_INTERVAL' 
-	| (situationName=SitName)(tempOp=TempOp)(intConst=IntConst)(unit=Unit)
+	| RelativeSituationPointBefore
+	| RelativeSituationPointAfter
+;
+
+RelativeSituationPointBefore:
+	(intConst=IntConst)(unit=Unit)(tempOp=TempOp)(situationName=SitName)
+;
+
+RelativeSituationPointAfter:
+	(situationName=SitName)(tempOp=TempOp)(intConst=IntConst)(unit=Unit)
 ;
 
 SitName:
@@ -139,7 +148,15 @@ TempOp:
 
 Point:
 	(eventName=SitName)  | unnamed='UNNAMED_POINT' | (pointConst=PointConst) 
-	| (pointConst=PointConst)(unit=Unit)(tempOp=TempOp)(eventName=SitName)
+	| RelativeEventPointBefore | RelativeEventPointAfter
+;
+
+RelativeEventPointBefore:
+	(pointConst=PointConst)(unit=Unit)(tempOp=TempOp)(eventName=SitName)
+;
+
+RelativeEventPointAfter:
+	(eventName=SitName)(tempOp=TempOp)(unit=Unit)(pointConst=PointConst)
 ;
 
 pEvent:

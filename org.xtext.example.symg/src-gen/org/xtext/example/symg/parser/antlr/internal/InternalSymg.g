@@ -2280,82 +2280,211 @@ ruleInterval returns [EObject current=null]
 			)
 		)
 		    |
+		{
+			newCompositeNode(grammarAccess.getIntervalAccess().getRelativeSituationPointBeforeParserRuleCall_3());
+		}
+		this_RelativeSituationPointBefore_7=ruleRelativeSituationPointBefore
+		{
+			$current = $this_RelativeSituationPointBefore_7.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getIntervalAccess().getRelativeSituationPointAfterParserRuleCall_4());
+		}
+		this_RelativeSituationPointAfter_8=ruleRelativeSituationPointAfter
+		{
+			$current = $this_RelativeSituationPointAfter_8.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleRelativeSituationPointBefore
+entryRuleRelativeSituationPointBefore returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getRelativeSituationPointBeforeRule()); }
+	iv_ruleRelativeSituationPointBefore=ruleRelativeSituationPointBefore
+	{ $current=$iv_ruleRelativeSituationPointBefore.current; }
+	EOF;
+
+// Rule RelativeSituationPointBefore
+ruleRelativeSituationPointBefore returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
 		(
 			(
-				(
-					{
-						newCompositeNode(grammarAccess.getIntervalAccess().getSituationNameSitNameParserRuleCall_3_0_0());
+				{
+					newCompositeNode(grammarAccess.getRelativeSituationPointBeforeAccess().getIntConstIntConstParserRuleCall_0_0());
+				}
+				lv_intConst_0_0=ruleIntConst
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeSituationPointBeforeRule());
 					}
-					lv_situationName_7_0=ruleSitName
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getIntervalRule());
-						}
-						set(
-							$current,
-							"situationName",
-							lv_situationName_7_0,
-							"org.xtext.example.symg.Symg.SitName");
-						afterParserOrEnumRuleCall();
-					}
-				)
+					set(
+						$current,
+						"intConst",
+						lv_intConst_0_0,
+						"org.xtext.example.symg.Symg.IntConst");
+					afterParserOrEnumRuleCall();
+				}
 			)
+		)
+		(
 			(
-				(
-					{
-						newCompositeNode(grammarAccess.getIntervalAccess().getTempOpTempOpParserRuleCall_3_1_0());
+				{
+					newCompositeNode(grammarAccess.getRelativeSituationPointBeforeAccess().getUnitUnitParserRuleCall_1_0());
+				}
+				lv_unit_1_0=ruleUnit
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeSituationPointBeforeRule());
 					}
-					lv_tempOp_8_0=ruleTempOp
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getIntervalRule());
-						}
-						set(
-							$current,
-							"tempOp",
-							lv_tempOp_8_0,
-							"org.xtext.example.symg.Symg.TempOp");
-						afterParserOrEnumRuleCall();
-					}
-				)
+					set(
+						$current,
+						"unit",
+						lv_unit_1_0,
+						"org.xtext.example.symg.Symg.Unit");
+					afterParserOrEnumRuleCall();
+				}
 			)
+		)
+		(
 			(
-				(
-					{
-						newCompositeNode(grammarAccess.getIntervalAccess().getIntConstIntConstParserRuleCall_3_2_0());
+				{
+					newCompositeNode(grammarAccess.getRelativeSituationPointBeforeAccess().getTempOpTempOpParserRuleCall_2_0());
+				}
+				lv_tempOp_2_0=ruleTempOp
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeSituationPointBeforeRule());
 					}
-					lv_intConst_9_0=ruleIntConst
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getIntervalRule());
-						}
-						set(
-							$current,
-							"intConst",
-							lv_intConst_9_0,
-							"org.xtext.example.symg.Symg.IntConst");
-						afterParserOrEnumRuleCall();
-					}
-				)
+					set(
+						$current,
+						"tempOp",
+						lv_tempOp_2_0,
+						"org.xtext.example.symg.Symg.TempOp");
+					afterParserOrEnumRuleCall();
+				}
 			)
+		)
+		(
 			(
-				(
-					{
-						newCompositeNode(grammarAccess.getIntervalAccess().getUnitUnitParserRuleCall_3_3_0());
+				{
+					newCompositeNode(grammarAccess.getRelativeSituationPointBeforeAccess().getSituationNameSitNameParserRuleCall_3_0());
+				}
+				lv_situationName_3_0=ruleSitName
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeSituationPointBeforeRule());
 					}
-					lv_unit_10_0=ruleUnit
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getIntervalRule());
-						}
-						set(
-							$current,
-							"unit",
-							lv_unit_10_0,
-							"org.xtext.example.symg.Symg.Unit");
-						afterParserOrEnumRuleCall();
+					set(
+						$current,
+						"situationName",
+						lv_situationName_3_0,
+						"org.xtext.example.symg.Symg.SitName");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleRelativeSituationPointAfter
+entryRuleRelativeSituationPointAfter returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getRelativeSituationPointAfterRule()); }
+	iv_ruleRelativeSituationPointAfter=ruleRelativeSituationPointAfter
+	{ $current=$iv_ruleRelativeSituationPointAfter.current; }
+	EOF;
+
+// Rule RelativeSituationPointAfter
+ruleRelativeSituationPointAfter returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getRelativeSituationPointAfterAccess().getSituationNameSitNameParserRuleCall_0_0());
+				}
+				lv_situationName_0_0=ruleSitName
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeSituationPointAfterRule());
 					}
-				)
+					set(
+						$current,
+						"situationName",
+						lv_situationName_0_0,
+						"org.xtext.example.symg.Symg.SitName");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getRelativeSituationPointAfterAccess().getTempOpTempOpParserRuleCall_1_0());
+				}
+				lv_tempOp_1_0=ruleTempOp
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeSituationPointAfterRule());
+					}
+					set(
+						$current,
+						"tempOp",
+						lv_tempOp_1_0,
+						"org.xtext.example.symg.Symg.TempOp");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getRelativeSituationPointAfterAccess().getIntConstIntConstParserRuleCall_2_0());
+				}
+				lv_intConst_2_0=ruleIntConst
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeSituationPointAfterRule());
+					}
+					set(
+						$current,
+						"intConst",
+						lv_intConst_2_0,
+						"org.xtext.example.symg.Symg.IntConst");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getRelativeSituationPointAfterAccess().getUnitUnitParserRuleCall_3_0());
+				}
+				lv_unit_3_0=ruleUnit
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeSituationPointAfterRule());
+					}
+					set(
+						$current,
+						"unit",
+						lv_unit_3_0,
+						"org.xtext.example.symg.Symg.Unit");
+					afterParserOrEnumRuleCall();
+				}
 			)
 		)
 	)
@@ -2753,82 +2882,211 @@ rulePoint returns [EObject current=null]
 			)
 		)
 		    |
+		{
+			newCompositeNode(grammarAccess.getPointAccess().getRelativeEventPointBeforeParserRuleCall_3());
+		}
+		this_RelativeEventPointBefore_3=ruleRelativeEventPointBefore
+		{
+			$current = $this_RelativeEventPointBefore_3.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getPointAccess().getRelativeEventPointAfterParserRuleCall_4());
+		}
+		this_RelativeEventPointAfter_4=ruleRelativeEventPointAfter
+		{
+			$current = $this_RelativeEventPointAfter_4.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleRelativeEventPointBefore
+entryRuleRelativeEventPointBefore returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getRelativeEventPointBeforeRule()); }
+	iv_ruleRelativeEventPointBefore=ruleRelativeEventPointBefore
+	{ $current=$iv_ruleRelativeEventPointBefore.current; }
+	EOF;
+
+// Rule RelativeEventPointBefore
+ruleRelativeEventPointBefore returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
 		(
 			(
-				(
-					{
-						newCompositeNode(grammarAccess.getPointAccess().getPointConstPointConstParserRuleCall_3_0_0());
+				{
+					newCompositeNode(grammarAccess.getRelativeEventPointBeforeAccess().getPointConstPointConstParserRuleCall_0_0());
+				}
+				lv_pointConst_0_0=rulePointConst
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeEventPointBeforeRule());
 					}
-					lv_pointConst_3_0=rulePointConst
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getPointRule());
-						}
-						set(
-							$current,
-							"pointConst",
-							lv_pointConst_3_0,
-							"org.xtext.example.symg.Symg.PointConst");
-						afterParserOrEnumRuleCall();
-					}
-				)
+					set(
+						$current,
+						"pointConst",
+						lv_pointConst_0_0,
+						"org.xtext.example.symg.Symg.PointConst");
+					afterParserOrEnumRuleCall();
+				}
 			)
+		)
+		(
 			(
-				(
-					{
-						newCompositeNode(grammarAccess.getPointAccess().getUnitUnitParserRuleCall_3_1_0());
+				{
+					newCompositeNode(grammarAccess.getRelativeEventPointBeforeAccess().getUnitUnitParserRuleCall_1_0());
+				}
+				lv_unit_1_0=ruleUnit
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeEventPointBeforeRule());
 					}
-					lv_unit_4_0=ruleUnit
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getPointRule());
-						}
-						set(
-							$current,
-							"unit",
-							lv_unit_4_0,
-							"org.xtext.example.symg.Symg.Unit");
-						afterParserOrEnumRuleCall();
-					}
-				)
+					set(
+						$current,
+						"unit",
+						lv_unit_1_0,
+						"org.xtext.example.symg.Symg.Unit");
+					afterParserOrEnumRuleCall();
+				}
 			)
+		)
+		(
 			(
-				(
-					{
-						newCompositeNode(grammarAccess.getPointAccess().getTempOpTempOpParserRuleCall_3_2_0());
+				{
+					newCompositeNode(grammarAccess.getRelativeEventPointBeforeAccess().getTempOpTempOpParserRuleCall_2_0());
+				}
+				lv_tempOp_2_0=ruleTempOp
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeEventPointBeforeRule());
 					}
-					lv_tempOp_5_0=ruleTempOp
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getPointRule());
-						}
-						set(
-							$current,
-							"tempOp",
-							lv_tempOp_5_0,
-							"org.xtext.example.symg.Symg.TempOp");
-						afterParserOrEnumRuleCall();
-					}
-				)
+					set(
+						$current,
+						"tempOp",
+						lv_tempOp_2_0,
+						"org.xtext.example.symg.Symg.TempOp");
+					afterParserOrEnumRuleCall();
+				}
 			)
+		)
+		(
 			(
-				(
-					{
-						newCompositeNode(grammarAccess.getPointAccess().getEventNameSitNameParserRuleCall_3_3_0());
+				{
+					newCompositeNode(grammarAccess.getRelativeEventPointBeforeAccess().getEventNameSitNameParserRuleCall_3_0());
+				}
+				lv_eventName_3_0=ruleSitName
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeEventPointBeforeRule());
 					}
-					lv_eventName_6_0=ruleSitName
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getPointRule());
-						}
-						set(
-							$current,
-							"eventName",
-							lv_eventName_6_0,
-							"org.xtext.example.symg.Symg.SitName");
-						afterParserOrEnumRuleCall();
+					set(
+						$current,
+						"eventName",
+						lv_eventName_3_0,
+						"org.xtext.example.symg.Symg.SitName");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleRelativeEventPointAfter
+entryRuleRelativeEventPointAfter returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getRelativeEventPointAfterRule()); }
+	iv_ruleRelativeEventPointAfter=ruleRelativeEventPointAfter
+	{ $current=$iv_ruleRelativeEventPointAfter.current; }
+	EOF;
+
+// Rule RelativeEventPointAfter
+ruleRelativeEventPointAfter returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getRelativeEventPointAfterAccess().getEventNameSitNameParserRuleCall_0_0());
+				}
+				lv_eventName_0_0=ruleSitName
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeEventPointAfterRule());
 					}
-				)
+					set(
+						$current,
+						"eventName",
+						lv_eventName_0_0,
+						"org.xtext.example.symg.Symg.SitName");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getRelativeEventPointAfterAccess().getTempOpTempOpParserRuleCall_1_0());
+				}
+				lv_tempOp_1_0=ruleTempOp
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeEventPointAfterRule());
+					}
+					set(
+						$current,
+						"tempOp",
+						lv_tempOp_1_0,
+						"org.xtext.example.symg.Symg.TempOp");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getRelativeEventPointAfterAccess().getUnitUnitParserRuleCall_2_0());
+				}
+				lv_unit_2_0=ruleUnit
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeEventPointAfterRule());
+					}
+					set(
+						$current,
+						"unit",
+						lv_unit_2_0,
+						"org.xtext.example.symg.Symg.Unit");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getRelativeEventPointAfterAccess().getPointConstPointConstParserRuleCall_3_0());
+				}
+				lv_pointConst_3_0=rulePointConst
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRelativeEventPointAfterRule());
+					}
+					set(
+						$current,
+						"pointConst",
+						lv_pointConst_3_0,
+						"org.xtext.example.symg.Symg.PointConst");
+					afterParserOrEnumRuleCall();
+				}
 			)
 		)
 	)

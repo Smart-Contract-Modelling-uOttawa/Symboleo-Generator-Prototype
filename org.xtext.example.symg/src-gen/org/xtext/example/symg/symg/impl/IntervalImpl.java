@@ -30,9 +30,9 @@ import org.xtext.example.symg.symg.SymgPackage;
  *   <li>{@link org.xtext.example.symg.symg.impl.IntervalImpl#getStart <em>Start</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.impl.IntervalImpl#getEnd <em>End</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.impl.IntervalImpl#getUnnamed <em>Unnamed</em>}</li>
- *   <li>{@link org.xtext.example.symg.symg.impl.IntervalImpl#getTempOp <em>Temp Op</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.impl.IntervalImpl#getIntConst <em>Int Const</em>}</li>
  *   <li>{@link org.xtext.example.symg.symg.impl.IntervalImpl#getUnit <em>Unit</em>}</li>
+ *   <li>{@link org.xtext.example.symg.symg.impl.IntervalImpl#getTempOp <em>Temp Op</em>}</li>
  * </ul>
  *
  * @generated
@@ -90,26 +90,6 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
   protected String unnamed = UNNAMED_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getTempOp() <em>Temp Op</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTempOp()
-   * @generated
-   * @ordered
-   */
-  protected static final String TEMP_OP_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getTempOp() <em>Temp Op</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTempOp()
-   * @generated
-   * @ordered
-   */
-  protected String tempOp = TEMP_OP_EDEFAULT;
-
-  /**
    * The cached value of the '{@link #getIntConst() <em>Int Const</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -138,6 +118,26 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * @ordered
    */
   protected String unit = UNIT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getTempOp() <em>Temp Op</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTempOp()
+   * @generated
+   * @ordered
+   */
+  protected static final String TEMP_OP_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getTempOp() <em>Temp Op</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTempOp()
+   * @generated
+   * @ordered
+   */
+  protected String tempOp = TEMP_OP_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -341,31 +341,6 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * @generated
    */
   @Override
-  public String getTempOp()
-  {
-    return tempOp;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setTempOp(String newTempOp)
-  {
-    String oldTempOp = tempOp;
-    tempOp = newTempOp;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SymgPackage.INTERVAL__TEMP_OP, oldTempOp, tempOp));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public IntConst getIntConst()
   {
     return intConst;
@@ -441,6 +416,31 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * @generated
    */
   @Override
+  public String getTempOp()
+  {
+    return tempOp;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setTempOp(String newTempOp)
+  {
+    String oldTempOp = tempOp;
+    tempOp = newTempOp;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SymgPackage.INTERVAL__TEMP_OP, oldTempOp, tempOp));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
@@ -475,12 +475,12 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
         return getEnd();
       case SymgPackage.INTERVAL__UNNAMED:
         return getUnnamed();
-      case SymgPackage.INTERVAL__TEMP_OP:
-        return getTempOp();
       case SymgPackage.INTERVAL__INT_CONST:
         return getIntConst();
       case SymgPackage.INTERVAL__UNIT:
         return getUnit();
+      case SymgPackage.INTERVAL__TEMP_OP:
+        return getTempOp();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -507,14 +507,14 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
       case SymgPackage.INTERVAL__UNNAMED:
         setUnnamed((String)newValue);
         return;
-      case SymgPackage.INTERVAL__TEMP_OP:
-        setTempOp((String)newValue);
-        return;
       case SymgPackage.INTERVAL__INT_CONST:
         setIntConst((IntConst)newValue);
         return;
       case SymgPackage.INTERVAL__UNIT:
         setUnit((String)newValue);
+        return;
+      case SymgPackage.INTERVAL__TEMP_OP:
+        setTempOp((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -542,14 +542,14 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
       case SymgPackage.INTERVAL__UNNAMED:
         setUnnamed(UNNAMED_EDEFAULT);
         return;
-      case SymgPackage.INTERVAL__TEMP_OP:
-        setTempOp(TEMP_OP_EDEFAULT);
-        return;
       case SymgPackage.INTERVAL__INT_CONST:
         setIntConst((IntConst)null);
         return;
       case SymgPackage.INTERVAL__UNIT:
         setUnit(UNIT_EDEFAULT);
+        return;
+      case SymgPackage.INTERVAL__TEMP_OP:
+        setTempOp(TEMP_OP_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -573,12 +573,12 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
         return end != null;
       case SymgPackage.INTERVAL__UNNAMED:
         return UNNAMED_EDEFAULT == null ? unnamed != null : !UNNAMED_EDEFAULT.equals(unnamed);
-      case SymgPackage.INTERVAL__TEMP_OP:
-        return TEMP_OP_EDEFAULT == null ? tempOp != null : !TEMP_OP_EDEFAULT.equals(tempOp);
       case SymgPackage.INTERVAL__INT_CONST:
         return intConst != null;
       case SymgPackage.INTERVAL__UNIT:
         return UNIT_EDEFAULT == null ? unit != null : !UNIT_EDEFAULT.equals(unit);
+      case SymgPackage.INTERVAL__TEMP_OP:
+        return TEMP_OP_EDEFAULT == null ? tempOp != null : !TEMP_OP_EDEFAULT.equals(tempOp);
     }
     return super.eIsSet(featureID);
   }
@@ -596,10 +596,10 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (unnamed: ");
     result.append(unnamed);
-    result.append(", tempOp: ");
-    result.append(tempOp);
     result.append(", unit: ");
     result.append(unit);
+    result.append(", tempOp: ");
+    result.append(tempOp);
     result.append(')');
     return result.toString();
   }

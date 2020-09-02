@@ -35,6 +35,10 @@ import java.util.ArrayList
 import java.util.HashSet
 import org.xtext.example.symg.generator.KeyValuePair;
 import java.lang.Math;
+import org.xtext.example.symg.symg.RelativeEventPointBefore
+import org.xtext.example.symg.symg.RelativeEventPointAfter
+import org.xtext.example.symg.symg.RelativeSituationPointBefore
+import org.xtext.example.symg.symg.RelativeSituationPointAfter
 
 /**
  * Generates code from your model files on save.
@@ -544,7 +548,7 @@ class SymgGenerator extends AbstractGenerator {
 		if (point.unnamed != null) {
 			res.append("_")
 		}
-		else if (point.eventName != null) {
+		else if (point.eventName != null && point.pointConst == null) {
 			if (point.eventName.declName != null) {
 				eventNumber = point.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
 				res.append("T" + events.get(point.eventName.declName))
@@ -553,16 +557,49 @@ class SymgGenerator extends AbstractGenerator {
 				eventNumber = point.eventName.compileEvent.compileAddEvent(decl, eventNumber, oblName, events)
 				res.append("T" + events.get(point.eventName.compileEvent))
 			}
-			
-			if (point.tempOp != null) {
-				res.append(point.tempOp.compileTempOp + point.pointConst.type)
-			}
+		}
+		else if (point.eventName == null && point.pointConst != null){
+			res.append(point.pointConst.type)
 		}
 		else {
-			res.append(point.pointConst.type)
+			eventNumber = point.compileRelativePointTime(res, decl, eventNumber, oblName, events)
 		}
 		
 		return eventNumber	
+	}
+	
+	def dispatch compileRelativePointTime(RelativeEventPointBefore point, StringBuilder res, StringBuilder decl, int d, String oblName, HashMap<String,String> events) {
+		var eventNumber = d
+		
+		if (point.eventName.declName != null) {
+			eventNumber = point.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+			res.append("T" + events.get(point.eventName.declName))
+		}
+		else {
+			eventNumber = point.eventName.declName.compileAddEvent(decl, eventNumber, oblName, events)
+			res.append("T" + events.get(point.eventName.compileEvent))
+		}
+		
+		res.append(point.tempOp.compileTempOpB + point.pointConst.type)
+		
+		return eventNumber
+	}
+	
+	def dispatch compileRelativePointTime(RelativeEventPointAfter point, StringBuilder res, StringBuilder decl, int d, String oblName, HashMap<String,String> events) {
+		var eventNumber = d
+		
+		if (point.eventName.declName != null) {
+			eventNumber = point.eventName.declName.compileAddDeclEvent(decl, eventNumber, oblName, events)
+			res.append("T" + events.get(point.eventName.declName))
+		}
+		else {
+			eventNumber = point.eventName.declName.compileAddEvent(decl, eventNumber, oblName, events)
+			res.append("T" + events.get(point.eventName.compileEvent))
+		}
+		
+		res.append(point.tempOp.compileTempOpA + point.pointConst.type)
+		
+		return eventNumber
 	}
 	
 	/**
@@ -625,24 +662,22 @@ class SymgGenerator extends AbstractGenerator {
 					res.append(start.toString + "<=" + end.toString)
 				}
 			}
-			else {
-				// interval is a situation
+			else if (sProp.interval.situationName != null && sProp.interval.intConst == null) {
 				if (sProp.interval.situationName.declName != null) {
-					// the situation is a declaration
 					eventNumber = sProp.interval.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
 					res.append("T" + events.get(sProp.interval.situationName.declName))
 				}
 				else {
-					// the situation is oState, cState, pState
 					eventNumber = sProp.interval.situationName.compileState.compileAddSit(decl, eventNumber, oblName, events)
 					res.append("T" + events.get(sProp.interval.situationName.compileState))
 				}
-				
-				if (sProp.interval.tempOp != null) {
-					res.append(sProp.interval.tempOp.compileTempOp + sProp.interval.intConst.type)
-				}
-				
 				res.append(",_])")
+			}
+			else {
+
+				res.append("[")
+				eventNumber = sProp.interval.compileRelativeSituation(res, decl, eventNumber, oblName, events)
+				res.append(",_]),")
 			}
 			
 		}
@@ -650,6 +685,39 @@ class SymgGenerator extends AbstractGenerator {
 		res.append(decl.toString)
 			
 		return eventNumber
+	}
+	
+	def dispatch compileRelativeSituation(RelativeSituationPointBefore situation, StringBuilder res, StringBuilder decl, int d, String oblName, HashMap<String,String> events) {
+		var eventNumber = d
+		
+		if (situation.situationName.declName != null) {
+			eventNumber = situation.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
+			res.append("T" + events.get(situation.situationName.declName))
+		}
+		else {
+			eventNumber = situation.situationName.compileState.compileAddSit(decl, eventNumber, oblName, events)
+			res.append("T" + events.get(situation.situationName.compileState))
+		}
+		
+		res.append(situation.tempOp.compileTempOpB + situation.intConst.type)
+		return eventNumber
+	}
+	
+	def dispatch compileRelativeSituation(RelativeSituationPointAfter situation, StringBuilder res, StringBuilder decl, int d, String oblName, HashMap<String,String> events) {
+		var eventNumber = d
+		
+		if (situation.situationName.declName != null) {
+			eventNumber = situation.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
+			res.append("T" + events.get(situation.situationName.declName))
+		}
+		else {
+			eventNumber = situation.situationName.compileState.compileAddSit(decl, eventNumber, oblName, events)
+			res.append("T" + events.get(situation.situationName.compileState))
+		}
+		
+		res.append(situation.tempOp.compileTempOpA + situation.intConst.type)
+		
+		return eventNumber	
 	}
 	
 	/**
@@ -686,24 +754,18 @@ class SymgGenerator extends AbstractGenerator {
 				// compile end
 				eventNumber = interval.end.compilePoint(end, decl, eventNumber, oblName, events)
 			}
-			else {
-				// interval is a situation
+			else if (interval.situationName != null && interval.intConst == null) {
 				if (interval.situationName.declName != null) {
-					// the situation is a declaration
 					eventNumber = interval.situationName.declName.compileAddDeclSit(decl, eventNumber, oblName, events)
 					start.append("T" + events.get(interval.situationName.declName))
 				}
 				else {
-					// the situation is an oState, cState, pState
 					eventNumber = interval.situationName.compileState.compileAddSit(decl, eventNumber, oblName, events)
 					start.append("T" + events.get(interval.situationName.compileState))
 				}
-				
-				if (interval.tempOp != null) {
-					start.append(interval.tempOp.compileTempOp + interval.intConst.type)
-				}
-				
-				
+			}
+			else {
+				eventNumber = interval.compileRelativeSituation(start, decl, eventNumber, oblName, events)
 			}
 			
 			// ensure that start <= point <= end times
@@ -761,8 +823,10 @@ class SymgGenerator extends AbstractGenerator {
 	}
 	
 	def compilePConsequent(Proposition prop, String powName, StringBuilder res) {
+		var states = new HashSet<String>()
+		
 		for (or : prop.junctions) {
-			or.powerCompileStates(res, powName)
+			or.powerCompileStates(res, powName, states)
 			res.append("\t:-\tcons(" + powName + ").\n")
 		}
 		
@@ -771,7 +835,7 @@ class SymgGenerator extends AbstractGenerator {
 		res.append(".\n")
 	}
 	
-	def powerCompileStates(Junction or, StringBuilder res, String powName) {
+	def powerCompileStates(Junction or, StringBuilder res, String powName, HashSet<String> states) {
 		
 	}
 	
@@ -899,10 +963,6 @@ class SymgGenerator extends AbstractGenerator {
 								events.put(causes.get(i), eventNumber.toString)
 							}
 							res.append("happens(" + causes.get(i) + ",T" + events.get(causes.get(i)))
-							if (sProp.interval.tempOp != null) {
-								res.append(sProp.interval.tempOp.compileTempOp)
-								res.append(sProp.interval.intConst.type)
-							}
 							res.append(")")
 							if (i < causes.length - 1) {
 								res.append(" ; ")
@@ -910,9 +970,6 @@ class SymgGenerator extends AbstractGenerator {
 						}
 						res.append("),")
 						res.append("T" + events.get(sProp.interval.situationName.declName))
-						if (sProp.interval.tempOp != null) {
-							res.append(sProp.interval.tempOp.compileTempOp + sProp.interval.intConst.type)
-						}
 						res.append("<=T" + eventNumber)
 						eventNumber += 1
 					}
@@ -924,10 +981,6 @@ class SymgGenerator extends AbstractGenerator {
 								events.put(causes.get(i), eventNumber.toString)
 							}
 							res.append("happens(" + causes.get(i) + ",T" + events.get(causes.get(i)))
-							if (sProp.interval.tempOp != null) {
-								res.append(sProp.interval.tempOp.compileTempOp)
-								res.append(sProp.interval.intConst.type)
-							}
 							res.append(")")
 							if (i < causes.length - 1) {
 								res.append(" ; ")
@@ -935,9 +988,6 @@ class SymgGenerator extends AbstractGenerator {
 						}
 						res.append("),")
 						res.append("T" + events.get(sProp.interval.situationName.compileState))
-						if (sProp.interval.tempOp != null) {
-							res.append(sProp.interval.tempOp.compileTempOp + sProp.interval.intConst.type)
-						}
 						res.append("<=T" + eventNumber)
 						eventNumber += 1
 					}
@@ -1017,9 +1067,9 @@ class SymgGenerator extends AbstractGenerator {
 	}
 	
 	/**
-	 * Returns String corresponding to a symboleo operator
+	 * Returns String corresponding to a symboleo operator for points in the form
 	 */
-	def compileTempOp(String TempOp) {
+	def compileTempOpB(String TempOp) {
 		switch (TempOp) {
 			case 'BEFORE': return "-"
 			case 'AFTER': return "+"
@@ -1028,6 +1078,14 @@ class SymgGenerator extends AbstractGenerator {
 		}
 	}
 	
+	def compileTempOpA(String TempOp) {
+		switch (TempOp) {
+			case 'BEFORE': return "+"
+			case 'AFTER': return "-"
+			case '+': return "-"
+			case '-': return "+"	
+		}
+	}
 	/**
 	 * Returns string corresponding to an event
 	 */

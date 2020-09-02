@@ -1299,24 +1299,18 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Keyword cRightSquareBracketKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
 		private final Assignment cUnnamedAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
 		private final Keyword cUnnamedUNNAMED_INTERVALKeyword_2_0 = (Keyword)cUnnamedAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
-		private final Assignment cSituationNameAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
-		private final RuleCall cSituationNameSitNameParserRuleCall_3_0_0 = (RuleCall)cSituationNameAssignment_3_0.eContents().get(0);
-		private final Assignment cTempOpAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cTempOpTempOpParserRuleCall_3_1_0 = (RuleCall)cTempOpAssignment_3_1.eContents().get(0);
-		private final Assignment cIntConstAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
-		private final RuleCall cIntConstIntConstParserRuleCall_3_2_0 = (RuleCall)cIntConstAssignment_3_2.eContents().get(0);
-		private final Assignment cUnitAssignment_3_3 = (Assignment)cGroup_3.eContents().get(3);
-		private final RuleCall cUnitUnitParserRuleCall_3_3_0 = (RuleCall)cUnitAssignment_3_3.eContents().get(0);
+		private final RuleCall cRelativeSituationPointBeforeParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cRelativeSituationPointAfterParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//Interval:
 		//	situationName=SitName | '[' start=Point ',' end=Point ']'
 		//	| unnamed='UNNAMED_INTERVAL'
-		//	| situationName=SitName tempOp=TempOp intConst=IntConst unit=Unit;
+		//	| RelativeSituationPointBefore
+		//	| RelativeSituationPointAfter;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//situationName=SitName | '[' start=Point ',' end=Point ']' | unnamed='UNNAMED_INTERVAL' | situationName=SitName
-		//tempOp=TempOp intConst=IntConst unit=Unit
+		//situationName=SitName | '[' start=Point ',' end=Point ']' | unnamed='UNNAMED_INTERVAL' | RelativeSituationPointBefore |
+		//RelativeSituationPointAfter
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//situationName=SitName
@@ -1355,32 +1349,97 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//'UNNAMED_INTERVAL'
 		public Keyword getUnnamedUNNAMED_INTERVALKeyword_2_0() { return cUnnamedUNNAMED_INTERVALKeyword_2_0; }
 		
-		//situationName=SitName tempOp=TempOp intConst=IntConst unit=Unit
-		public Group getGroup_3() { return cGroup_3; }
+		//RelativeSituationPointBefore
+		public RuleCall getRelativeSituationPointBeforeParserRuleCall_3() { return cRelativeSituationPointBeforeParserRuleCall_3; }
 		
-		//situationName=SitName
-		public Assignment getSituationNameAssignment_3_0() { return cSituationNameAssignment_3_0; }
+		//RelativeSituationPointAfter
+		public RuleCall getRelativeSituationPointAfterParserRuleCall_4() { return cRelativeSituationPointAfterParserRuleCall_4; }
+	}
+	public class RelativeSituationPointBeforeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.symg.Symg.RelativeSituationPointBefore");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cIntConstAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cIntConstIntConstParserRuleCall_0_0 = (RuleCall)cIntConstAssignment_0.eContents().get(0);
+		private final Assignment cUnitAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cUnitUnitParserRuleCall_1_0 = (RuleCall)cUnitAssignment_1.eContents().get(0);
+		private final Assignment cTempOpAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTempOpTempOpParserRuleCall_2_0 = (RuleCall)cTempOpAssignment_2.eContents().get(0);
+		private final Assignment cSituationNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cSituationNameSitNameParserRuleCall_3_0 = (RuleCall)cSituationNameAssignment_3.eContents().get(0);
 		
-		//SitName
-		public RuleCall getSituationNameSitNameParserRuleCall_3_0_0() { return cSituationNameSitNameParserRuleCall_3_0_0; }
+		//RelativeSituationPointBefore:
+		//	intConst=IntConst unit=Unit tempOp=TempOp situationName=SitName;
+		@Override public ParserRule getRule() { return rule; }
 		
-		//tempOp=TempOp
-		public Assignment getTempOpAssignment_3_1() { return cTempOpAssignment_3_1; }
-		
-		//TempOp
-		public RuleCall getTempOpTempOpParserRuleCall_3_1_0() { return cTempOpTempOpParserRuleCall_3_1_0; }
+		//intConst=IntConst unit=Unit tempOp=TempOp situationName=SitName
+		public Group getGroup() { return cGroup; }
 		
 		//intConst=IntConst
-		public Assignment getIntConstAssignment_3_2() { return cIntConstAssignment_3_2; }
+		public Assignment getIntConstAssignment_0() { return cIntConstAssignment_0; }
 		
 		//IntConst
-		public RuleCall getIntConstIntConstParserRuleCall_3_2_0() { return cIntConstIntConstParserRuleCall_3_2_0; }
+		public RuleCall getIntConstIntConstParserRuleCall_0_0() { return cIntConstIntConstParserRuleCall_0_0; }
 		
 		//unit=Unit
-		public Assignment getUnitAssignment_3_3() { return cUnitAssignment_3_3; }
+		public Assignment getUnitAssignment_1() { return cUnitAssignment_1; }
 		
 		//Unit
-		public RuleCall getUnitUnitParserRuleCall_3_3_0() { return cUnitUnitParserRuleCall_3_3_0; }
+		public RuleCall getUnitUnitParserRuleCall_1_0() { return cUnitUnitParserRuleCall_1_0; }
+		
+		//tempOp=TempOp
+		public Assignment getTempOpAssignment_2() { return cTempOpAssignment_2; }
+		
+		//TempOp
+		public RuleCall getTempOpTempOpParserRuleCall_2_0() { return cTempOpTempOpParserRuleCall_2_0; }
+		
+		//situationName=SitName
+		public Assignment getSituationNameAssignment_3() { return cSituationNameAssignment_3; }
+		
+		//SitName
+		public RuleCall getSituationNameSitNameParserRuleCall_3_0() { return cSituationNameSitNameParserRuleCall_3_0; }
+	}
+	public class RelativeSituationPointAfterElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.symg.Symg.RelativeSituationPointAfter");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cSituationNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cSituationNameSitNameParserRuleCall_0_0 = (RuleCall)cSituationNameAssignment_0.eContents().get(0);
+		private final Assignment cTempOpAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTempOpTempOpParserRuleCall_1_0 = (RuleCall)cTempOpAssignment_1.eContents().get(0);
+		private final Assignment cIntConstAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cIntConstIntConstParserRuleCall_2_0 = (RuleCall)cIntConstAssignment_2.eContents().get(0);
+		private final Assignment cUnitAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cUnitUnitParserRuleCall_3_0 = (RuleCall)cUnitAssignment_3.eContents().get(0);
+		
+		//RelativeSituationPointAfter:
+		//	situationName=SitName tempOp=TempOp intConst=IntConst unit=Unit;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//situationName=SitName tempOp=TempOp intConst=IntConst unit=Unit
+		public Group getGroup() { return cGroup; }
+		
+		//situationName=SitName
+		public Assignment getSituationNameAssignment_0() { return cSituationNameAssignment_0; }
+		
+		//SitName
+		public RuleCall getSituationNameSitNameParserRuleCall_0_0() { return cSituationNameSitNameParserRuleCall_0_0; }
+		
+		//tempOp=TempOp
+		public Assignment getTempOpAssignment_1() { return cTempOpAssignment_1; }
+		
+		//TempOp
+		public RuleCall getTempOpTempOpParserRuleCall_1_0() { return cTempOpTempOpParserRuleCall_1_0; }
+		
+		//intConst=IntConst
+		public Assignment getIntConstAssignment_2() { return cIntConstAssignment_2; }
+		
+		//IntConst
+		public RuleCall getIntConstIntConstParserRuleCall_2_0() { return cIntConstIntConstParserRuleCall_2_0; }
+		
+		//unit=Unit
+		public Assignment getUnitAssignment_3() { return cUnitAssignment_3; }
+		
+		//Unit
+		public RuleCall getUnitUnitParserRuleCall_3_0() { return cUnitUnitParserRuleCall_3_0; }
 	}
 	public class SitNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.symg.Symg.SitName");
@@ -1561,23 +1620,15 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Keyword cUnnamedUNNAMED_POINTKeyword_1_0 = (Keyword)cUnnamedAssignment_1.eContents().get(0);
 		private final Assignment cPointConstAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
 		private final RuleCall cPointConstPointConstParserRuleCall_2_0 = (RuleCall)cPointConstAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
-		private final Assignment cPointConstAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
-		private final RuleCall cPointConstPointConstParserRuleCall_3_0_0 = (RuleCall)cPointConstAssignment_3_0.eContents().get(0);
-		private final Assignment cUnitAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cUnitUnitParserRuleCall_3_1_0 = (RuleCall)cUnitAssignment_3_1.eContents().get(0);
-		private final Assignment cTempOpAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
-		private final RuleCall cTempOpTempOpParserRuleCall_3_2_0 = (RuleCall)cTempOpAssignment_3_2.eContents().get(0);
-		private final Assignment cEventNameAssignment_3_3 = (Assignment)cGroup_3.eContents().get(3);
-		private final RuleCall cEventNameSitNameParserRuleCall_3_3_0 = (RuleCall)cEventNameAssignment_3_3.eContents().get(0);
+		private final RuleCall cRelativeEventPointBeforeParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cRelativeEventPointAfterParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//Point:
-		//	eventName=SitName | unnamed='UNNAMED_POINT' | pointConst=PointConst | pointConst=PointConst unit=Unit tempOp=TempOp
-		//	eventName=SitName;
+		//	eventName=SitName | unnamed='UNNAMED_POINT' | pointConst=PointConst | RelativeEventPointBefore |
+		//	RelativeEventPointAfter;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//eventName=SitName | unnamed='UNNAMED_POINT' | pointConst=PointConst | pointConst=PointConst unit=Unit tempOp=TempOp
-		//eventName=SitName
+		//eventName=SitName | unnamed='UNNAMED_POINT' | pointConst=PointConst | RelativeEventPointBefore | RelativeEventPointAfter
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//eventName=SitName
@@ -1598,32 +1649,97 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//PointConst
 		public RuleCall getPointConstPointConstParserRuleCall_2_0() { return cPointConstPointConstParserRuleCall_2_0; }
 		
+		//RelativeEventPointBefore
+		public RuleCall getRelativeEventPointBeforeParserRuleCall_3() { return cRelativeEventPointBeforeParserRuleCall_3; }
+		
+		//RelativeEventPointAfter
+		public RuleCall getRelativeEventPointAfterParserRuleCall_4() { return cRelativeEventPointAfterParserRuleCall_4; }
+	}
+	public class RelativeEventPointBeforeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.symg.Symg.RelativeEventPointBefore");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cPointConstAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cPointConstPointConstParserRuleCall_0_0 = (RuleCall)cPointConstAssignment_0.eContents().get(0);
+		private final Assignment cUnitAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cUnitUnitParserRuleCall_1_0 = (RuleCall)cUnitAssignment_1.eContents().get(0);
+		private final Assignment cTempOpAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTempOpTempOpParserRuleCall_2_0 = (RuleCall)cTempOpAssignment_2.eContents().get(0);
+		private final Assignment cEventNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cEventNameSitNameParserRuleCall_3_0 = (RuleCall)cEventNameAssignment_3.eContents().get(0);
+		
+		//RelativeEventPointBefore:
+		//	pointConst=PointConst unit=Unit tempOp=TempOp eventName=SitName;
+		@Override public ParserRule getRule() { return rule; }
+		
 		//pointConst=PointConst unit=Unit tempOp=TempOp eventName=SitName
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup() { return cGroup; }
 		
 		//pointConst=PointConst
-		public Assignment getPointConstAssignment_3_0() { return cPointConstAssignment_3_0; }
+		public Assignment getPointConstAssignment_0() { return cPointConstAssignment_0; }
 		
 		//PointConst
-		public RuleCall getPointConstPointConstParserRuleCall_3_0_0() { return cPointConstPointConstParserRuleCall_3_0_0; }
+		public RuleCall getPointConstPointConstParserRuleCall_0_0() { return cPointConstPointConstParserRuleCall_0_0; }
 		
 		//unit=Unit
-		public Assignment getUnitAssignment_3_1() { return cUnitAssignment_3_1; }
+		public Assignment getUnitAssignment_1() { return cUnitAssignment_1; }
 		
 		//Unit
-		public RuleCall getUnitUnitParserRuleCall_3_1_0() { return cUnitUnitParserRuleCall_3_1_0; }
+		public RuleCall getUnitUnitParserRuleCall_1_0() { return cUnitUnitParserRuleCall_1_0; }
 		
 		//tempOp=TempOp
-		public Assignment getTempOpAssignment_3_2() { return cTempOpAssignment_3_2; }
+		public Assignment getTempOpAssignment_2() { return cTempOpAssignment_2; }
 		
 		//TempOp
-		public RuleCall getTempOpTempOpParserRuleCall_3_2_0() { return cTempOpTempOpParserRuleCall_3_2_0; }
+		public RuleCall getTempOpTempOpParserRuleCall_2_0() { return cTempOpTempOpParserRuleCall_2_0; }
 		
 		//eventName=SitName
-		public Assignment getEventNameAssignment_3_3() { return cEventNameAssignment_3_3; }
+		public Assignment getEventNameAssignment_3() { return cEventNameAssignment_3; }
 		
 		//SitName
-		public RuleCall getEventNameSitNameParserRuleCall_3_3_0() { return cEventNameSitNameParserRuleCall_3_3_0; }
+		public RuleCall getEventNameSitNameParserRuleCall_3_0() { return cEventNameSitNameParserRuleCall_3_0; }
+	}
+	public class RelativeEventPointAfterElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.symg.Symg.RelativeEventPointAfter");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cEventNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cEventNameSitNameParserRuleCall_0_0 = (RuleCall)cEventNameAssignment_0.eContents().get(0);
+		private final Assignment cTempOpAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTempOpTempOpParserRuleCall_1_0 = (RuleCall)cTempOpAssignment_1.eContents().get(0);
+		private final Assignment cUnitAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cUnitUnitParserRuleCall_2_0 = (RuleCall)cUnitAssignment_2.eContents().get(0);
+		private final Assignment cPointConstAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cPointConstPointConstParserRuleCall_3_0 = (RuleCall)cPointConstAssignment_3.eContents().get(0);
+		
+		//RelativeEventPointAfter:
+		//	eventName=SitName tempOp=TempOp unit=Unit pointConst=PointConst;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//eventName=SitName tempOp=TempOp unit=Unit pointConst=PointConst
+		public Group getGroup() { return cGroup; }
+		
+		//eventName=SitName
+		public Assignment getEventNameAssignment_0() { return cEventNameAssignment_0; }
+		
+		//SitName
+		public RuleCall getEventNameSitNameParserRuleCall_0_0() { return cEventNameSitNameParserRuleCall_0_0; }
+		
+		//tempOp=TempOp
+		public Assignment getTempOpAssignment_1() { return cTempOpAssignment_1; }
+		
+		//TempOp
+		public RuleCall getTempOpTempOpParserRuleCall_1_0() { return cTempOpTempOpParserRuleCall_1_0; }
+		
+		//unit=Unit
+		public Assignment getUnitAssignment_2() { return cUnitAssignment_2; }
+		
+		//Unit
+		public RuleCall getUnitUnitParserRuleCall_2_0() { return cUnitUnitParserRuleCall_2_0; }
+		
+		//pointConst=PointConst
+		public Assignment getPointConstAssignment_3() { return cPointConstAssignment_3; }
+		
+		//PointConst
+		public RuleCall getPointConstPointConstParserRuleCall_3_0() { return cPointConstPointConstParserRuleCall_3_0; }
 	}
 	public class PEventElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.symg.Symg.pEvent");
@@ -2121,11 +2237,15 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	private final SitPropElements pSitProp;
 	private final EventPropElements pEventProp;
 	private final IntervalElements pInterval;
+	private final RelativeSituationPointBeforeElements pRelativeSituationPointBefore;
+	private final RelativeSituationPointAfterElements pRelativeSituationPointAfter;
 	private final SitNameElements pSitName;
 	private final UnitElements pUnit;
 	private final IntConstElements pIntConst;
 	private final TempOpElements pTempOp;
 	private final PointElements pPoint;
+	private final RelativeEventPointBeforeElements pRelativeEventPointBefore;
+	private final RelativeEventPointAfterElements pRelativeEventPointAfter;
 	private final PEventElements pPEvent;
 	private final PowEventElements pPowEvent;
 	private final CEventElements pCEvent;
@@ -2172,11 +2292,15 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		this.pSitProp = new SitPropElements();
 		this.pEventProp = new EventPropElements();
 		this.pInterval = new IntervalElements();
+		this.pRelativeSituationPointBefore = new RelativeSituationPointBeforeElements();
+		this.pRelativeSituationPointAfter = new RelativeSituationPointAfterElements();
 		this.pSitName = new SitNameElements();
 		this.pUnit = new UnitElements();
 		this.pIntConst = new IntConstElements();
 		this.pTempOp = new TempOpElements();
 		this.pPoint = new PointElements();
+		this.pRelativeEventPointBefore = new RelativeEventPointBeforeElements();
+		this.pRelativeEventPointAfter = new RelativeEventPointAfterElements();
 		this.pPEvent = new PEventElements();
 		this.pPowEvent = new PowEventElements();
 		this.pCEvent = new CEventElements();
@@ -2461,13 +2585,34 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//Interval:
 	//	situationName=SitName | '[' start=Point ',' end=Point ']'
 	//	| unnamed='UNNAMED_INTERVAL'
-	//	| situationName=SitName tempOp=TempOp intConst=IntConst unit=Unit;
+	//	| RelativeSituationPointBefore
+	//	| RelativeSituationPointAfter;
 	public IntervalElements getIntervalAccess() {
 		return pInterval;
 	}
 	
 	public ParserRule getIntervalRule() {
 		return getIntervalAccess().getRule();
+	}
+	
+	//RelativeSituationPointBefore:
+	//	intConst=IntConst unit=Unit tempOp=TempOp situationName=SitName;
+	public RelativeSituationPointBeforeElements getRelativeSituationPointBeforeAccess() {
+		return pRelativeSituationPointBefore;
+	}
+	
+	public ParserRule getRelativeSituationPointBeforeRule() {
+		return getRelativeSituationPointBeforeAccess().getRule();
+	}
+	
+	//RelativeSituationPointAfter:
+	//	situationName=SitName tempOp=TempOp intConst=IntConst unit=Unit;
+	public RelativeSituationPointAfterElements getRelativeSituationPointAfterAccess() {
+		return pRelativeSituationPointAfter;
+	}
+	
+	public ParserRule getRelativeSituationPointAfterRule() {
+		return getRelativeSituationPointAfterAccess().getRule();
 	}
 	
 	//SitName:
@@ -2513,14 +2658,34 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	}
 	
 	//Point:
-	//	eventName=SitName | unnamed='UNNAMED_POINT' | pointConst=PointConst | pointConst=PointConst unit=Unit tempOp=TempOp
-	//	eventName=SitName;
+	//	eventName=SitName | unnamed='UNNAMED_POINT' | pointConst=PointConst | RelativeEventPointBefore |
+	//	RelativeEventPointAfter;
 	public PointElements getPointAccess() {
 		return pPoint;
 	}
 	
 	public ParserRule getPointRule() {
 		return getPointAccess().getRule();
+	}
+	
+	//RelativeEventPointBefore:
+	//	pointConst=PointConst unit=Unit tempOp=TempOp eventName=SitName;
+	public RelativeEventPointBeforeElements getRelativeEventPointBeforeAccess() {
+		return pRelativeEventPointBefore;
+	}
+	
+	public ParserRule getRelativeEventPointBeforeRule() {
+		return getRelativeEventPointBeforeAccess().getRule();
+	}
+	
+	//RelativeEventPointAfter:
+	//	eventName=SitName tempOp=TempOp unit=Unit pointConst=PointConst;
+	public RelativeEventPointAfterElements getRelativeEventPointAfterAccess() {
+		return pRelativeEventPointAfter;
+	}
+	
+	public ParserRule getRelativeEventPointAfterRule() {
+		return getRelativeEventPointAfterAccess().getRule();
 	}
 	
 	//pEvent:

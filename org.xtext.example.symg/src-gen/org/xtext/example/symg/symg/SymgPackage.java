@@ -1080,22 +1080,13 @@ public interface SymgPackage extends EPackage
   int INTERVAL__UNNAMED = 3;
 
   /**
-   * The feature id for the '<em><b>Temp Op</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERVAL__TEMP_OP = 4;
-
-  /**
    * The feature id for the '<em><b>Int Const</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INTERVAL__INT_CONST = 5;
+  int INTERVAL__INT_CONST = 4;
 
   /**
    * The feature id for the '<em><b>Unit</b></em>' attribute.
@@ -1104,7 +1095,16 @@ public interface SymgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERVAL__UNIT = 6;
+  int INTERVAL__UNIT = 5;
+
+  /**
+   * The feature id for the '<em><b>Temp Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTERVAL__TEMP_OP = 6;
 
   /**
    * The number of structural features of the '<em>Interval</em>' class.
@@ -1116,6 +1116,170 @@ public interface SymgPackage extends EPackage
   int INTERVAL_FEATURE_COUNT = 7;
 
   /**
+   * The meta object id for the '{@link org.xtext.example.symg.symg.impl.RelativeSituationPointBeforeImpl <em>Relative Situation Point Before</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.xtext.example.symg.symg.impl.RelativeSituationPointBeforeImpl
+   * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getRelativeSituationPointBefore()
+   * @generated
+   */
+  int RELATIVE_SITUATION_POINT_BEFORE = 23;
+
+  /**
+   * The feature id for the '<em><b>Situation Name</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_BEFORE__SITUATION_NAME = INTERVAL__SITUATION_NAME;
+
+  /**
+   * The feature id for the '<em><b>Start</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_BEFORE__START = INTERVAL__START;
+
+  /**
+   * The feature id for the '<em><b>End</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_BEFORE__END = INTERVAL__END;
+
+  /**
+   * The feature id for the '<em><b>Unnamed</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_BEFORE__UNNAMED = INTERVAL__UNNAMED;
+
+  /**
+   * The feature id for the '<em><b>Int Const</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_BEFORE__INT_CONST = INTERVAL__INT_CONST;
+
+  /**
+   * The feature id for the '<em><b>Unit</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_BEFORE__UNIT = INTERVAL__UNIT;
+
+  /**
+   * The feature id for the '<em><b>Temp Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_BEFORE__TEMP_OP = INTERVAL__TEMP_OP;
+
+  /**
+   * The number of structural features of the '<em>Relative Situation Point Before</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_BEFORE_FEATURE_COUNT = INTERVAL_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.xtext.example.symg.symg.impl.RelativeSituationPointAfterImpl <em>Relative Situation Point After</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.xtext.example.symg.symg.impl.RelativeSituationPointAfterImpl
+   * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getRelativeSituationPointAfter()
+   * @generated
+   */
+  int RELATIVE_SITUATION_POINT_AFTER = 24;
+
+  /**
+   * The feature id for the '<em><b>Situation Name</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_AFTER__SITUATION_NAME = INTERVAL__SITUATION_NAME;
+
+  /**
+   * The feature id for the '<em><b>Start</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_AFTER__START = INTERVAL__START;
+
+  /**
+   * The feature id for the '<em><b>End</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_AFTER__END = INTERVAL__END;
+
+  /**
+   * The feature id for the '<em><b>Unnamed</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_AFTER__UNNAMED = INTERVAL__UNNAMED;
+
+  /**
+   * The feature id for the '<em><b>Int Const</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_AFTER__INT_CONST = INTERVAL__INT_CONST;
+
+  /**
+   * The feature id for the '<em><b>Unit</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_AFTER__UNIT = INTERVAL__UNIT;
+
+  /**
+   * The feature id for the '<em><b>Temp Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_AFTER__TEMP_OP = INTERVAL__TEMP_OP;
+
+  /**
+   * The number of structural features of the '<em>Relative Situation Point After</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_SITUATION_POINT_AFTER_FEATURE_COUNT = INTERVAL_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.xtext.example.symg.symg.impl.SitNameImpl <em>Sit Name</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1123,7 +1287,7 @@ public interface SymgPackage extends EPackage
    * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getSitName()
    * @generated
    */
-  int SIT_NAME = 23;
+  int SIT_NAME = 25;
 
   /**
    * The feature id for the '<em><b>Decl Name</b></em>' attribute.
@@ -1205,7 +1369,7 @@ public interface SymgPackage extends EPackage
    * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getIntConst()
    * @generated
    */
-  int INT_CONST = 24;
+  int INT_CONST = 26;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1233,7 +1397,7 @@ public interface SymgPackage extends EPackage
    * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getPoint()
    * @generated
    */
-  int POINT = 25;
+  int POINT = 27;
 
   /**
    * The feature id for the '<em><b>Event Name</b></em>' containment reference.
@@ -1290,6 +1454,134 @@ public interface SymgPackage extends EPackage
   int POINT_FEATURE_COUNT = 5;
 
   /**
+   * The meta object id for the '{@link org.xtext.example.symg.symg.impl.RelativeEventPointBeforeImpl <em>Relative Event Point Before</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.xtext.example.symg.symg.impl.RelativeEventPointBeforeImpl
+   * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getRelativeEventPointBefore()
+   * @generated
+   */
+  int RELATIVE_EVENT_POINT_BEFORE = 28;
+
+  /**
+   * The feature id for the '<em><b>Event Name</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_EVENT_POINT_BEFORE__EVENT_NAME = POINT__EVENT_NAME;
+
+  /**
+   * The feature id for the '<em><b>Unnamed</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_EVENT_POINT_BEFORE__UNNAMED = POINT__UNNAMED;
+
+  /**
+   * The feature id for the '<em><b>Point Const</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_EVENT_POINT_BEFORE__POINT_CONST = POINT__POINT_CONST;
+
+  /**
+   * The feature id for the '<em><b>Unit</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_EVENT_POINT_BEFORE__UNIT = POINT__UNIT;
+
+  /**
+   * The feature id for the '<em><b>Temp Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_EVENT_POINT_BEFORE__TEMP_OP = POINT__TEMP_OP;
+
+  /**
+   * The number of structural features of the '<em>Relative Event Point Before</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_EVENT_POINT_BEFORE_FEATURE_COUNT = POINT_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.xtext.example.symg.symg.impl.RelativeEventPointAfterImpl <em>Relative Event Point After</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.xtext.example.symg.symg.impl.RelativeEventPointAfterImpl
+   * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getRelativeEventPointAfter()
+   * @generated
+   */
+  int RELATIVE_EVENT_POINT_AFTER = 29;
+
+  /**
+   * The feature id for the '<em><b>Event Name</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_EVENT_POINT_AFTER__EVENT_NAME = POINT__EVENT_NAME;
+
+  /**
+   * The feature id for the '<em><b>Unnamed</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_EVENT_POINT_AFTER__UNNAMED = POINT__UNNAMED;
+
+  /**
+   * The feature id for the '<em><b>Point Const</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_EVENT_POINT_AFTER__POINT_CONST = POINT__POINT_CONST;
+
+  /**
+   * The feature id for the '<em><b>Unit</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_EVENT_POINT_AFTER__UNIT = POINT__UNIT;
+
+  /**
+   * The feature id for the '<em><b>Temp Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_EVENT_POINT_AFTER__TEMP_OP = POINT__TEMP_OP;
+
+  /**
+   * The number of structural features of the '<em>Relative Event Point After</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATIVE_EVENT_POINT_AFTER_FEATURE_COUNT = POINT_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.xtext.example.symg.symg.impl.pEventImpl <em>pEvent</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1297,7 +1589,7 @@ public interface SymgPackage extends EPackage
    * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getpEvent()
    * @generated
    */
-  int PEVENT = 26;
+  int PEVENT = 30;
 
   /**
    * The feature id for the '<em><b>Pow Event</b></em>' attribute.
@@ -1334,7 +1626,7 @@ public interface SymgPackage extends EPackage
    * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getcEvent()
    * @generated
    */
-  int CEVENT = 27;
+  int CEVENT = 31;
 
   /**
    * The feature id for the '<em><b>Contr Event</b></em>' attribute.
@@ -1371,7 +1663,7 @@ public interface SymgPackage extends EPackage
    * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getoEvent()
    * @generated
    */
-  int OEVENT = 28;
+  int OEVENT = 32;
 
   /**
    * The feature id for the '<em><b>Obl Event</b></em>' attribute.
@@ -1408,7 +1700,7 @@ public interface SymgPackage extends EPackage
    * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getPointConst()
    * @generated
    */
-  int POINT_CONST = 29;
+  int POINT_CONST = 33;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1436,7 +1728,7 @@ public interface SymgPackage extends EPackage
    * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getoState()
    * @generated
    */
-  int OSTATE = 30;
+  int OSTATE = 34;
 
   /**
    * The feature id for the '<em><b>Obl State</b></em>' attribute.
@@ -1473,7 +1765,7 @@ public interface SymgPackage extends EPackage
    * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getcState()
    * @generated
    */
-  int CSTATE = 31;
+  int CSTATE = 35;
 
   /**
    * The feature id for the '<em><b>Contr State</b></em>' attribute.
@@ -1510,7 +1802,7 @@ public interface SymgPackage extends EPackage
    * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getpState()
    * @generated
    */
-  int PSTATE = 32;
+  int PSTATE = 36;
 
   /**
    * The feature id for the '<em><b>Pow State</b></em>' attribute.
@@ -2475,17 +2767,6 @@ public interface SymgPackage extends EPackage
   EAttribute getInterval_Unnamed();
 
   /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.symg.symg.Interval#getTempOp <em>Temp Op</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Temp Op</em>'.
-   * @see org.xtext.example.symg.symg.Interval#getTempOp()
-   * @see #getInterval()
-   * @generated
-   */
-  EAttribute getInterval_TempOp();
-
-  /**
    * Returns the meta object for the containment reference '{@link org.xtext.example.symg.symg.Interval#getIntConst <em>Int Const</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2506,6 +2787,37 @@ public interface SymgPackage extends EPackage
    * @generated
    */
   EAttribute getInterval_Unit();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.symg.symg.Interval#getTempOp <em>Temp Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Temp Op</em>'.
+   * @see org.xtext.example.symg.symg.Interval#getTempOp()
+   * @see #getInterval()
+   * @generated
+   */
+  EAttribute getInterval_TempOp();
+
+  /**
+   * Returns the meta object for class '{@link org.xtext.example.symg.symg.RelativeSituationPointBefore <em>Relative Situation Point Before</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Relative Situation Point Before</em>'.
+   * @see org.xtext.example.symg.symg.RelativeSituationPointBefore
+   * @generated
+   */
+  EClass getRelativeSituationPointBefore();
+
+  /**
+   * Returns the meta object for class '{@link org.xtext.example.symg.symg.RelativeSituationPointAfter <em>Relative Situation Point After</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Relative Situation Point After</em>'.
+   * @see org.xtext.example.symg.symg.RelativeSituationPointAfter
+   * @generated
+   */
+  EClass getRelativeSituationPointAfter();
 
   /**
    * Returns the meta object for class '{@link org.xtext.example.symg.symg.SitName <em>Sit Name</em>}'.
@@ -2679,6 +2991,26 @@ public interface SymgPackage extends EPackage
    * @generated
    */
   EAttribute getPoint_TempOp();
+
+  /**
+   * Returns the meta object for class '{@link org.xtext.example.symg.symg.RelativeEventPointBefore <em>Relative Event Point Before</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Relative Event Point Before</em>'.
+   * @see org.xtext.example.symg.symg.RelativeEventPointBefore
+   * @generated
+   */
+  EClass getRelativeEventPointBefore();
+
+  /**
+   * Returns the meta object for class '{@link org.xtext.example.symg.symg.RelativeEventPointAfter <em>Relative Event Point After</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Relative Event Point After</em>'.
+   * @see org.xtext.example.symg.symg.RelativeEventPointAfter
+   * @generated
+   */
+  EClass getRelativeEventPointAfter();
 
   /**
    * Returns the meta object for class '{@link org.xtext.example.symg.symg.pEvent <em>pEvent</em>}'.
@@ -3659,14 +3991,6 @@ public interface SymgPackage extends EPackage
     EAttribute INTERVAL__UNNAMED = eINSTANCE.getInterval_Unnamed();
 
     /**
-     * The meta object literal for the '<em><b>Temp Op</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute INTERVAL__TEMP_OP = eINSTANCE.getInterval_TempOp();
-
-    /**
      * The meta object literal for the '<em><b>Int Const</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3681,6 +4005,34 @@ public interface SymgPackage extends EPackage
      * @generated
      */
     EAttribute INTERVAL__UNIT = eINSTANCE.getInterval_Unit();
+
+    /**
+     * The meta object literal for the '<em><b>Temp Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute INTERVAL__TEMP_OP = eINSTANCE.getInterval_TempOp();
+
+    /**
+     * The meta object literal for the '{@link org.xtext.example.symg.symg.impl.RelativeSituationPointBeforeImpl <em>Relative Situation Point Before</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.xtext.example.symg.symg.impl.RelativeSituationPointBeforeImpl
+     * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getRelativeSituationPointBefore()
+     * @generated
+     */
+    EClass RELATIVE_SITUATION_POINT_BEFORE = eINSTANCE.getRelativeSituationPointBefore();
+
+    /**
+     * The meta object literal for the '{@link org.xtext.example.symg.symg.impl.RelativeSituationPointAfterImpl <em>Relative Situation Point After</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.xtext.example.symg.symg.impl.RelativeSituationPointAfterImpl
+     * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getRelativeSituationPointAfter()
+     * @generated
+     */
+    EClass RELATIVE_SITUATION_POINT_AFTER = eINSTANCE.getRelativeSituationPointAfter();
 
     /**
      * The meta object literal for the '{@link org.xtext.example.symg.symg.impl.SitNameImpl <em>Sit Name</em>}' class.
@@ -3815,6 +4167,26 @@ public interface SymgPackage extends EPackage
      * @generated
      */
     EAttribute POINT__TEMP_OP = eINSTANCE.getPoint_TempOp();
+
+    /**
+     * The meta object literal for the '{@link org.xtext.example.symg.symg.impl.RelativeEventPointBeforeImpl <em>Relative Event Point Before</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.xtext.example.symg.symg.impl.RelativeEventPointBeforeImpl
+     * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getRelativeEventPointBefore()
+     * @generated
+     */
+    EClass RELATIVE_EVENT_POINT_BEFORE = eINSTANCE.getRelativeEventPointBefore();
+
+    /**
+     * The meta object literal for the '{@link org.xtext.example.symg.symg.impl.RelativeEventPointAfterImpl <em>Relative Event Point After</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.xtext.example.symg.symg.impl.RelativeEventPointAfterImpl
+     * @see org.xtext.example.symg.symg.impl.SymgPackageImpl#getRelativeEventPointAfter()
+     * @generated
+     */
+    EClass RELATIVE_EVENT_POINT_AFTER = eINSTANCE.getRelativeEventPointAfter();
 
     /**
      * The meta object literal for the '{@link org.xtext.example.symg.symg.impl.pEventImpl <em>pEvent</em>}' class.

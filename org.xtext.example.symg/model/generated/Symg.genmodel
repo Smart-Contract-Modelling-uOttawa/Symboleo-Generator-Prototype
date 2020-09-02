@@ -113,10 +113,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//Interval/start"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//Interval/end"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//Interval/unnamed"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//Interval/tempOp"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//Interval/intConst"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//Interval/unit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//Interval/tempOp"/>
     </genClasses>
+    <genClasses ecoreClass="Symg.ecore#//RelativeSituationPointBefore"/>
+    <genClasses ecoreClass="Symg.ecore#//RelativeSituationPointAfter"/>
     <genClasses ecoreClass="Symg.ecore#//SitName">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//SitName/declName"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Symg.ecore#//SitName/oState"/>
@@ -136,6 +138,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//Point/unit"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//Point/tempOp"/>
     </genClasses>
+    <genClasses ecoreClass="Symg.ecore#//RelativeEventPointBefore"/>
+    <genClasses ecoreClass="Symg.ecore#//RelativeEventPointAfter"/>
     <genClasses ecoreClass="Symg.ecore#//pEvent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//pEvent/powEvent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Symg.ecore#//pEvent/powName"/>

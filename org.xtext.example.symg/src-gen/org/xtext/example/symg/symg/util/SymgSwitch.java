@@ -241,6 +241,22 @@ public class SymgSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SymgPackage.RELATIVE_SITUATION_POINT_BEFORE:
+      {
+        RelativeSituationPointBefore relativeSituationPointBefore = (RelativeSituationPointBefore)theEObject;
+        T result = caseRelativeSituationPointBefore(relativeSituationPointBefore);
+        if (result == null) result = caseInterval(relativeSituationPointBefore);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SymgPackage.RELATIVE_SITUATION_POINT_AFTER:
+      {
+        RelativeSituationPointAfter relativeSituationPointAfter = (RelativeSituationPointAfter)theEObject;
+        T result = caseRelativeSituationPointAfter(relativeSituationPointAfter);
+        if (result == null) result = caseInterval(relativeSituationPointAfter);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SymgPackage.SIT_NAME:
       {
         SitName sitName = (SitName)theEObject;
@@ -259,6 +275,22 @@ public class SymgSwitch<T> extends Switch<T>
       {
         Point point = (Point)theEObject;
         T result = casePoint(point);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SymgPackage.RELATIVE_EVENT_POINT_BEFORE:
+      {
+        RelativeEventPointBefore relativeEventPointBefore = (RelativeEventPointBefore)theEObject;
+        T result = caseRelativeEventPointBefore(relativeEventPointBefore);
+        if (result == null) result = casePoint(relativeEventPointBefore);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SymgPackage.RELATIVE_EVENT_POINT_AFTER:
+      {
+        RelativeEventPointAfter relativeEventPointAfter = (RelativeEventPointAfter)theEObject;
+        T result = caseRelativeEventPointAfter(relativeEventPointAfter);
+        if (result == null) result = casePoint(relativeEventPointAfter);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -684,6 +716,38 @@ public class SymgSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Relative Situation Point Before</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Relative Situation Point Before</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRelativeSituationPointBefore(RelativeSituationPointBefore object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Relative Situation Point After</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Relative Situation Point After</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRelativeSituationPointAfter(RelativeSituationPointAfter object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Sit Name</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -727,6 +791,38 @@ public class SymgSwitch<T> extends Switch<T>
    * @generated
    */
   public T casePoint(Point object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Relative Event Point Before</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Relative Event Point Before</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRelativeEventPointBefore(RelativeEventPointBefore object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Relative Event Point After</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Relative Event Point After</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRelativeEventPointAfter(RelativeEventPointAfter object)
   {
     return null;
   }
