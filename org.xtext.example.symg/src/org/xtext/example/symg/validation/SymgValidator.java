@@ -3,6 +3,13 @@
  */
 package org.xtext.example.symg.validation;
 
+import org.eclipse.xtext.validation.Check;
+import org.xtext.example.symg.symg.DomainConcept;
+import org.xtext.example.symg.symg.DomainType;
+import org.xtext.example.symg.symg.Enumeration;
+import org.xtext.example.symg.symg.OntoCType;
+import org.xtext.example.symg.symg.Regular;
+import org.xtext.example.symg.symg.SymgPackage;
 
 /**
  * This class contains custom validation rules. 
@@ -11,15 +18,24 @@ package org.xtext.example.symg.validation;
  */
 public class SymgValidator extends AbstractSymgValidator {
 	
-//	public static final String INVALID_NAME = "invalidName";
-//
-//	@Check
-//	public void checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.getName().charAt(0))) {
-//			warning("Name should start with a capital",
-//					SymgPackage.Literals.GREETING__NAME,
-//					INVALID_NAME);
-//		}
-//	}
+	protected static final String ISSUE_CODE_PREFIX = "symboleo.";
 	
+	public static final String DUPLICATE_NAME = ISSUE_CODE_PREFIX + "DuplicateName";
+
+		@Check
+	public void checkDomainSpec(DomainConcept domainSpec) {
+		if (!(domainSpec instanceof Regular || domainSpec instanceof Enumeration)) {
+			error("Variable needs to be a CType", SymgPackage.eINSTANCE.getDomainConcept_Name(), DUPLICATE_NAME, domainSpec.getName());
+		}
+		return;
+	}
+
+		@Check
+	public void checkEntityCapital(Regular reg) {
+		if (!(reg.getConceptType() instanceof OntoCType || reg.getConceptType() instanceof DomainType)) {
+			error("Concept Type needs to be of type OntoCType", SymgPackage.eINSTANCE.getRegular_ConceptType(), DUPLICATE_NAME, reg.getName());
+		}
+		return;
+	}
+		
 }

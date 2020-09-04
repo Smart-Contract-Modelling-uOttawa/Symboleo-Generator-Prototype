@@ -11,20 +11,191 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.^extension.ExtendWith
 import org.xtext.example.symg.symg.Model
+import org.eclipse.xtext.generator.InMemoryFileSystemAccess
+import static org.junit.Assert.*
+import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipse.xtext.generator.IGenerator2
+import org.eclipse.xtext.util.CancelIndicator
+import org.eclipse.xtext.generator.GeneratorContext
+import org.xtext.example.symg.tests.GetInputValues
 
 @ExtendWith(InjectionExtension)
 @InjectWith(SymgInjectorProvider)
+
 class SymgParsingTest {
-	@Inject
-	ParseHelper<Model> parseHelper
+	@Inject IGenerator2 underTest
+    @Inject ParseHelper<Model> parseHelper 
+    
+    GetInputValues inputProperties = new GetInputValues();
+    GetInputValues expectedProperties = new GetInputValues();
+    
+    @Test
+    def void domainRole() {
+    	        
+    	val fsa = new InMemoryFileSystemAccess()
+        val context = new GeneratorContext => [
+			cancelIndicator = CancelIndicator.NullImpl
+			]
+					
+    	val model = parseHelper.parse(this.inputProperties.getInputValues("domainLoad", "input"));
+        val expected = this.expectedProperties.getInputValues("domainLoad" , "expected");  
+        
+   underTest.doGenerate(model.eResource, fsa, context)
+        println(fsa.files)
+        assertEquals(1,fsa.files.size)   
+        
+        assertEquals(removeWhiteSpaces(expected.toString), removeWhiteSpaces(fsa.files.get(IFileSystemAccess::DEFAULT_OUTPUT+"test.pl").toString))      
+            
+    }
+    
+    @Test
+    def void domainEnum() {
+    	        
+    	val fsa = new InMemoryFileSystemAccess()
+        val context = new GeneratorContext => [
+			cancelIndicator = CancelIndicator.NullImpl
+			]
+			
+    	val model = parseHelper.parse(this.inputProperties.getInputValues("domainEnum", "input")); 
+        val expected = this.expectedProperties.getInputValues("domainEnum" , "expected");
+        
+   underTest.doGenerate(model.eResource, fsa, context)
+        println(fsa.files)
+        assertEquals(1,fsa.files.size)   
+        
+        assertEquals(removeWhiteSpaces(expected.toString), removeWhiteSpaces(fsa.files.get(IFileSystemAccess::DEFAULT_OUTPUT+"test.pl").toString))      
+            
+    }
+    
+    @Test
+    def void domainWithSuperType() {
+    	        
+    	val fsa = new InMemoryFileSystemAccess()
+        val context = new GeneratorContext => [
+			cancelIndicator = CancelIndicator.NullImpl
+			]
+			
+    	val model = parseHelper.parse(this.inputProperties.getInputValues("domainWithSuperType", "input"));
+        val expected = this.expectedProperties.getInputValues("domainWithSuperType" , "expected");
+        
+   underTest.doGenerate(model.eResource, fsa, context)
+        println(fsa.files)
+        assertEquals(1,fsa.files.size)   
+        
+        assertEquals(removeWhiteSpaces(expected.toString), removeWhiteSpaces(fsa.files.get(IFileSystemAccess::DEFAULT_OUTPUT+"test.pl").toString))      
+            
+    }    
+    
+     @Test
+    def void loadModel() {
+    	
+        val model = parseHelper.parse(this.inputProperties.getInputValues("loadModel", "input"));
+        val expected = this.expectedProperties.getInputValues("loadModel" , "expected");
+        
+        val fsa = new InMemoryFileSystemAccess()
+        val context = new GeneratorContext => [
+			cancelIndicator = CancelIndicator.NullImpl
+		]
+        underTest.doGenerate(model.eResource, fsa, context)
+        println(fsa.files)
+        assertEquals(1,fsa.files.size)
+ 
+         val String[] expectedLines = expected.toString.split("\\n");
+         val String[] actualLines = fsa.files.get(IFileSystemAccess::DEFAULT_OUTPUT+"test.pl").toString.split("\\n");
+         
+        assertEquals(removeWhiteSpaces(expected.toString), removeWhiteSpaces(fsa.files.get(IFileSystemAccess::DEFAULT_OUTPUT+"test.pl").toString))
+         
+    }
+    
+        @Test
+    def void declarations() {
+    	        
+    	val fsa = new InMemoryFileSystemAccess()
+        val context = new GeneratorContext => [
+			cancelIndicator = CancelIndicator.NullImpl
+			]
+			
+    	val model = parseHelper.parse(this.inputProperties.getInputValues("declarations", "input"));
+        val expected = this.expectedProperties.getInputValues("declarations" , "expected");
+        
+   underTest.doGenerate(model.eResource, fsa, context)
+        println(fsa.files)
+        assertEquals(1,fsa.files.size)   
+        
+        assertEquals(removeWhiteSpaces(expected.toString), removeWhiteSpaces(fsa.files.get(IFileSystemAccess::DEFAULT_OUTPUT+"test.pl").toString))      
+            
+    }
+    
+            @Test
+    def void badDeclarationCombinationVariable() {
+    	
+	    	try {
+	    		      
+		    	val fsa = new InMemoryFileSystemAccess()
+		        val context = new GeneratorContext => [
+					cancelIndicator = CancelIndicator.NullImpl
+					]
+					
+		    	val model = parseHelper.parse(this.inputProperties.getInputValues("badDeclarationCombinationVariable", "input"));
+		        val expected = this.expectedProperties.getInputValues("badDeclarationCombinationVariable" , "expected");
+		        
+		   		underTest.doGenerate(model.eResource, fsa, context)
+		        
+		        assertEquals(removeWhiteSpaces(expected.toString), removeWhiteSpaces(fsa.files.get(IFileSystemAccess::DEFAULT_OUTPUT+"test.pl").toString))    
+	           
+	        } catch (java.lang.NullPointerException e) {
+	        	System.out.println("Test failed");
+	        	System.out.println(e);
+	        	assertEquals(true,true);
+	        } 	   
+    	}
+    
+    
+    @Test
+    def void badDomainRole() {
+    	   
+    	try {   
+    		     
+	    	val fsa = new InMemoryFileSystemAccess()
+	        val context = new GeneratorContext => [
+				cancelIndicator = CancelIndicator.NullImpl
+				]
+				
+	    	val model = parseHelper.parse(this.inputProperties.getInputValues("badDomainRole", "input"));
+	        
+	   		underTest.doGenerate(model.eResource, fsa, context)
+	        assertEquals(true,false)   
+
+       } catch (java.lang.NullPointerException e) {
+	        	System.out.println("Test failed");
+	        	System.out.println(e);
+	        	assertEquals(true,true);
+	        }          
+    }
+    
+   @Test
+   def void noContractRequirement() {
+    	  try {   
+    	  	   
+	    	val fsa = new InMemoryFileSystemAccess()
+	        val context = new GeneratorContext => [
+				cancelIndicator = CancelIndicator.NullImpl
+				]
+				
+	    	val model = parseHelper.parse(this.inputProperties.getInputValues("noContractRequirement", "input"));
+	        
+	   		underTest.doGenerate(model.eResource, fsa, context)
+	        println(fsa.files)
+	        assertEquals(true, false)   
+	            
+           } catch (java.lang.NullPointerException e) {
+        	System.out.println("Test failed");
+        	System.out.println(e);
+        	assertEquals(true,true);
+        }      
+    }
 	
-	@Test
-	def void loadModel() {
-		val result = parseHelper.parse('''
-			Hello Xtext!
-		''')
-		Assertions.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	def removeWhiteSpaces(String input) {
+		return input.replaceAll("\\s+", "");
 	}
 }
