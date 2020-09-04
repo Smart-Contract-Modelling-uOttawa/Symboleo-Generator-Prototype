@@ -120,14 +120,21 @@ class SymgGenerator extends AbstractGenerator {
 	 */
 	def compileDeclaration(String parent, String declName, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declAttrs, HashSet<String> dates) {
 		var i = 0
+		
+		// checks each attribute of the declaration of the declaration and generates code for it
 		for (attr: declAttrs.get(declName)) {
 
 			if (declAttrs.containsKey(attr.value)) {
-				// the value of this attribute is a declaration
+				/**
+				 * if the attribute is a declaration it recursively generates the attributes of that declaration
+				 */
 				attr.value.compileDeclarations(res, declAttrs, dates)
 			}
 			// if the value is date in the parameters, ignore it
 			if (!dates.contains(attr.value)) {
+				/**
+				 * if the attribute is not a date and not a declaration, generate code for the attribute base on the below template
+				 */
 				res.append("holds_at(" + attr.key + "(" + parent + "," + attr.value + "),T)")	
 				if (i < declAttrs.get(declName).length - 1) {
 					res.append(",")
@@ -142,7 +149,7 @@ class SymgGenerator extends AbstractGenerator {
 	 */
 	def compileDeclarations(String object, StringBuilder res, HashMap<String, ArrayList<KeyValuePair>> declAttrs, HashSet<String> dates) {
 		for (attr: declAttrs.get(object)) {
-
+			// recursive call for the above function in case of multiple levels of declaration nesting (attribute of declaration is a declaration with an attribute that is a declaration)
 			if (declAttrs.containsKey(attr.value)) {
 				// the value of this attribute is a declaration
 				attr.value.compileDeclarations(res, declAttrs, dates)
