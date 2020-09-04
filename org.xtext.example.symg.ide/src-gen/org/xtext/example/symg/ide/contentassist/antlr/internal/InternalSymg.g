@@ -2334,9 +2334,16 @@ rule__Model__Group__13__Impl
 	}
 :
 (
-	{ before(grammarAccess.getModelAccess().getGroup_13()); }
-	(rule__Model__Group_13__0)?
-	{ after(grammarAccess.getModelAccess().getGroup_13()); }
+	(
+		{ before(grammarAccess.getModelAccess().getGroup_13()); }
+		(rule__Model__Group_13__0)
+		{ after(grammarAccess.getModelAccess().getGroup_13()); }
+	)
+	(
+		{ before(grammarAccess.getModelAccess().getGroup_13()); }
+		(rule__Model__Group_13__0)*
+		{ after(grammarAccess.getModelAccess().getGroup_13()); }
+	)
 )
 ;
 finally {

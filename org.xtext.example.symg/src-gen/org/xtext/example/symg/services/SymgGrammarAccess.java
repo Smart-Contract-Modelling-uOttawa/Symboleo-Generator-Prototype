@@ -96,7 +96,7 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//	'endDomain'
 		//	'Contract' contractName=ID '(' (parameters+=Parameter ',')+ parameters+=Parameter ')' ('Declarations'
 		//	(declarations+=Declar ';')*)? ('Preconditions' (preconditions+=Proposition ';')*)? ('Postconditions'
-		//	(postconditions+=Proposition ';')*)? ('Obligations' (obligations+=Obligation ';')*)? ('Surviving' 'Obligations'
+		//	(postconditions+=Proposition ';')*)? ('Obligations' (obligations+=Obligation ';')*)+ ('Surviving' 'Obligations'
 		//	(sobligations+=Obligation ';')*)? ('Powers' (powers+=Power ';')*)? ('Constraints' (constraints+=Proposition ';')*)?
 		//	'endContract';
 		@Override public ParserRule getRule() { return rule; }
@@ -104,7 +104,7 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//'Domain' domainName=ID (domainConcepts+=DomainConcept ';')+ 'endDomain' 'Contract' contractName=ID '('
 		//(parameters+=Parameter ',')+ parameters+=Parameter ')' ('Declarations' (declarations+=Declar ';')*)? ('Preconditions'
 		//(preconditions+=Proposition ';')*)? ('Postconditions' (postconditions+=Proposition ';')*)? ('Obligations'
-		//(obligations+=Obligation ';')*)? ('Surviving' 'Obligations' (sobligations+=Obligation ';')*)? ('Powers' (powers+=Power
+		//(obligations+=Obligation ';')*)+ ('Surviving' 'Obligations' (sobligations+=Obligation ';')*)? ('Powers' (powers+=Power
 		//';')*)? ('Constraints' (constraints+=Proposition ';')*)? 'endContract'
 		public Group getGroup() { return cGroup; }
 		
@@ -219,7 +219,7 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//';'
 		public Keyword getSemicolonKeyword_12_1_1() { return cSemicolonKeyword_12_1_1; }
 		
-		//('Obligations' (obligations+=Obligation ';')*)?
+		//('Obligations' (obligations+=Obligation ';')*)+
 		public Group getGroup_13() { return cGroup_13; }
 		
 		//'Obligations'
@@ -2348,7 +2348,7 @@ public class SymgGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//	'endDomain'
 	//	'Contract' contractName=ID '(' (parameters+=Parameter ',')+ parameters+=Parameter ')' ('Declarations'
 	//	(declarations+=Declar ';')*)? ('Preconditions' (preconditions+=Proposition ';')*)? ('Postconditions'
-	//	(postconditions+=Proposition ';')*)? ('Obligations' (obligations+=Obligation ';')*)? ('Surviving' 'Obligations'
+	//	(postconditions+=Proposition ';')*)? ('Obligations' (obligations+=Obligation ';')*)+ ('Surviving' 'Obligations'
 	//	(sobligations+=Obligation ';')*)? ('Powers' (powers+=Power ';')*)? ('Constraints' (constraints+=Proposition ';')*)?
 	//	'endContract';
 	public ModelElements getModelAccess() {

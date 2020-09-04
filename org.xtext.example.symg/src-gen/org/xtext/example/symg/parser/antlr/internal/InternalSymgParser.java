@@ -206,7 +206,7 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModel"
-    // InternalSymg.g:71:1: ruleModel returns [EObject current=null] : (otherlv_0= 'Domain' ( (lv_domainName_1_0= RULE_ID ) ) ( ( (lv_domainConcepts_2_0= ruleDomainConcept ) ) otherlv_3= ';' )+ otherlv_4= 'endDomain' otherlv_5= 'Contract' ( (lv_contractName_6_0= RULE_ID ) ) otherlv_7= '(' ( ( (lv_parameters_8_0= ruleParameter ) ) otherlv_9= ',' )+ ( (lv_parameters_10_0= ruleParameter ) ) otherlv_11= ')' (otherlv_12= 'Declarations' ( ( (lv_declarations_13_0= ruleDeclar ) ) otherlv_14= ';' )* )? (otherlv_15= 'Preconditions' ( ( (lv_preconditions_16_0= ruleProposition ) ) otherlv_17= ';' )* )? (otherlv_18= 'Postconditions' ( ( (lv_postconditions_19_0= ruleProposition ) ) otherlv_20= ';' )* )? (otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )* )? (otherlv_24= 'Surviving' otherlv_25= 'Obligations' ( ( (lv_sobligations_26_0= ruleObligation ) ) otherlv_27= ';' )* )? (otherlv_28= 'Powers' ( ( (lv_powers_29_0= rulePower ) ) otherlv_30= ';' )* )? (otherlv_31= 'Constraints' ( ( (lv_constraints_32_0= ruleProposition ) ) otherlv_33= ';' )* )? otherlv_34= 'endContract' ) ;
+    // InternalSymg.g:71:1: ruleModel returns [EObject current=null] : (otherlv_0= 'Domain' ( (lv_domainName_1_0= RULE_ID ) ) ( ( (lv_domainConcepts_2_0= ruleDomainConcept ) ) otherlv_3= ';' )+ otherlv_4= 'endDomain' otherlv_5= 'Contract' ( (lv_contractName_6_0= RULE_ID ) ) otherlv_7= '(' ( ( (lv_parameters_8_0= ruleParameter ) ) otherlv_9= ',' )+ ( (lv_parameters_10_0= ruleParameter ) ) otherlv_11= ')' (otherlv_12= 'Declarations' ( ( (lv_declarations_13_0= ruleDeclar ) ) otherlv_14= ';' )* )? (otherlv_15= 'Preconditions' ( ( (lv_preconditions_16_0= ruleProposition ) ) otherlv_17= ';' )* )? (otherlv_18= 'Postconditions' ( ( (lv_postconditions_19_0= ruleProposition ) ) otherlv_20= ';' )* )? (otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )* )+ (otherlv_24= 'Surviving' otherlv_25= 'Obligations' ( ( (lv_sobligations_26_0= ruleObligation ) ) otherlv_27= ';' )* )? (otherlv_28= 'Powers' ( ( (lv_powers_29_0= rulePower ) ) otherlv_30= ';' )* )? (otherlv_31= 'Constraints' ( ( (lv_constraints_32_0= ruleProposition ) ) otherlv_33= ';' )* )? otherlv_34= 'endContract' ) ;
     public final EObject ruleModel() throws RecognitionException {
         EObject current = null;
 
@@ -260,11 +260,11 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSymg.g:77:2: ( (otherlv_0= 'Domain' ( (lv_domainName_1_0= RULE_ID ) ) ( ( (lv_domainConcepts_2_0= ruleDomainConcept ) ) otherlv_3= ';' )+ otherlv_4= 'endDomain' otherlv_5= 'Contract' ( (lv_contractName_6_0= RULE_ID ) ) otherlv_7= '(' ( ( (lv_parameters_8_0= ruleParameter ) ) otherlv_9= ',' )+ ( (lv_parameters_10_0= ruleParameter ) ) otherlv_11= ')' (otherlv_12= 'Declarations' ( ( (lv_declarations_13_0= ruleDeclar ) ) otherlv_14= ';' )* )? (otherlv_15= 'Preconditions' ( ( (lv_preconditions_16_0= ruleProposition ) ) otherlv_17= ';' )* )? (otherlv_18= 'Postconditions' ( ( (lv_postconditions_19_0= ruleProposition ) ) otherlv_20= ';' )* )? (otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )* )? (otherlv_24= 'Surviving' otherlv_25= 'Obligations' ( ( (lv_sobligations_26_0= ruleObligation ) ) otherlv_27= ';' )* )? (otherlv_28= 'Powers' ( ( (lv_powers_29_0= rulePower ) ) otherlv_30= ';' )* )? (otherlv_31= 'Constraints' ( ( (lv_constraints_32_0= ruleProposition ) ) otherlv_33= ';' )* )? otherlv_34= 'endContract' ) )
-            // InternalSymg.g:78:2: (otherlv_0= 'Domain' ( (lv_domainName_1_0= RULE_ID ) ) ( ( (lv_domainConcepts_2_0= ruleDomainConcept ) ) otherlv_3= ';' )+ otherlv_4= 'endDomain' otherlv_5= 'Contract' ( (lv_contractName_6_0= RULE_ID ) ) otherlv_7= '(' ( ( (lv_parameters_8_0= ruleParameter ) ) otherlv_9= ',' )+ ( (lv_parameters_10_0= ruleParameter ) ) otherlv_11= ')' (otherlv_12= 'Declarations' ( ( (lv_declarations_13_0= ruleDeclar ) ) otherlv_14= ';' )* )? (otherlv_15= 'Preconditions' ( ( (lv_preconditions_16_0= ruleProposition ) ) otherlv_17= ';' )* )? (otherlv_18= 'Postconditions' ( ( (lv_postconditions_19_0= ruleProposition ) ) otherlv_20= ';' )* )? (otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )* )? (otherlv_24= 'Surviving' otherlv_25= 'Obligations' ( ( (lv_sobligations_26_0= ruleObligation ) ) otherlv_27= ';' )* )? (otherlv_28= 'Powers' ( ( (lv_powers_29_0= rulePower ) ) otherlv_30= ';' )* )? (otherlv_31= 'Constraints' ( ( (lv_constraints_32_0= ruleProposition ) ) otherlv_33= ';' )* )? otherlv_34= 'endContract' )
+            // InternalSymg.g:77:2: ( (otherlv_0= 'Domain' ( (lv_domainName_1_0= RULE_ID ) ) ( ( (lv_domainConcepts_2_0= ruleDomainConcept ) ) otherlv_3= ';' )+ otherlv_4= 'endDomain' otherlv_5= 'Contract' ( (lv_contractName_6_0= RULE_ID ) ) otherlv_7= '(' ( ( (lv_parameters_8_0= ruleParameter ) ) otherlv_9= ',' )+ ( (lv_parameters_10_0= ruleParameter ) ) otherlv_11= ')' (otherlv_12= 'Declarations' ( ( (lv_declarations_13_0= ruleDeclar ) ) otherlv_14= ';' )* )? (otherlv_15= 'Preconditions' ( ( (lv_preconditions_16_0= ruleProposition ) ) otherlv_17= ';' )* )? (otherlv_18= 'Postconditions' ( ( (lv_postconditions_19_0= ruleProposition ) ) otherlv_20= ';' )* )? (otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )* )+ (otherlv_24= 'Surviving' otherlv_25= 'Obligations' ( ( (lv_sobligations_26_0= ruleObligation ) ) otherlv_27= ';' )* )? (otherlv_28= 'Powers' ( ( (lv_powers_29_0= rulePower ) ) otherlv_30= ';' )* )? (otherlv_31= 'Constraints' ( ( (lv_constraints_32_0= ruleProposition ) ) otherlv_33= ';' )* )? otherlv_34= 'endContract' ) )
+            // InternalSymg.g:78:2: (otherlv_0= 'Domain' ( (lv_domainName_1_0= RULE_ID ) ) ( ( (lv_domainConcepts_2_0= ruleDomainConcept ) ) otherlv_3= ';' )+ otherlv_4= 'endDomain' otherlv_5= 'Contract' ( (lv_contractName_6_0= RULE_ID ) ) otherlv_7= '(' ( ( (lv_parameters_8_0= ruleParameter ) ) otherlv_9= ',' )+ ( (lv_parameters_10_0= ruleParameter ) ) otherlv_11= ')' (otherlv_12= 'Declarations' ( ( (lv_declarations_13_0= ruleDeclar ) ) otherlv_14= ';' )* )? (otherlv_15= 'Preconditions' ( ( (lv_preconditions_16_0= ruleProposition ) ) otherlv_17= ';' )* )? (otherlv_18= 'Postconditions' ( ( (lv_postconditions_19_0= ruleProposition ) ) otherlv_20= ';' )* )? (otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )* )+ (otherlv_24= 'Surviving' otherlv_25= 'Obligations' ( ( (lv_sobligations_26_0= ruleObligation ) ) otherlv_27= ';' )* )? (otherlv_28= 'Powers' ( ( (lv_powers_29_0= rulePower ) ) otherlv_30= ';' )* )? (otherlv_31= 'Constraints' ( ( (lv_constraints_32_0= ruleProposition ) ) otherlv_33= ';' )* )? otherlv_34= 'endContract' )
             {
-            // InternalSymg.g:78:2: (otherlv_0= 'Domain' ( (lv_domainName_1_0= RULE_ID ) ) ( ( (lv_domainConcepts_2_0= ruleDomainConcept ) ) otherlv_3= ';' )+ otherlv_4= 'endDomain' otherlv_5= 'Contract' ( (lv_contractName_6_0= RULE_ID ) ) otherlv_7= '(' ( ( (lv_parameters_8_0= ruleParameter ) ) otherlv_9= ',' )+ ( (lv_parameters_10_0= ruleParameter ) ) otherlv_11= ')' (otherlv_12= 'Declarations' ( ( (lv_declarations_13_0= ruleDeclar ) ) otherlv_14= ';' )* )? (otherlv_15= 'Preconditions' ( ( (lv_preconditions_16_0= ruleProposition ) ) otherlv_17= ';' )* )? (otherlv_18= 'Postconditions' ( ( (lv_postconditions_19_0= ruleProposition ) ) otherlv_20= ';' )* )? (otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )* )? (otherlv_24= 'Surviving' otherlv_25= 'Obligations' ( ( (lv_sobligations_26_0= ruleObligation ) ) otherlv_27= ';' )* )? (otherlv_28= 'Powers' ( ( (lv_powers_29_0= rulePower ) ) otherlv_30= ';' )* )? (otherlv_31= 'Constraints' ( ( (lv_constraints_32_0= ruleProposition ) ) otherlv_33= ';' )* )? otherlv_34= 'endContract' )
-            // InternalSymg.g:79:3: otherlv_0= 'Domain' ( (lv_domainName_1_0= RULE_ID ) ) ( ( (lv_domainConcepts_2_0= ruleDomainConcept ) ) otherlv_3= ';' )+ otherlv_4= 'endDomain' otherlv_5= 'Contract' ( (lv_contractName_6_0= RULE_ID ) ) otherlv_7= '(' ( ( (lv_parameters_8_0= ruleParameter ) ) otherlv_9= ',' )+ ( (lv_parameters_10_0= ruleParameter ) ) otherlv_11= ')' (otherlv_12= 'Declarations' ( ( (lv_declarations_13_0= ruleDeclar ) ) otherlv_14= ';' )* )? (otherlv_15= 'Preconditions' ( ( (lv_preconditions_16_0= ruleProposition ) ) otherlv_17= ';' )* )? (otherlv_18= 'Postconditions' ( ( (lv_postconditions_19_0= ruleProposition ) ) otherlv_20= ';' )* )? (otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )* )? (otherlv_24= 'Surviving' otherlv_25= 'Obligations' ( ( (lv_sobligations_26_0= ruleObligation ) ) otherlv_27= ';' )* )? (otherlv_28= 'Powers' ( ( (lv_powers_29_0= rulePower ) ) otherlv_30= ';' )* )? (otherlv_31= 'Constraints' ( ( (lv_constraints_32_0= ruleProposition ) ) otherlv_33= ';' )* )? otherlv_34= 'endContract'
+            // InternalSymg.g:78:2: (otherlv_0= 'Domain' ( (lv_domainName_1_0= RULE_ID ) ) ( ( (lv_domainConcepts_2_0= ruleDomainConcept ) ) otherlv_3= ';' )+ otherlv_4= 'endDomain' otherlv_5= 'Contract' ( (lv_contractName_6_0= RULE_ID ) ) otherlv_7= '(' ( ( (lv_parameters_8_0= ruleParameter ) ) otherlv_9= ',' )+ ( (lv_parameters_10_0= ruleParameter ) ) otherlv_11= ')' (otherlv_12= 'Declarations' ( ( (lv_declarations_13_0= ruleDeclar ) ) otherlv_14= ';' )* )? (otherlv_15= 'Preconditions' ( ( (lv_preconditions_16_0= ruleProposition ) ) otherlv_17= ';' )* )? (otherlv_18= 'Postconditions' ( ( (lv_postconditions_19_0= ruleProposition ) ) otherlv_20= ';' )* )? (otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )* )+ (otherlv_24= 'Surviving' otherlv_25= 'Obligations' ( ( (lv_sobligations_26_0= ruleObligation ) ) otherlv_27= ';' )* )? (otherlv_28= 'Powers' ( ( (lv_powers_29_0= rulePower ) ) otherlv_30= ';' )* )? (otherlv_31= 'Constraints' ( ( (lv_constraints_32_0= ruleProposition ) ) otherlv_33= ';' )* )? otherlv_34= 'endContract' )
+            // InternalSymg.g:79:3: otherlv_0= 'Domain' ( (lv_domainName_1_0= RULE_ID ) ) ( ( (lv_domainConcepts_2_0= ruleDomainConcept ) ) otherlv_3= ';' )+ otherlv_4= 'endDomain' otherlv_5= 'Contract' ( (lv_contractName_6_0= RULE_ID ) ) otherlv_7= '(' ( ( (lv_parameters_8_0= ruleParameter ) ) otherlv_9= ',' )+ ( (lv_parameters_10_0= ruleParameter ) ) otherlv_11= ')' (otherlv_12= 'Declarations' ( ( (lv_declarations_13_0= ruleDeclar ) ) otherlv_14= ';' )* )? (otherlv_15= 'Preconditions' ( ( (lv_preconditions_16_0= ruleProposition ) ) otherlv_17= ';' )* )? (otherlv_18= 'Postconditions' ( ( (lv_postconditions_19_0= ruleProposition ) ) otherlv_20= ';' )* )? (otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )* )+ (otherlv_24= 'Surviving' otherlv_25= 'Obligations' ( ( (lv_sobligations_26_0= ruleObligation ) ) otherlv_27= ';' )* )? (otherlv_28= 'Powers' ( ( (lv_powers_29_0= rulePower ) ) otherlv_30= ';' )* )? (otherlv_31= 'Constraints' ( ( (lv_constraints_32_0= ruleProposition ) ) otherlv_33= ';' )* )? otherlv_34= 'endContract'
             {
             otherlv_0=(Token)match(input,11,FOLLOW_3); 
 
@@ -790,85 +790,97 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSymg.g:297:3: (otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )* )?
-            int alt10=2;
-            int LA10_0 = input.LA(1);
+            // InternalSymg.g:297:3: (otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )* )+
+            int cnt10=0;
+            loop10:
+            do {
+                int alt10=2;
+                int LA10_0 = input.LA(1);
 
-            if ( (LA10_0==21) ) {
-                alt10=1;
-            }
-            switch (alt10) {
-                case 1 :
-                    // InternalSymg.g:298:4: otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )*
-                    {
-                    otherlv_21=(Token)match(input,21,FOLLOW_14); 
-
-                    				newLeafNode(otherlv_21, grammarAccess.getModelAccess().getObligationsKeyword_13_0());
-                    			
-                    // InternalSymg.g:302:4: ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )*
-                    loop9:
-                    do {
-                        int alt9=2;
-                        int LA9_0 = input.LA(1);
-
-                        if ( (LA9_0==RULE_ID) ) {
-                            alt9=1;
-                        }
+                if ( (LA10_0==21) ) {
+                    alt10=1;
+                }
 
 
-                        switch (alt9) {
-                    	case 1 :
-                    	    // InternalSymg.g:303:5: ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';'
-                    	    {
-                    	    // InternalSymg.g:303:5: ( (lv_obligations_22_0= ruleObligation ) )
-                    	    // InternalSymg.g:304:6: (lv_obligations_22_0= ruleObligation )
-                    	    {
-                    	    // InternalSymg.g:304:6: (lv_obligations_22_0= ruleObligation )
-                    	    // InternalSymg.g:305:7: lv_obligations_22_0= ruleObligation
-                    	    {
+                switch (alt10) {
+            	case 1 :
+            	    // InternalSymg.g:298:4: otherlv_21= 'Obligations' ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )*
+            	    {
+            	    otherlv_21=(Token)match(input,21,FOLLOW_14); 
 
-                    	    							newCompositeNode(grammarAccess.getModelAccess().getObligationsObligationParserRuleCall_13_1_0_0());
-                    	    						
-                    	    pushFollow(FOLLOW_4);
-                    	    lv_obligations_22_0=ruleObligation();
+            	    				newLeafNode(otherlv_21, grammarAccess.getModelAccess().getObligationsKeyword_13_0());
+            	    			
+            	    // InternalSymg.g:302:4: ( ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';' )*
+            	    loop9:
+            	    do {
+            	        int alt9=2;
+            	        int LA9_0 = input.LA(1);
 
-                    	    state._fsp--;
-
-
-                    	    							if (current==null) {
-                    	    								current = createModelElementForParent(grammarAccess.getModelRule());
-                    	    							}
-                    	    							add(
-                    	    								current,
-                    	    								"obligations",
-                    	    								lv_obligations_22_0,
-                    	    								"org.xtext.example.symg.Symg.Obligation");
-                    	    							afterParserOrEnumRuleCall();
-                    	    						
-
-                    	    }
+            	        if ( (LA9_0==RULE_ID) ) {
+            	            alt9=1;
+            	        }
 
 
-                    	    }
+            	        switch (alt9) {
+            	    	case 1 :
+            	    	    // InternalSymg.g:303:5: ( (lv_obligations_22_0= ruleObligation ) ) otherlv_23= ';'
+            	    	    {
+            	    	    // InternalSymg.g:303:5: ( (lv_obligations_22_0= ruleObligation ) )
+            	    	    // InternalSymg.g:304:6: (lv_obligations_22_0= ruleObligation )
+            	    	    {
+            	    	    // InternalSymg.g:304:6: (lv_obligations_22_0= ruleObligation )
+            	    	    // InternalSymg.g:305:7: lv_obligations_22_0= ruleObligation
+            	    	    {
 
-                    	    otherlv_23=(Token)match(input,12,FOLLOW_14); 
+            	    	    							newCompositeNode(grammarAccess.getModelAccess().getObligationsObligationParserRuleCall_13_1_0_0());
+            	    	    						
+            	    	    pushFollow(FOLLOW_4);
+            	    	    lv_obligations_22_0=ruleObligation();
 
-                    	    					newLeafNode(otherlv_23, grammarAccess.getModelAccess().getSemicolonKeyword_13_1_1());
-                    	    				
-
-                    	    }
-                    	    break;
-
-                    	default :
-                    	    break loop9;
-                        }
-                    } while (true);
+            	    	    state._fsp--;
 
 
-                    }
-                    break;
+            	    	    							if (current==null) {
+            	    	    								current = createModelElementForParent(grammarAccess.getModelRule());
+            	    	    							}
+            	    	    							add(
+            	    	    								current,
+            	    	    								"obligations",
+            	    	    								lv_obligations_22_0,
+            	    	    								"org.xtext.example.symg.Symg.Obligation");
+            	    	    							afterParserOrEnumRuleCall();
+            	    	    						
 
-            }
+            	    	    }
+
+
+            	    	    }
+
+            	    	    otherlv_23=(Token)match(input,12,FOLLOW_14); 
+
+            	    	    					newLeafNode(otherlv_23, grammarAccess.getModelAccess().getSemicolonKeyword_13_1_1());
+            	    	    				
+
+            	    	    }
+            	    	    break;
+
+            	    	default :
+            	    	    break loop9;
+            	        }
+            	    } while (true);
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    if ( cnt10 >= 1 ) break loop10;
+                        EarlyExitException eee =
+                            new EarlyExitException(10, input);
+                        throw eee;
+                }
+                cnt10++;
+            } while (true);
 
             // InternalSymg.g:328:3: (otherlv_24= 'Surviving' otherlv_25= 'Obligations' ( ( (lv_sobligations_26_0= ruleObligation ) ) otherlv_27= ';' )* )?
             int alt12=2;
@@ -10106,11 +10118,11 @@ public class InternalSymgParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000008000L});
     public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000003FC0000L});
-    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000003F80010L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0003700003F08030L,0x00001FFFFFFFFFF8L});
-    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0003700003E08030L,0x00001FFFFFFFFFF8L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000003C00010L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x00000000003C0000L});
+    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000380010L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0003700000308030L,0x00001FFFFFFFFFF8L});
+    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0003700000208030L,0x00001FFFFFFFFFF8L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000003E00010L});
     public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000200000L});
     public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000003800010L});
     public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000003000010L});

@@ -811,17 +811,28 @@ class SymgGenerator extends AbstractGenerator {
 	//---------------------------Power Generator-----------------------------//
 	//-----------------------------------------------------------------------//
 	
+	/**
+	 * Generates prolog code for Powers
+	 * 
+	 * @param Power pow Power
+	 * @param int i power number
+	 * @param StringBuilder res StringBuilder containing the result string
+	 */
 	def compilePowers(Power pow, int i, StringBuilder res) {
 		res.append("P(X)\t:-\tP" + i + "(X).\n")
 		res.append("P" + i + "(" + pow.name + ").\n")
 		res.append("associate(" + pow.name + ",cArgToCan).\n\n")
 		res.append("initially(debtor(X,P))\t:-\tP" + i + "(X),initially(bind(" + pow.role1 + ",P)).\n")
 		res.append("initially(creditor(X,P))\t:-\tP" + i + "(X),initially(bind(" + pow.role2 + ",P)).\n\n")
+		pow.antecedent.compileOAntecedent(pow.name, res)
 		pow.trigger.compileTrigger(pow.name, res)
 		pow.consequent.compilePConsequent(pow.name, res)
 		res.append("\n\n")
 	}
 	
+	/**
+	 * Helper function to generate code for power consequent
+	 */
 	def compilePConsequent(Proposition prop, String powName, StringBuilder res) {
 		prop.powerCompileStates(res, powName)
 		
@@ -830,22 +841,34 @@ class SymgGenerator extends AbstractGenerator {
 		res.append(".\n")
 	}
 	
+	/**
+	 * Helper function to find all states within atoms
+	 */
 	def powerCompileStates(Proposition prop, StringBuilder res, String powName) {
 		 for (or : prop.junctions) {
 		 	or.powerCompileStates(res, powName)
 		 }
 	}
 	
+	/**
+	 * Helper function to find all states within atoms
+	 */
 	def powerCompileStates(Junction or, StringBuilder res, String powName) {
 		 for (and : or.negativeAtoms) {
 		 	and.powerCompileStates(res, powName)
 		 }
 	}
 	
+	/**
+	 * Helper function to find all states within atoms
+	 */
 	def powerCompileStates(Negation neg, StringBuilder res, String powName) {
 		neg.atomicExpression.powerCompileStates(res, powName)
 	}
 	
+	/**
+	 * Helper function to find all states within atoms
+	 */
 	def powerCompileStates(Atom atom, StringBuilder res, String powName) {
 		if (atom.situationProposition != null) {
 			if (atom.situationProposition.CSituationName != null) {
@@ -1123,6 +1146,10 @@ class SymgGenerator extends AbstractGenerator {
 		}
 	}
 	
+	/**
+	 * Helper functions that return the prolog representation for predefined events
+	 */
+	 
 	def compileOEvent(oEvent event) {
 		switch (event.oblEvent) {
 			case 'oTRIGGERED': return 'triggered(' + event.oblName + ')'
@@ -1176,6 +1203,10 @@ class SymgGenerator extends AbstractGenerator {
 		}
 	}
 	
+	/**
+	 * Helper functions that return the prolog representation for predefined states
+	 */
+	 
 	def compileOState(oState state) {
 		switch (state.oblState) {
 			case 'oCREATE': return 'create(' + state.oblName + ')'
@@ -1222,6 +1253,10 @@ class SymgGenerator extends AbstractGenerator {
 		}
 	}
 	
+	/**
+	 * Helper functions to find the events that lead to certain states
+	 */
+	 
 	def mapOStateToEvent(oState state) {
 		switch (state.oblState) {
 			case 'oCREATE': return 'triggered(' + state.oblName + ')'

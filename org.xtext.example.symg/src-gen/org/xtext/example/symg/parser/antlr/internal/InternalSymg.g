@@ -324,7 +324,7 @@ ruleModel returns [EObject current=null]
 					newLeafNode(otherlv_23, grammarAccess.getModelAccess().getSemicolonKeyword_13_1_1());
 				}
 			)*
-		)?
+		)+
 		(
 			otherlv_24='Surviving'
 			{

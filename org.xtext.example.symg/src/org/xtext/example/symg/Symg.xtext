@@ -10,7 +10,7 @@ Model:
 	('Declarations' (declarations+=Declar ';')*)?
 	('Preconditions' (preconditions+=Proposition';')*)?
 	('Postconditions' (postconditions+=Proposition ';')*)?
-	('Obligations'(obligations+=Obligation ';')*)?
+	('Obligations'(obligations+=Obligation ';')*)+
 	('Surviving''Obligations' (sobligations+=Obligation ';')*)?
 	('Powers'(powers+=Power ';')*)?
 	('Constraints' (constraints+=Proposition ';')*)?

@@ -23,7 +23,8 @@ public class SymgSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected SymgGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_Model_ConstraintsKeyword_16_0_q;
 	protected AbstractElementAlias match_Model_DeclarationsKeyword_10_0_q;
-	protected AbstractElementAlias match_Model_ObligationsKeyword_13_0_q;
+	protected AbstractElementAlias match_Model_ObligationsKeyword_13_0_a;
+	protected AbstractElementAlias match_Model_ObligationsKeyword_13_0_p;
 	protected AbstractElementAlias match_Model_PostconditionsKeyword_12_0_q;
 	protected AbstractElementAlias match_Model_PowersKeyword_15_0_q;
 	protected AbstractElementAlias match_Model_PreconditionsKeyword_11_0_q;
@@ -34,7 +35,8 @@ public class SymgSyntacticSequencer extends AbstractSyntacticSequencer {
 		grammarAccess = (SymgGrammarAccess) access;
 		match_Model_ConstraintsKeyword_16_0_q = new TokenAlias(false, true, grammarAccess.getModelAccess().getConstraintsKeyword_16_0());
 		match_Model_DeclarationsKeyword_10_0_q = new TokenAlias(false, true, grammarAccess.getModelAccess().getDeclarationsKeyword_10_0());
-		match_Model_ObligationsKeyword_13_0_q = new TokenAlias(false, true, grammarAccess.getModelAccess().getObligationsKeyword_13_0());
+		match_Model_ObligationsKeyword_13_0_a = new TokenAlias(true, true, grammarAccess.getModelAccess().getObligationsKeyword_13_0());
+		match_Model_ObligationsKeyword_13_0_p = new TokenAlias(true, false, grammarAccess.getModelAccess().getObligationsKeyword_13_0());
 		match_Model_PostconditionsKeyword_12_0_q = new TokenAlias(false, true, grammarAccess.getModelAccess().getPostconditionsKeyword_12_0());
 		match_Model_PowersKeyword_15_0_q = new TokenAlias(false, true, grammarAccess.getModelAccess().getPowersKeyword_15_0());
 		match_Model_PreconditionsKeyword_11_0_q = new TokenAlias(false, true, grammarAccess.getModelAccess().getPreconditionsKeyword_11_0());
@@ -57,8 +59,10 @@ public class SymgSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_Model_ConstraintsKeyword_16_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Model_DeclarationsKeyword_10_0_q.equals(syntax))
 				emit_Model_DeclarationsKeyword_10_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Model_ObligationsKeyword_13_0_q.equals(syntax))
-				emit_Model_ObligationsKeyword_13_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Model_ObligationsKeyword_13_0_a.equals(syntax))
+				emit_Model_ObligationsKeyword_13_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Model_ObligationsKeyword_13_0_p.equals(syntax))
+				emit_Model_ObligationsKeyword_13_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Model_PostconditionsKeyword_12_0_q.equals(syntax))
 				emit_Model_PostconditionsKeyword_12_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Model_PowersKeyword_15_0_q.equals(syntax))
@@ -76,12 +80,12 @@ public class SymgSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'Constraints'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? (ambiguity) 'endContract' (rule end)
-	 *     obligations+=Obligation ';' ('Surviving' 'Obligations')? 'Powers'? (ambiguity) 'endContract' (rule end)
-	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? (ambiguity) 'endContract' (rule end)
-	 *     postconditions+=Proposition ';' 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? (ambiguity) 'endContract' (rule end)
+	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? (ambiguity) 'endContract' (rule end)
+	 *     obligations+=Obligation ';' 'Obligations'* ('Surviving' 'Obligations')? 'Powers'? (ambiguity) 'endContract' (rule end)
+	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? (ambiguity) 'endContract' (rule end)
+	 *     postconditions+=Proposition ';' 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? (ambiguity) 'endContract' (rule end)
 	 *     powers+=Power ';' (ambiguity) 'endContract' (rule end)
-	 *     preconditions+=Proposition ';' 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? (ambiguity) 'endContract' (rule end)
+	 *     preconditions+=Proposition ';' 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? (ambiguity) 'endContract' (rule end)
 	 *     sobligations+=Obligation ';' 'Powers'? (ambiguity) 'endContract' (rule end)
 	 */
 	protected void emit_Model_ConstraintsKeyword_16_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -95,11 +99,11 @@ public class SymgSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     parameters+=Parameter ')' (ambiguity) 'Preconditions' preconditions+=Proposition
 	 *     parameters+=Parameter ')' (ambiguity) 'Preconditions'? 'Postconditions' postconditions+=Proposition
-	 *     parameters+=Parameter ')' (ambiguity) 'Preconditions'? 'Postconditions'? 'Obligations' obligations+=Obligation
-	 *     parameters+=Parameter ')' (ambiguity) 'Preconditions'? 'Postconditions'? 'Obligations'? 'Surviving' 'Obligations' sobligations+=Obligation
-	 *     parameters+=Parameter ')' (ambiguity) 'Preconditions'? 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? 'Powers' powers+=Power
-	 *     parameters+=Parameter ')' (ambiguity) 'Preconditions'? 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
-	 *     parameters+=Parameter ')' (ambiguity) 'Preconditions'? 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     parameters+=Parameter ')' (ambiguity) 'Preconditions'? 'Postconditions'? 'Obligations'+ 'Surviving' 'Obligations' sobligations+=Obligation
+	 *     parameters+=Parameter ')' (ambiguity) 'Preconditions'? 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? 'Powers' powers+=Power
+	 *     parameters+=Parameter ')' (ambiguity) 'Preconditions'? 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
+	 *     parameters+=Parameter ')' (ambiguity) 'Preconditions'? 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     parameters+=Parameter ')' (ambiguity) 'Preconditions'? 'Postconditions'? 'Obligations'+ obligations+=Obligation
 	 */
 	protected void emit_Model_DeclarationsKeyword_10_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -107,27 +111,46 @@ public class SymgSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Ambiguous syntax:
-	 *     'Obligations'?
+	 *     'Obligations'*
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     obligations+=Obligation ';' (ambiguity) 'Surviving' 'Obligations' sobligations+=Obligation
+	 *     obligations+=Obligation ';' (ambiguity) ('Surviving' 'Obligations')? 'Powers' powers+=Power
+	 *     obligations+=Obligation ';' (ambiguity) ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
+	 *     obligations+=Obligation ';' (ambiguity) ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     obligations+=Obligation ';' (ambiguity) obligations+=Obligation
+	 */
+	protected void emit_Model_ObligationsKeyword_13_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'Obligations'+
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? (ambiguity) 'Surviving' 'Obligations' sobligations+=Obligation
 	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? (ambiguity) ('Surviving' 'Obligations')? 'Powers' powers+=Power
 	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? (ambiguity) ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
 	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? (ambiguity) ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? (ambiguity) obligations+=Obligation
 	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? (ambiguity) 'Surviving' 'Obligations' sobligations+=Obligation
 	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? (ambiguity) ('Surviving' 'Obligations')? 'Powers' powers+=Power
 	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? (ambiguity) ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
 	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? (ambiguity) ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? (ambiguity) obligations+=Obligation
 	 *     postconditions+=Proposition ';' (ambiguity) 'Surviving' 'Obligations' sobligations+=Obligation
 	 *     postconditions+=Proposition ';' (ambiguity) ('Surviving' 'Obligations')? 'Powers' powers+=Power
 	 *     postconditions+=Proposition ';' (ambiguity) ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
 	 *     postconditions+=Proposition ';' (ambiguity) ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     postconditions+=Proposition ';' (ambiguity) obligations+=Obligation
 	 *     preconditions+=Proposition ';' 'Postconditions'? (ambiguity) 'Surviving' 'Obligations' sobligations+=Obligation
 	 *     preconditions+=Proposition ';' 'Postconditions'? (ambiguity) ('Surviving' 'Obligations')? 'Powers' powers+=Power
 	 *     preconditions+=Proposition ';' 'Postconditions'? (ambiguity) ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
 	 *     preconditions+=Proposition ';' 'Postconditions'? (ambiguity) ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     preconditions+=Proposition ';' 'Postconditions'? (ambiguity) obligations+=Obligation
 	 */
-	protected void emit_Model_ObligationsKeyword_13_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Model_ObligationsKeyword_13_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -136,21 +159,21 @@ public class SymgSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'Postconditions'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     declarations+=Declar ';' 'Preconditions'? (ambiguity) 'Obligations' obligations+=Obligation
-	 *     declarations+=Declar ';' 'Preconditions'? (ambiguity) 'Obligations'? 'Surviving' 'Obligations' sobligations+=Obligation
-	 *     declarations+=Declar ';' 'Preconditions'? (ambiguity) 'Obligations'? ('Surviving' 'Obligations')? 'Powers' powers+=Power
-	 *     declarations+=Declar ';' 'Preconditions'? (ambiguity) 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
-	 *     declarations+=Declar ';' 'Preconditions'? (ambiguity) 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
-	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? (ambiguity) 'Obligations' obligations+=Obligation
-	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? (ambiguity) 'Obligations'? 'Surviving' 'Obligations' sobligations+=Obligation
-	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? (ambiguity) 'Obligations'? ('Surviving' 'Obligations')? 'Powers' powers+=Power
-	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? (ambiguity) 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
-	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? (ambiguity) 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
-	 *     preconditions+=Proposition ';' (ambiguity) 'Obligations' obligations+=Obligation
-	 *     preconditions+=Proposition ';' (ambiguity) 'Obligations'? 'Surviving' 'Obligations' sobligations+=Obligation
-	 *     preconditions+=Proposition ';' (ambiguity) 'Obligations'? ('Surviving' 'Obligations')? 'Powers' powers+=Power
-	 *     preconditions+=Proposition ';' (ambiguity) 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
-	 *     preconditions+=Proposition ';' (ambiguity) 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     declarations+=Declar ';' 'Preconditions'? (ambiguity) 'Obligations'+ 'Surviving' 'Obligations' sobligations+=Obligation
+	 *     declarations+=Declar ';' 'Preconditions'? (ambiguity) 'Obligations'+ ('Surviving' 'Obligations')? 'Powers' powers+=Power
+	 *     declarations+=Declar ';' 'Preconditions'? (ambiguity) 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
+	 *     declarations+=Declar ';' 'Preconditions'? (ambiguity) 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     declarations+=Declar ';' 'Preconditions'? (ambiguity) 'Obligations'+ obligations+=Obligation
+	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? (ambiguity) 'Obligations'+ 'Surviving' 'Obligations' sobligations+=Obligation
+	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? (ambiguity) 'Obligations'+ ('Surviving' 'Obligations')? 'Powers' powers+=Power
+	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? (ambiguity) 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
+	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? (ambiguity) 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? (ambiguity) 'Obligations'+ obligations+=Obligation
+	 *     preconditions+=Proposition ';' (ambiguity) 'Obligations'+ 'Surviving' 'Obligations' sobligations+=Obligation
+	 *     preconditions+=Proposition ';' (ambiguity) 'Obligations'+ ('Surviving' 'Obligations')? 'Powers' powers+=Power
+	 *     preconditions+=Proposition ';' (ambiguity) 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
+	 *     preconditions+=Proposition ';' (ambiguity) 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     preconditions+=Proposition ';' (ambiguity) 'Obligations'+ obligations+=Obligation
 	 */
 	protected void emit_Model_PostconditionsKeyword_12_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -161,16 +184,16 @@ public class SymgSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'Powers'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? (ambiguity) 'Constraints' constraints+=Proposition
-	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? (ambiguity) 'Constraints'? 'endContract' (rule end)
-	 *     obligations+=Obligation ';' ('Surviving' 'Obligations')? (ambiguity) 'Constraints' constraints+=Proposition
-	 *     obligations+=Obligation ';' ('Surviving' 'Obligations')? (ambiguity) 'Constraints'? 'endContract' (rule end)
-	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? (ambiguity) 'Constraints' constraints+=Proposition
-	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? (ambiguity) 'Constraints'? 'endContract' (rule end)
-	 *     postconditions+=Proposition ';' 'Obligations'? ('Surviving' 'Obligations')? (ambiguity) 'Constraints' constraints+=Proposition
-	 *     postconditions+=Proposition ';' 'Obligations'? ('Surviving' 'Obligations')? (ambiguity) 'Constraints'? 'endContract' (rule end)
-	 *     preconditions+=Proposition ';' 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? (ambiguity) 'Constraints' constraints+=Proposition
-	 *     preconditions+=Proposition ';' 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? (ambiguity) 'Constraints'? 'endContract' (rule end)
+	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? (ambiguity) 'Constraints' constraints+=Proposition
+	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? (ambiguity) 'Constraints'? 'endContract' (rule end)
+	 *     obligations+=Obligation ';' 'Obligations'* ('Surviving' 'Obligations')? (ambiguity) 'Constraints' constraints+=Proposition
+	 *     obligations+=Obligation ';' 'Obligations'* ('Surviving' 'Obligations')? (ambiguity) 'Constraints'? 'endContract' (rule end)
+	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? (ambiguity) 'Constraints' constraints+=Proposition
+	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? (ambiguity) 'Constraints'? 'endContract' (rule end)
+	 *     postconditions+=Proposition ';' 'Obligations'+ ('Surviving' 'Obligations')? (ambiguity) 'Constraints' constraints+=Proposition
+	 *     postconditions+=Proposition ';' 'Obligations'+ ('Surviving' 'Obligations')? (ambiguity) 'Constraints'? 'endContract' (rule end)
+	 *     preconditions+=Proposition ';' 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? (ambiguity) 'Constraints' constraints+=Proposition
+	 *     preconditions+=Proposition ';' 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? (ambiguity) 'Constraints'? 'endContract' (rule end)
 	 *     sobligations+=Obligation ';' (ambiguity) 'Constraints' constraints+=Proposition
 	 *     sobligations+=Obligation ';' (ambiguity) 'Constraints'? 'endContract' (rule end)
 	 */
@@ -184,17 +207,17 @@ public class SymgSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     declarations+=Declar ';' (ambiguity) 'Postconditions' postconditions+=Proposition
-	 *     declarations+=Declar ';' (ambiguity) 'Postconditions'? 'Obligations' obligations+=Obligation
-	 *     declarations+=Declar ';' (ambiguity) 'Postconditions'? 'Obligations'? 'Surviving' 'Obligations' sobligations+=Obligation
-	 *     declarations+=Declar ';' (ambiguity) 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? 'Powers' powers+=Power
-	 *     declarations+=Declar ';' (ambiguity) 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
-	 *     declarations+=Declar ';' (ambiguity) 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     declarations+=Declar ';' (ambiguity) 'Postconditions'? 'Obligations'+ 'Surviving' 'Obligations' sobligations+=Obligation
+	 *     declarations+=Declar ';' (ambiguity) 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? 'Powers' powers+=Power
+	 *     declarations+=Declar ';' (ambiguity) 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
+	 *     declarations+=Declar ';' (ambiguity) 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     declarations+=Declar ';' (ambiguity) 'Postconditions'? 'Obligations'+ obligations+=Obligation
 	 *     parameters+=Parameter ')' 'Declarations'? (ambiguity) 'Postconditions' postconditions+=Proposition
-	 *     parameters+=Parameter ')' 'Declarations'? (ambiguity) 'Postconditions'? 'Obligations' obligations+=Obligation
-	 *     parameters+=Parameter ')' 'Declarations'? (ambiguity) 'Postconditions'? 'Obligations'? 'Surviving' 'Obligations' sobligations+=Obligation
-	 *     parameters+=Parameter ')' 'Declarations'? (ambiguity) 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? 'Powers' powers+=Power
-	 *     parameters+=Parameter ')' 'Declarations'? (ambiguity) 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
-	 *     parameters+=Parameter ')' 'Declarations'? (ambiguity) 'Postconditions'? 'Obligations'? ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     parameters+=Parameter ')' 'Declarations'? (ambiguity) 'Postconditions'? 'Obligations'+ 'Surviving' 'Obligations' sobligations+=Obligation
+	 *     parameters+=Parameter ')' 'Declarations'? (ambiguity) 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? 'Powers' powers+=Power
+	 *     parameters+=Parameter ')' 'Declarations'? (ambiguity) 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? 'Constraints' constraints+=Proposition
+	 *     parameters+=Parameter ')' 'Declarations'? (ambiguity) 'Postconditions'? 'Obligations'+ ('Surviving' 'Obligations')? 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     parameters+=Parameter ')' 'Declarations'? (ambiguity) 'Postconditions'? 'Obligations'+ obligations+=Obligation
 	 */
 	protected void emit_Model_PreconditionsKeyword_11_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -205,21 +228,21 @@ public class SymgSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('Surviving' 'Obligations')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? 'Obligations'? (ambiguity) 'Powers' powers+=Power
-	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? 'Obligations'? (ambiguity) 'Powers'? 'Constraints' constraints+=Proposition
-	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? 'Obligations'? (ambiguity) 'Powers'? 'Constraints'? 'endContract' (rule end)
-	 *     obligations+=Obligation ';' (ambiguity) 'Powers' powers+=Power
-	 *     obligations+=Obligation ';' (ambiguity) 'Powers'? 'Constraints' constraints+=Proposition
-	 *     obligations+=Obligation ';' (ambiguity) 'Powers'? 'Constraints'? 'endContract' (rule end)
-	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? 'Obligations'? (ambiguity) 'Powers' powers+=Power
-	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? 'Obligations'? (ambiguity) 'Powers'? 'Constraints' constraints+=Proposition
-	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? 'Obligations'? (ambiguity) 'Powers'? 'Constraints'? 'endContract' (rule end)
-	 *     postconditions+=Proposition ';' 'Obligations'? (ambiguity) 'Powers' powers+=Power
-	 *     postconditions+=Proposition ';' 'Obligations'? (ambiguity) 'Powers'? 'Constraints' constraints+=Proposition
-	 *     postconditions+=Proposition ';' 'Obligations'? (ambiguity) 'Powers'? 'Constraints'? 'endContract' (rule end)
-	 *     preconditions+=Proposition ';' 'Postconditions'? 'Obligations'? (ambiguity) 'Powers' powers+=Power
-	 *     preconditions+=Proposition ';' 'Postconditions'? 'Obligations'? (ambiguity) 'Powers'? 'Constraints' constraints+=Proposition
-	 *     preconditions+=Proposition ';' 'Postconditions'? 'Obligations'? (ambiguity) 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? 'Obligations'+ (ambiguity) 'Powers' powers+=Power
+	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? 'Obligations'+ (ambiguity) 'Powers'? 'Constraints' constraints+=Proposition
+	 *     declarations+=Declar ';' 'Preconditions'? 'Postconditions'? 'Obligations'+ (ambiguity) 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     obligations+=Obligation ';' 'Obligations'* (ambiguity) 'Powers' powers+=Power
+	 *     obligations+=Obligation ';' 'Obligations'* (ambiguity) 'Powers'? 'Constraints' constraints+=Proposition
+	 *     obligations+=Obligation ';' 'Obligations'* (ambiguity) 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? 'Obligations'+ (ambiguity) 'Powers' powers+=Power
+	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? 'Obligations'+ (ambiguity) 'Powers'? 'Constraints' constraints+=Proposition
+	 *     parameters+=Parameter ')' 'Declarations'? 'Preconditions'? 'Postconditions'? 'Obligations'+ (ambiguity) 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     postconditions+=Proposition ';' 'Obligations'+ (ambiguity) 'Powers' powers+=Power
+	 *     postconditions+=Proposition ';' 'Obligations'+ (ambiguity) 'Powers'? 'Constraints' constraints+=Proposition
+	 *     postconditions+=Proposition ';' 'Obligations'+ (ambiguity) 'Powers'? 'Constraints'? 'endContract' (rule end)
+	 *     preconditions+=Proposition ';' 'Postconditions'? 'Obligations'+ (ambiguity) 'Powers' powers+=Power
+	 *     preconditions+=Proposition ';' 'Postconditions'? 'Obligations'+ (ambiguity) 'Powers'? 'Constraints' constraints+=Proposition
+	 *     preconditions+=Proposition ';' 'Postconditions'? 'Obligations'+ (ambiguity) 'Powers'? 'Constraints'? 'endContract' (rule end)
 	 */
 	protected void emit_Model___SurvivingKeyword_14_0_ObligationsKeyword_14_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
